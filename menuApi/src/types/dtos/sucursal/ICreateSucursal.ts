@@ -1,3 +1,4 @@
+import { IDomicilio } from "../../IDomicilio";
 
 export interface ICreateSucursal {
   nombre: string;
@@ -6,14 +7,7 @@ export interface ICreateSucursal {
   esCasaMatriz: boolean;
   latitud: number;
   longitud: number;
-  domicilio: {
-    calle: string;
-    numero: number;
-    cp: number;
-    piso: number;
-    nroDpto: number;
-    idLocalidad: number;
-  };
+  domicilio: IDomicilio;
   idEmpresa: number;
   logo: string | null;
 }
