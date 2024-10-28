@@ -3,7 +3,6 @@ import { ICreateSucursal } from '../../../../types/dtos/sucursal/ICreateSucursal
 import { SucursalService } from '../../../../services/SucursalService/SucursalService';
 import BaseModal from '../BaseModal';
 
-import styles from './SucursalModal.module.css'
 
 
 interface SucursalModalProps {
@@ -12,7 +11,7 @@ interface SucursalModalProps {
     onSuccess: () => void; // Callback para manejar el éxito
 }
 
-const SucursalModal: React.FC<SucursalModalProps> = ({ isOpen, onClose, onSuccess }) => {
+export const SucursalModal: React.FC<SucursalModalProps> = ({ isOpen, onClose, onSuccess }) => {
     const [sucursal, setSucursal] = useState<ICreateSucursal>({
         nombre: '',
         horarioApertura: '',
@@ -73,7 +72,7 @@ const SucursalModal: React.FC<SucursalModalProps> = ({ isOpen, onClose, onSucces
     return (
         isOpen && (
             <BaseModal title="Crear una Sucursal" onClose={onClose} onSave={handleSubmit}>
-                <div className={styles.containerPrincipal}>
+                <div >
                     <div >
                     <input
                         type="text"

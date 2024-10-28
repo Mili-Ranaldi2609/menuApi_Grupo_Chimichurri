@@ -1,7 +1,7 @@
 import { ILocalidad } from "./ILocalidad";
 
 export interface IDomicilio {
-  id: number;
+  id?: number;
   calle: string;
   numero: number;
   cp: number;

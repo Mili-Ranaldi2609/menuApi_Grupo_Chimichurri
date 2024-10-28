@@ -1,28 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { EmpresaService } from '../../services/EmpresaService/EmpresaService';
-import { IEmpresa } from '../../types/IEmpresa';
 
-const empresaService = new EmpresaService();
+import { useState } from "react";
+import CardEmpresa from "../../components/cards/CardEmpresa/CardEmpresa";
+import { Header } from "../../components/Header/Header";
+import EmpresaModal from "../../components/modals/BaseModal/CrearEditarEmpresa/CrearEditarEmpresa";
+import { IEmpresa } from "../../types/IEmpresa";
 
 
-export const EmpresaPage: React.FC = () => {
-    const [empresas, setEmpresas] = useState<IEmpresa[]>([]);
+import SucursalPage from "../SucursalPage/SucursalPage";
 
-    useEffect(() => {
-        //para obtener todas las empresas
-        empresaService.getAll().then(setEmpresas).catch(console.error);
-    }, []);
 
-    return (
-        <div >
-        {empresas.map(empresa => (
-            <div key={empresa.id}>
-            <h3>{empresa.name}</h3>
-            <p>{empresa.description}</p>
-            </div>
-        ))}
-        </div>
-    );
+
+
+export const EmpresaPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => setIsModalOpen(true);
+
+  // Función para cerrar el modal
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  // Callback cuando se crea una empresa con éxito
+  const handleSuccess = () => {
+    // Aquí puedes refrescar la lista de empresas o cualquier otra acción
+    handleCloseModal();
+  };
+  const empresai: IEmpresa = {
+    name: '',
+    description: "",
+    
+
+  };
+
+  return (
+    <div className="pageEmpresaContainer">
+      <Header nombreVista="Empresas" />
+      <div>
+        <button className="" onClick={handleOpenModal}>Agregar Empresa</button>
+      </div>
+      <div className="pageEmpresaSucursal">
+        <CardEmpresa empresa={empresai}/>
+        <SucursalPage />
+      </div>
+      <div>
+      <EmpresaModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSuccess={handleSuccess}
+      />
+      </div>
+    </div>
+    
+  );
 };
-
-export default EmpresaPage;
