@@ -1,3 +1,4 @@
+import styles from"./EmpresaPage.module.css";
 import { Header } from "../../components/Header/Header";
 import { useState } from "react";
 import EmpresaModal from "../../components/modals/BaseModal/CrearEditarEmpresa/CrearEditarEmpresa";
@@ -11,22 +12,21 @@ export const EmpresaPage = () => {
     const handleCloseModal = () => setIsModalOpen(false);
 
     return (
-        <div className="pageEmpresaContainer">
+        <div className={styles.pageEmpresaContainer}>
             <Header nombreVista="Empresas" />
-            <div>
+            {/* <div>
                 <button onClick={handleOpenModal}>Agregar Empresa</button>
-            </div>
-            <div className="pageEmpresaSucursal">
+            </div> */}
+            <div className={styles.empresaList}>
                 <EmpresaList />
-                <SucursalPage />
             </div>
-            <div>
+            {/* <div>
                 <EmpresaModal
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
                     onSuccess={() => {}} // Puedes dejarlo vacío o manejarlo según necesites
                 />
-            </div>
+            </div> */}
         </div>
     );
 };

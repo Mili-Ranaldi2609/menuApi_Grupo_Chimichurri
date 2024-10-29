@@ -1,8 +1,8 @@
 .containerEmpresaPage{
-    display: flex;
-    justify-content: center ;
-    align-items: center;
-    gap: 2vh;
-    height: 100%;
-    background-color: rgb(186, 186, 255);
+    background-color: rgb(122, 175, 52);
+}
+/* cuando tenga la pagina definida esto no lleva nada, solo el pageEmpresa  */
+.empresaList{
+    background-color: rgb(80, 91, 189);
+    width: 22%;
 }

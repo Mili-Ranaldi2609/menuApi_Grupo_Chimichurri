@@ -1,4 +1,5 @@
 import React from 'react';
+import './CardEmpresa.css';
 import { IEmpresa2 } from '../../../types/dtos/empresa/IEmpresa2';
 
 interface CardEmpresaProps {
@@ -9,13 +10,15 @@ interface CardEmpresaProps {
 
 const CardEmpresa: React.FC<CardEmpresaProps> = ({ empresa, onView, onEdit }) => {
   return (
-    <div>
+    <div className='card-empresa'>
       <h3>{empresa.nombre}</h3>
       <p>{empresa.id}</p>
       <p>{empresa.cuit}</p>
       <p>{empresa.razonSocial}</p>
-      <button onClick={() => onView(empresa)}>Ver Detalles</button>
-      <button onClick={() => onEdit(empresa)}>Editar</button>
+      <div className='card__contenedor-botones'>
+        <button onClick={() => onView(empresa)}>Ver Detalles</button>
+        <button onClick={() => onEdit(empresa)}>Editar</button>
+      </div>
     </div>
   );
 };
