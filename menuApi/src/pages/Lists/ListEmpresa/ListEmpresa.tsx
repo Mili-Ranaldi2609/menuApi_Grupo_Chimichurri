@@ -72,6 +72,7 @@ const EmpresaList: React.FC = () => {
           empresa={empresa} 
           onView={handleShowDetails} 
           onEdit={handleEdit} 
+          onAddSucursal={empresa}
         />
       ))}
       
