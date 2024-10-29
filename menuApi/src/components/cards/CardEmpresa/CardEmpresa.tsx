@@ -7,10 +7,10 @@ interface CardEmpresaProps {
   empresa: IEmpresa2;
   onView: (empresa: IEmpresa2) => void;
   onEdit: (empresa: IEmpresa2) => void;
-  onAddSucursal: (empresa: IEmpresa2) => void;
+  /*onAddSucursal: (empresa: IEmpresa2) => void;*/
 }
 
-const CardEmpresa: React.FC<CardEmpresaProps> = ({ empresa, onView, onEdit, onAddSucursal }) => {
+const CardEmpresa: React.FC<CardEmpresaProps> = ({ empresa, onView, onEdit }) => {
   const [showAddSucursal, setShowAddSucursal] = useState(false); // Estado para controlar la visibilidad del botón
 
   const handleCardClick = () => {
@@ -29,9 +29,9 @@ const CardEmpresa: React.FC<CardEmpresaProps> = ({ empresa, onView, onEdit, onAd
         <button onClick={() => onView(empresa)}>Ver Detalles</button>
         <button onClick={() => onEdit(empresa)}>Editar</button>
       </div>
-      {showAddSucursal && ( // Mostrar botón si showAddSucursal es true
+      {/*showAddSucursal && ( // Mostrar botón si showAddSucursal es true
         <button onClick={() => onAddSucursal(empresa)}>Agregar Sucursal</button>
-      )}
+      )*/}
     </div>
   );
 };

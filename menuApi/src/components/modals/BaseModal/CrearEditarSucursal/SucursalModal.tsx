@@ -39,7 +39,7 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, on
             }
         },
         logo: sucursal?.logo || '', // Mantener como cadena vacía en lugar de null
-        empresa:sucursal?.empresa.id || 0 
+        empresa:{id:sucursal?.empresa.id || 0} 
     });
 
     useEffect(() => {
@@ -53,7 +53,8 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, on
                 latitud: sucursal.latitud,
                 longitud: sucursal.longitud,
                 domicilio: sucursal.domicilio,
-                logo: sucursal.logo || ''
+                logo: sucursal.logo || '',
+                empresa:sucursal.empresa
             });
         } else {
             resetForm();
@@ -134,7 +135,9 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, on
 
     return (
         isOpen && (
-            <BaseModal title={sucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={handleSubmit}>
+            <BaseModal title={sucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={function (): void {
+                throw new Error('Function not implemented.');
+            } } >
                 <form onSubmit={handleSubmit}>
                     <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
                     <input type="time" name="horarioApertura" value={formData.horarioApertura} onChange={handleChange} required />

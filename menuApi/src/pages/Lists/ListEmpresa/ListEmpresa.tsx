@@ -68,11 +68,10 @@ const EmpresaList: React.FC = () => {
       
       {empresas.map((empresa) => (
         <CardEmpresa 
-          key={empresa.id} 
-          empresa={empresa} 
-          onView={handleShowDetails} 
+          key={empresa.id}
+          empresa={empresa}
+          onView={handleShowDetails}
           onEdit={handleEdit} 
-          onAddSucursal={empresa}
         />
       ))}
       

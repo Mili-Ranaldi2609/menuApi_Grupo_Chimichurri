@@ -3,7 +3,7 @@ import {ReactNode } from 'react' ;
 
 interface BaseModalProps {
     title: string;
-    children: ReactNode;
+    children?: ReactNode;
     onClose: () => void;
     onSave: () => void;
 }
