@@ -1,16 +1,21 @@
 import React from 'react';
+import { IEmpresa2 } from '../../../types/dtos/empresa/IEmpresa2';
 
-import { IEmpresa } from '../../../types/IEmpresa';
-interface cardEmpresaProps{
-  empresa: IEmpresa
+interface CardEmpresaProps {
+  empresa: IEmpresa2;
+  onView: (empresa: IEmpresa2) => void;
+  onEdit: (empresa: IEmpresa2) => void;
 }
 
-export const CardEmpresa: React.FC<cardEmpresaProps> = ({empresa})=> {
+const CardEmpresa: React.FC<CardEmpresaProps> = ({ empresa, onView, onEdit }) => {
   return (
-    <div className="card">
-      <h2 className="card-title">{empresa.name}</h2>
-      <p className="card-description">{empresa.description}</p>
-      <button className="card-button">Ver Detalles</button>
+    <div>
+      <h3>{empresa.nombre}</h3>
+      <p>{empresa.id}</p>
+      <p>{empresa.cuit}</p>
+      <p>{empresa.razonSocial}</p>
+      <button onClick={() => onView(empresa)}>Ver Detalles</button>
+      <button onClick={() => onEdit(empresa)}>Editar</button>
     </div>
   );
 };

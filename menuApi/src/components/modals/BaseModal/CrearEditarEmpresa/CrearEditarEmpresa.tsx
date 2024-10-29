@@ -1,78 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BaseModal from '../BaseModal';
-import { ICreateEmpresaDto } from '../../../../types/dtos/empresa/ICreateEmpresaDto';
-import { EmpresaService } from '../../../../services/EmpresaService/EmpresaService';
-
+import EmpresaService from '../../../../services/EmpresaService/EmpresaService';
+import { IUpdateEmpresaDto } from '../../../../types/dtos/empresa/IUpdateEmpresaDto';
+import { IEmpresa2 } from '../../../../types/dtos/empresa/IEmpresa2';
 
 interface EmpresaModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSuccess: () => void; // Callback para manejar el éxito
+    onSuccess: () => void;
+    empresa?: IEmpresa2; // Prop opcional para editar
 }
 
-const EmpresaModal: React.FC<EmpresaModalProps> = ({ isOpen, onClose, onSuccess }) => {
-    const [empresa, setEmpresa] = useState<ICreateEmpresaDto>({
-        nombre: '',
-       razonSocial:"",
-        cuit:0,
-        logo:"",
+const EmpresaModal: React.FC<EmpresaModalProps> = ({ isOpen, onClose, onSuccess, empresa }) => {
+    const [formData, setFormData] = useState<IUpdateEmpresaDto>({
+        id: empresa?.id || 0, // `id` viene de `baseDto`
+        nombre: empresa?.nombre || '',
+        razonSocial: empresa?.razonSocial || '',
+        cuit: empresa?.cuit || 0,
+        logo: empresa?.logo || null,
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, type } = e.target;
-        const value = type === 'checkbox' ? (e.target as HTMLInputElement).checked : (e.target as HTMLInputElement).value;
-    
-        setEmpresa((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+    useEffect(() => {
+        if (empresa) {
+            setFormData({
+                id: empresa.id,
+                nombre: empresa.nombre,
+                razonSocial: empresa.razonSocial,
+                cuit: empresa.cuit,
+                logo: empresa.logo || null,
+            });
+        }
+    }, [empresa]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: name === "cuit" ? parseInt(value) : value }));
     };
 
     const handleSubmit = async () => {
+        const empresaService = new EmpresaService();
         try {
-            const empresaService = new EmpresaService();
-            await empresaService.create(setEmpresa); // Pasa los datos de `empresa`
-            onSuccess(); // Callback para refrescar la lista de empresas
-            onClose(); // Cierra el modal
+            if (empresa) {
+                await empresaService.update(empresa.id, formData); // Usa `formData` que ahora cumple con `IUpdateEmpresaDto`
+            } else {
+                await empresaService.create(formData);
+            }
+            onSuccess();
+            onClose();
         } catch (error) {
             console.error("Error al guardar la empresa:", error);
         }
     };
-    
 
     return (
         isOpen && (
-            <BaseModal title="Crear una empresa" onClose={onClose} onSave={handleSubmit}>
-                <div>
-                  
-                    <input
-                        type="text"
-                        name="nombre"
-                        value={empresa.nombre}
-                        onChange={handleChange}
-                        placeholder="Nombre de la Empresa"
-                    />
-                      <input
-                        type="text"
-                        name="razon social"
-                        value={empresa.razonSocial}
-                        placeholder="razon social"
-                    />
-                    <input
-                        type="number"
-                        name="cuit"
-                        value={empresa.cuit}
-                        placeholder="cuit"
-                    />
-                    <input
-                        type="text"
-                        name="logo"
-                        value={empresa.logo ??""}
-                        placeholder="logo"
-                    />
-            
-                    
-                </div>
+            <BaseModal title={empresa ? "Editar Empresa" : "Crear Empresa"} onClose={onClose} onSave={handleSubmit}>
+                <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre de la Empresa" />
+                <input type="text" name="razonSocial" value={formData.razonSocial} onChange={handleChange} placeholder="Razón Social" />
+                <input type="number" name="cuit" value={formData.cuit} onChange={handleChange} placeholder="CUIT" />
+                <input type="text" name="logo" value={formData.logo ?? ''} onChange={handleChange} placeholder="Logo URL" />
             </BaseModal>
         )
     );

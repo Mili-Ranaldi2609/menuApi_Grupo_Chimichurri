@@ -3,12 +3,10 @@ import { ICreateSucursal } from '../../../../types/dtos/sucursal/ICreateSucursal
 import { SucursalService } from '../../../../services/SucursalService/SucursalService';
 import BaseModal from '../BaseModal';
 
-
-
 interface SucursalModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSuccess: () => void; // Callback para manejar el éxito
+    onSuccess: () => void;
 }
 
 export const SucursalModal: React.FC<SucursalModalProps> = ({ isOpen, onClose, onSuccess }) => {
@@ -20,60 +18,62 @@ export const SucursalModal: React.FC<SucursalModalProps> = ({ isOpen, onClose, o
         latitud: 0,
         longitud: 0,
         domicilio: {
-            id: 0, // Asegúrate de asignar un ID adecuado
+            id: 0,
             calle: '',
             numero: 0,
             cp: 0,
             piso: 0,
             nroDpto: 0,
             localidad: {
-                id: 0, // Inicializa el ID de localidad
-                nombre: '', // Inicializa el nombre de la localidad
-                provincia:{
+                id: 0,
+                nombre: '',
+                provincia: {
                     id: 0,
                     nombre: '',
-                    pais:{
+                    pais: {
                         id: 0,
                         nombre: ''
-                        
-                    }}} },
+                    }
+                }
+            }
+        },
         idEmpresa: 0,
         logo: null,
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, type } = e.target;
-        const value = type === 'checkbox' ? (e.target as HTMLInputElement).checked : (e.target as HTMLInputElement).value;
-    
-        setSucursal((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
+        const { name, type, value } = e.target;
+        const parsedValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked 
+                          : type === 'number' ? parseInt(value) || 0 
+                          : value;
 
-    const handleDomicilioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setSucursal(prev => ({
-            ...prev,
-            domicilio: {
-                ...prev.domicilio,
-                [name]: value,
-            },
-        }));
+        // Detecta campos anidados y actualiza recursivamente
+        setSucursal(prev => {
+            const keys = name.split('.');
+            let obj: any = { ...prev };
+            keys.reduce((acc, key, idx) => {
+                if (idx === keys.length - 1) {
+                    acc[key] = parsedValue;
+                } else {
+                    acc[key] = { ...acc[key] };
+                }
+                return acc[key];
+            }, obj);
+            return obj;
+        });
     };
 
     const handleSubmit = async () => {
         const sucursalService = new SucursalService();
         await sucursalService.create(sucursal);
-        onSuccess(); // Llama al callback para refrescar la lista de sucursales
-        onClose(); // Cierra el modal
+        onSuccess();
+        onClose();
     };
 
     return (
         isOpen && (
             <BaseModal title="Crear una Sucursal" onClose={onClose} onSave={handleSubmit}>
-                <div >
-                    <div >
+                <div>
                     <input
                         type="text"
                         name="nombre"
@@ -100,86 +100,81 @@ export const SucursalModal: React.FC<SucursalModalProps> = ({ isOpen, onClose, o
                         name="esCasaMatriz"
                         checked={sucursal.esCasaMatriz}
                         onChange={handleChange}
-                    />{' '}
-                    Casa Matriz
-                    </div>
-                   <div>
-                   <input
+                    />
+                    {' '} Casa Matriz
+
+                    {/* Campos anidados usando nombres completos */}
+                    <input
                         type="text"
-                        name="pais"
+                        name="domicilio.localidad.provincia.pais.nombre"
                         value={sucursal.domicilio.localidad.provincia.pais.nombre}
-                        onChange={handleDomicilioChange}
+                        onChange={handleChange}
                         placeholder="País"
                     />
                     <input
                         type="text"
-                        name="provincia"
+                        name="domicilio.localidad.provincia.nombre"
                         value={sucursal.domicilio.localidad.provincia.nombre}
-                        onChange={handleDomicilioChange}
+                        onChange={handleChange}
                         placeholder="Provincia"
                     />
-                    {/* Agrega campos para la localidad */}
                     <input
                         type="text"
-                        name="localidad"
+                        name="domicilio.localidad.nombre"
                         value={sucursal.domicilio.localidad.nombre}
-                        onChange={handleDomicilioChange}
+                        onChange={handleChange}
                         placeholder="Localidad"
                     />
-                      <input
+                    <input
                         type="number"
                         name="latitud"
                         value={sucursal.latitud}
-                        onChange={handleDomicilioChange}
-                        placeholder="latitud"
-                    />
+                        onChange={handleChange}
+                        placeholder="Latitud"
+                    />Latitud
                     <input
                         type="number"
                         name="longitud"
                         value={sucursal.longitud}
-                        onChange={handleDomicilioChange}
-                        placeholder="longitud"
-                    />
-                   </div>
-                    <div>
+                        onChange={handleChange}
+                        placeholder="Longitud"
+                    />Longitud
+
                     <input
                         type="text"
-                        name="calle"
+                        name="domicilio.calle"
                         value={sucursal.domicilio.calle}
-                        onChange={handleDomicilioChange}
+                        onChange={handleChange}
                         placeholder="Calle"
                     />
                     <input
                         type="number"
-                        name="numero de la calle"
+                        name="domicilio.numero"
                         value={sucursal.domicilio.numero}
-                        onChange={handleDomicilioChange}
-                        placeholder="numero de la calle"
-                    />
-              
+                        onChange={handleChange}
+                        placeholder="Número de la calle"
+                    />Numero Calle
                     <input
-                        type="text"
-                        name="cp"
+                        type="number"
+                        name="domicilio.cp"
                         value={sucursal.domicilio.cp}
-                        onChange={handleDomicilioChange}
+                        onChange={handleChange}
                         placeholder="Código Postal"
-                    />Codigo Postal
-                    <input
-                        type="number"
-                        name="piso"
-                        value={sucursal.domicilio.piso}
-                        onChange={handleDomicilioChange}
-                        placeholder="Piso "
                     />
                     <input
                         type="number"
-                        name="nroDpto"
+                        name="domicilio.piso"
+                        value={sucursal.domicilio.piso}
+                        onChange={handleChange}
+                        placeholder="Piso"
+                    />
+                    <input
+                        type="number"
+                        name="domicilio.nroDpto"
                         value={sucursal.domicilio.nroDpto}
-                        onChange={handleDomicilioChange}
+                        onChange={handleChange}
                         placeholder="Número de Departamento"
                     />
-                    </div>
-                    
                 </div>
             </BaseModal>
         )

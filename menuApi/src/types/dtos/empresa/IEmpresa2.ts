@@ -1,12 +1,12 @@
 import { IPais } from "../../IPais";
 
 import { ISucursal } from "../sucursal/ISucursal";
-export interface IEmpresa {
-  id?: number;
+export interface IEmpresa2 {
+  id: number;
   nombre: string;
   razonSocial: string;
   cuit: number;
-  logo: string | null;
+  logo?: string | null;
   sucursales?: ISucursal[];
   pais?: IPais;
 }
