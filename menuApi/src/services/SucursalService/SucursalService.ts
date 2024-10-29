@@ -29,9 +29,9 @@ class SucursalService {
         }
     }
 
-    async getSucursalesByEmpresa(idEmpresa: number): Promise<ISucursal[]> {
+    async getSucursalesByEmpresa(empresa: IEmpresa): Promise<ISucursal[]> {
         try {
-            const response = await axios.get<ISucursal[]>(`${this.baseUrl}/empresa/${idEmpresa}`);
+            const response = await axios.get<ISucursal[]>(`${this.baseUrl}/empresa/${empresa.id}`);
             this.sucursales = response.data; // Actualizar el arreglo local
             return this.sucursales;
         } catch (error) {
@@ -50,7 +50,7 @@ class SucursalService {
         }
     }
 
-    async updateSucursalById(idSucursal: number, sucursalData: Partial<ICreateSucursal>): Promise<ISucursal | null> {
+    async updateSucursalById(idSucursal: number | undefined, sucursalData: Partial<ICreateSucursal>): Promise<ISucursal | null> {
         try {
             const response = await axios.put<ISucursal>(`${this.baseUrl}/update/${idSucursal}`, sucursalData, {
                 headers: {
