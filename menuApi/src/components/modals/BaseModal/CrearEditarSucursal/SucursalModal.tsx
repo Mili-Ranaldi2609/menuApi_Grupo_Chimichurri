@@ -60,21 +60,6 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, on
             resetForm();
         }
     }, [sucursal, isOpen]);
-/*
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value,
-            ...(name.startsWith('domicilio.') && { 
-                domicilio: { 
-                    ...prev.domicilio, 
-                    [name.split('.')[1]]: type === 'number' ? Number(value) : value 
-                } 
-            })
-        }));
-    };
-*/
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
 
