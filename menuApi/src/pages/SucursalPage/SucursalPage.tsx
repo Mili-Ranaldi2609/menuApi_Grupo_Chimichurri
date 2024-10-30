@@ -67,10 +67,9 @@ export const SucursalPage = () => {
       </div>
       <div>
       <SucursalModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onSuccess={handleSuccess}
-      />
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onSuccess={handleSuccess} empresa={sucursali.empresa} sucursal={sucursali}      />
       </div>
     </div>
     

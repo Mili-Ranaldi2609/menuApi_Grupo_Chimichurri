@@ -13,7 +13,7 @@ const BaseModal: React.FC<BaseModalProps> = ({ title, children, onClose, onSave 
         <div className="modal-content">
         <h2>{title}</h2>
         {children}
-        <button onClick={onSave}>Guardar</button>
+        {<button onClick={onSave}>Guardar</button>}
         <button onClick={onClose}>Cerrar</button>
         </div>
     </div>

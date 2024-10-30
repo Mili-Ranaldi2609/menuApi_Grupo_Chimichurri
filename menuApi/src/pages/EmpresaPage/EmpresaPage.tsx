@@ -8,15 +8,13 @@ import EmpresaList from "../Lists/ListEmpresa/ListEmpresa";
 export const EmpresaPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    /*const handleOpenModal = () => setIsModalOpen(true);*/
+  
     const handleCloseModal = () => setIsModalOpen(false);
 
     return (
         <div className={styles.pageEmpresaContainer}>
             <Header nombreVista="Empresas" />
-            {/*<div>
-                <button onClick={handleOpenModal}>Agregar Empresa</button>
-            </div> */}
+            
             <div className={styles.empresaList}>
                 <EmpresaList />
             </div>
