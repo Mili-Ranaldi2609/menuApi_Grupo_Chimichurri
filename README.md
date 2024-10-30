@@ -1,1 +1,1 @@
-Creando modal, card y page de sucursal, usando como referencia la carpeta types con las interfaces requeridas.
+Creando modal, card y page de sucursales y empresas , usando como referencia la carpeta types con las interfaces requeridas., ademas de implementar los fetchs, desde los service de empresa y sucursal, que son requeridos para las comunicaciones con la Api
