@@ -5,13 +5,17 @@ import axios from 'axios';
 
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'; // Asegúrate de definir este tipo
 import { RootState } from '../../../redux/store/store';
+import DetalleSucursal from '../../../components/cards/CardSucursal/DetalleSucursal/DetalleSucursal';
+import CardSucursal from '../../../components/cards/CardSucursal/CardSucursal';
 
 const ListSucursales: React.FC = () => {
     const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
     const [sucursales, setSucursales] = useState<ISucursal[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedSucursal, setSelectedSucursal] = useState<ISucursal | null>(null);
     useEffect(() => {
         const fetchSucursales = async () => {
             if (!activeEmpresa) return;
@@ -36,20 +40,41 @@ const ListSucursales: React.FC = () => {
     if (error) {
         return <div>{error}</div>;
     }
+    
+  const handleShowDetails = (sucursal: ISucursal) => {
+    setSelectedSucursal(sucursal);
+    setIsEditMode(false); // Vista solo de detalles
+    setIsModalOpen(false);
+  };
+
+  const handleEdit = (sucursal: ISucursal) => {
+    setSelectedSucursal(sucursal);
+    setIsEditMode(true); // Activar modo de edición
+    setIsModalOpen(true); // Abre el modal en modo edición
+  };
+
+  const handleCloseModal = () => {
+    setSelectedSucursal(null);
+    setIsModalOpen(false);
+  };
 
     return (
         <div>
             <h2>Sucursales de {activeEmpresa?.nombre}</h2>
             <div className="sucursales-list">
                 {sucursales.map((sucursal) => (
-                    <div key={sucursal.id} className="sucursal-card">
-                        <h3>{sucursal.nombre}</h3>
-                        <p>Horario Apertura: {sucursal.horarioApertura}</p>
-                        <p>Horario Cierre: {sucursal.horarioCierre}</p>
-                        <p>Casa Matriz?: {sucursal.esCasaMatriz}</p>
-                    </div>
+                    <CardSucursal
+                        key={sucursal.id}
+                        onView={handleShowDetails}
+                        onEdit={handleEdit} sucursal={sucursal}                  />
                 ))}
             </div>
+            {selectedSucursal && !isEditMode && (
+        <DetalleSucursal
+          sucursal={selectedSucursal}
+          onClose={handleCloseModal}
+        />
+      )}
         </div>
     );
 };

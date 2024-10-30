@@ -1,7 +1,6 @@
 // SucursalPage.tsx
 import { useState } from "react";
 import { Header } from "../../components/Header/Header";
-import { CardSucursal } from "../../components/cards/CardSucursal";
 import SucursalModal from "../../components/modals/BaseModal/CrearEditarSucursal/SucursalModal";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import ListSucursales from "../Lists/ListSucursal/ListSucursal";
@@ -57,10 +56,15 @@ export const SucursalPage = () => {
       <Header nombreVista="sucursales" />
       <div>
         <button onClick={handleOpenModal}>Agregar Sucursal</button>
-      </div>
+      </div>{/*
+      
+      
       <div className="pageEmpresaSucursal">
         <CardSucursal sucursal={sucursali} />
       </div>
+      
+      */ }
+      
       <div>
         <SucursalModal
           isOpen={isModalOpen}

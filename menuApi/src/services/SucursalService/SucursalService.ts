@@ -5,34 +5,44 @@ import { IEmpresa } from '../../types/IEmpresa';
 class SucursalService {
     private baseUrl: string = 'http://190.221.207.224:8090/sucursales';
     private sucursales: ISucursal[] = []; // Arreglo para almacenar sucursales
-
+    private buildUrl(endpoint: string): string {
+        return `${this.baseUrl}/${endpoint}`;
+    }
+    
     async createSucursalByEmpresa(sucursalData: ICreateSucursal, empresa: IEmpresa): Promise<ISucursal | null> {
         try {
+            // Validación de datos de entrada
+            if (!sucursalData.nombre || !sucursalData.domicilio) {
+                throw new Error('Faltan campos requeridos para crear la sucursal');
+            }
+    
             const dataToSend = {
                 ...sucursalData,
-                idEmpresa: empresa.id, // Usar el id de la empresa
+                idEmpresa: empresa.id,
             };
-
-            const response = await fetch(`${this.baseUrl}/create`, {
+    
+            const response = await fetch(this.buildUrl('create'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(dataToSend),
             });
-
+    
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorText = await response.text(); // Captura el cuerpo del error
+                throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
             }
-
+    
             const data: ISucursal = await response.json();
-            this.sucursales.push(data); // Agregar la nueva sucursal al arreglo
+            this.sucursales.push(data);
             return data;
         } catch (error) {
             console.error('Error al crear la sucursal', error);
             return null;
         }
     }
+    
 
     async getSucursalesByEmpresa(empresa: IEmpresa): Promise<ISucursal[]> {
         try {
