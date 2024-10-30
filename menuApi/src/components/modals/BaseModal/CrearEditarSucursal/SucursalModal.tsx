@@ -3,16 +3,17 @@ import SucursalService from '../../../../services/SucursalService/SucursalServic
 import { ICreateSucursal } from '../../../../types/dtos/sucursal/ICreateSucursal';
 import { ISucursal } from '../../../../types/dtos/sucursal/ISucursal';
 import BaseModal from '../BaseModal'; // Asegúrate de que la ruta sea correcta
-import { IEmpresa } from '../../../../types/IEmpresa';
+
 import { RootState } from '../../../../redux/store/store';
 import { useSelector } from 'react-redux';
+import { IEmpresa2 } from '../../../../types/dtos/empresa/IEmpresa2';
 
 interface SucursalModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSuccess: (sucursal: ISucursal) => void; // Notifica al padre cuando se crea o edita una sucursal
-    sucursal: ISucursal; // Prop opcional para editar
-    empresa:IEmpresa // ID de la empresa a la que pertenece la sucursal
+    sucursal: ISucursal | undefined; // Prop opcional para editar
+    empresa:IEmpresa2  // ID de la empresa a la que pertenece la sucursal
 }
 
 const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, onSuccess, sucursal, empresa }) => {

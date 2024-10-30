@@ -1,12 +1,14 @@
 // ListSucursales.tsx
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+
 
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal'; // Asegúrate de definir este tipo
 import { RootState } from '../../../redux/store/store';
 import DetalleSucursal from '../../../components/cards/CardSucursal/DetalleSucursal/DetalleSucursal';
 import CardSucursal from '../../../components/cards/CardSucursal/CardSucursal';
+import ModalCreateSucursal from '../../../components/modals/BaseModal/CrearEditarSucursal/SucursalModal';
+import axios from 'axios';
 
 const ListSucursales: React.FC = () => {
     const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
@@ -69,6 +71,13 @@ const ListSucursales: React.FC = () => {
                         onEdit={handleEdit} sucursal={sucursal}                  />
                 ))}
             </div>
+            {isModalOpen && (
+        <ModalCreateSucursal
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    empresa={activeEmpresa} 
+                    sucursal={isEditMode && selectedSucursal ? selectedSucursal : undefined}        />
+      )}
             {selectedSucursal && !isEditMode && (
         <DetalleSucursal
           sucursal={selectedSucursal}
