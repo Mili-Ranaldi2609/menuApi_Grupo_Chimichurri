@@ -1,0 +1,19 @@
+.listEmpresa_contenedor{
+    margin: 0 30px;
+}
+.listEmpresa_boton{
+    background-color: #141C59;
+    color: white;
+    width: 100%;
+    font-size: 16px; 
+    padding: 12px 0;
+    margin-bottom: 12px;
+    border: 2px solid #141C59;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.listEmpresa_boton:hover{
+    background-color: #526CA5;
+    /* #445891 */
+}

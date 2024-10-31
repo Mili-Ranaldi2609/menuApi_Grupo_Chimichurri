@@ -1,3 +1,4 @@
+import styles from"./ListEmpresa.module.css";
 import React, { useEffect, useState } from 'react';
 import EmpresaService from '../../../services/EmpresaService/EmpresaService';
 import CardEmpresa from '../../../components/cards/CardEmpresa/CardEmpresa';
@@ -57,13 +58,14 @@ const EmpresaList: React.FC = () => {
   };
 
   return (
-    <div>
-      <button onClick={() => {
+    <div className={styles.listEmpresa_contenedor}>
+
+      <button className={styles.listEmpresa_boton} onClick={() => {
         setSelectedEmpresa(null); // Limpia la empresa seleccionada al crear una nueva
         setIsEditMode(false); // Modo de creación
         setIsModalOpen(true);
       }}>
-        Crear Empresa
+        Agregar Empresa
       </button>
       
       {empresas.map((empresa) => (
