@@ -1,5 +1,5 @@
 import styles from"./EmpresaPage.module.css";
-import { Header } from "../../components/Header/Header";
+// import { Header } from "../../components/Header/Header";
 import { useState } from "react";
 import EmpresaModal from "../../components/modals/BaseModal/CrearEditarEmpresa/CrearEditarEmpresa";
 import SucursalPage from "../SucursalPage/SucursalPage";

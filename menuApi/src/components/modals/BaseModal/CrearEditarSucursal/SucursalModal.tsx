@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SucursalService from '../../../../services/SucursalService/SucursalService';
 import { ICreateSucursal } from '../../../../types/dtos/sucursal/ICreateSucursal';
 import { ISucursal } from '../../../../types/dtos/sucursal/ISucursal';
-import BaseModal from '../BaseModal'; // Asegúrate de que la ruta sea correcta
-
+import BaseModal from '../BaseModal';
 import { RootState } from '../../../../redux/store/store';
 import { useSelector } from 'react-redux';
 import { IEmpresa2 } from '../../../../types/dtos/empresa/IEmpresa2';
@@ -11,14 +10,14 @@ import { IEmpresa2 } from '../../../../types/dtos/empresa/IEmpresa2';
 interface SucursalModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSuccess: (sucursal: ISucursal) => void; // Notifica al padre cuando se crea o edita una sucursal
-    sucursal: ISucursal | undefined; // Prop opcional para editar
-    empresa:IEmpresa2  // ID de la empresa a la que pertenece la sucursal
+    onSuccess: (sucursal: ISucursal) => void;
+    sucursal?: ISucursal;
+    empresa: IEmpresa2 ;
 }
 
 const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, onSuccess, sucursal, empresa }) => {
-    const [formData, setFormData] = useState<ICreateSucursal>({
-        id: sucursal?.id || 0, // Solo si es para editar
+    const getInitialFormData = (): ICreateSucursal => ({
+        id: sucursal?.id,
         nombre: sucursal?.nombre || '',
         horarioApertura: sucursal?.horarioApertura || '',
         horarioCierre: sucursal?.horarioCierre || '',
@@ -35,75 +34,43 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, on
                 nombre: sucursal?.domicilio.localidad.nombre || '',
                 provincia: {
                     nombre: sucursal?.domicilio.localidad.provincia.nombre || '',
-                    pais: {
-                        nombre: sucursal?.domicilio.localidad.provincia.pais.nombre || ''
-                    }
+                    pais: { nombre: sucursal?.domicilio.localidad.provincia.pais.nombre || '' }
                 }
             }
         },
-        logo: sucursal?.logo || '', // Mantener como cadena vacía en lugar de null
-        empresa:{id:sucursal?.empresa.id || 0} 
+        logo: sucursal?.logo || '',
+        empresa: { id: sucursal?.empresa.id || 0 }
     });
+
+    const [formData, setFormData] = useState<ICreateSucursal>(getInitialFormData());
+    const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
 
     useEffect(() => {
-        if (sucursal) {
-            setFormData({
-                id: sucursal.id,
-                nombre: sucursal.nombre,
-                horarioApertura: sucursal.horarioApertura,
-                horarioCierre: sucursal.horarioCierre,
-                esCasaMatriz: sucursal.esCasaMatriz,
-                latitud: sucursal.latitud,
-                longitud: sucursal.longitud,
-                domicilio: sucursal.domicilio,
-                logo: sucursal.logo || '',
-                empresa:sucursal.empresa
-            });
-        } else {
-            resetForm();
-        }
+        setFormData(getInitialFormData());
     }, [sucursal, isOpen]);
-const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
 
-    setFormData((prev) => {
-        const keys = name.split(".");
-        let updatedData: any = { ...prev };
-
-        // Recorre las claves para llegar al nivel correcto y actualiza el valor
-        keys.reduce((acc, key, index) => {
-            if (index === keys.length - 1) {
-                acc[key] = type === 'checkbox' ? checked : type === 'number' ? Number(value) : value;
-            } else {
-                acc[key] = { ...acc[key] };
-            }
-            return acc[key];
-        }, updatedData);
-
-        return updatedData;
-    });
-};
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const sucursalService = new SucursalService();
+        await saveSucursal();
+    };
 
+    const saveSucursal = async () => {
+        const sucursalService = new SucursalService();
         try {
-            let nuevaSucursal;
-            if (sucursal) {
-                // Si estamos editando
-                nuevaSucursal = await sucursalService.updateSucursalById(formData.id, formData);
-            } else {
-                // Si estamos creando, incluye idEmpresa
-                const dataToCreate: ICreateSucursal = {
-                    ...formData,
-                    empresa // Asegúrate de que idEmpresa se pase aquí
-                };
-                nuevaSucursal = await sucursalService.createSucursalByEmpresa(dataToCreate, empresa);
-            }
+            const nuevaSucursal = sucursal
+                ? await sucursalService.updateSucursalById(formData.id, formData)
+                : await sucursalService.createSucursalByEmpresa(formData, activeEmpresa || empresa);
             if (nuevaSucursal) {
-                onSuccess(nuevaSucursal); // Notificar a la página que la sucursal fue creada o editada
-                onClose(); // Cierra el modal
+                onSuccess(nuevaSucursal);
+                onClose();
             } else {
                 console.error('Error al guardar la sucursal');
             }
@@ -111,66 +78,10 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             console.error('Error al guardar la sucursal:', error);
         }
     };
-    
-    ///handle save de sucursal por empresa 
-    const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
-    const handleSave = async () => {
-    
-        const sucursalService = new SucursalService();
-        if (!activeEmpresa) {
-            console.error('No hay empresa activa');
-            return;
-        }
 
-    try {
-        // Llama al método para crear la sucursal
-        const nuevaSucursal = await sucursalService.createSucursalByEmpresa(formData, activeEmpresa);
-        
-        // Comprueba si se creó la sucursal
-        if (nuevaSucursal) {
-            console.log('Sucursal creada con éxito:', nuevaSucursal);
-            onClose(); // Cierra el modal si se creó la sucursal correctamente
-        } else {
-            console.error('Error al crear la sucursal'); // Manejo de error si la creación falla
-        }
-    } catch (error) {
-        // Manejo de errores al crear la sucursal
-        console.error('Error al crear la sucursal', error);
-    }
-
-    };
-    const resetForm = () => {
-        setFormData({
-            id: 0,
-            nombre: '',
-            horarioApertura: '',
-            horarioCierre: '',
-            esCasaMatriz: false,
-            latitud: 0,
-            longitud: 0,
-            domicilio: {
-                calle: '',
-                numero: 0,
-                cp: 0,
-                piso: 0,
-                nroDpto: 0,
-                localidad: {
-                    nombre: '',
-                    provincia: {
-                        nombre: '',
-                        pais: {
-                            nombre: ''
-                        }
-                    }
-                }
-            },
-            logo: '', // Asegúrate de mantener la misma estructura
-            empresa:{id:0} // Reinicia idEmpresa si es necesario
-        });
-    };
     return (
         isOpen && (
-            <BaseModal title={sucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={handleSave} >
+            <BaseModal title={sucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={saveSucursal}>
                 <form onSubmit={handleSubmit}>
                     <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
                     <div>
@@ -201,10 +112,9 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                     </div>
                     <div>
                         <label>Nro Departamento</label>
-                         <input type="number" name="domicilio.nroDpto" value={formData.domicilio.nroDpto} onChange={handleChange} placeholder="Número de Departamento" />
+                            <input type="number" name="domicilio.nroDpto" value={formData.domicilio.nroDpto} onChange={handleChange} placeholder="Número de Departamento" />
                     </div>
                     
-                   
                     <input type="text" name="domicilio.localidad.nombre" value={formData.domicilio.localidad.nombre} onChange={handleChange} placeholder="Localidad" required />
                     <input type="text" name="domicilio.localidad.provincia.nombre" value={formData.domicilio.localidad.provincia.nombre} onChange={handleChange} placeholder="Provincia" required />
                     <input type="text" name="domicilio.localidad.provincia.pais.nombre" value={formData.domicilio.localidad.provincia.pais.nombre} onChange={handleChange} placeholder="País" required />
