@@ -24,9 +24,9 @@ const EmpresaModal: React.FC<EmpresaModalProps> = ({ isOpen, onClose, onSuccess,
         if (empresa) {
             setFormData({
                 id: empresa.id,
-                nombre: empresa.nombre,
-                razonSocial: empresa.razonSocial,
-                cuit: empresa.cuit,
+                nombre: empresa.nombre || '',
+                razonSocial: empresa.razonSocial || '' ,
+                cuit: empresa.cuit || 0,
                 logo: empresa.logo || null,
             });
         }
