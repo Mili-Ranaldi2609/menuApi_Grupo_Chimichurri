@@ -1,0 +1,44 @@
+.modal_fondo {
+    position: fixed; /* para superponer el contenido */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+}
+.modal_contenedor {
+    background-color: white; 
+    box-sizing: border-box;
+    padding: 20px 32px; 
+    border-radius: 16px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+    width: 360px; 
+}
+.modal_titulo {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+.modal_botones_contenedor{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+.modal_botones_contenedor button{
+    padding: 12px 20px;
+    background-color: #6638DE;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+.modal_botones_contenedor button:first-child{
+    background-color: #2D2D2D;
+}
+
