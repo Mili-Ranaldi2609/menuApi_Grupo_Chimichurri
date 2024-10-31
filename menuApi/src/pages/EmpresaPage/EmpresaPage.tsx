@@ -13,11 +13,9 @@ export const EmpresaPage = () => {
 
     return (
         <div className={styles.pageEmpresaContainer}>
-            <Header nombreVista="Empresas" />
-            {/*<div>
-                <button onClick={handleOpenModal}>Agregar Empresa</button>
-            </div> */}
             <div className={styles.empresaList}>
+                {/* <Header nombreVista="Empresas" /> */}
+                <h1 className={styles.empresaList_title}>Empresas</h1>
                 <EmpresaList />
             </div>
             { <div>
@@ -26,7 +24,9 @@ export const EmpresaPage = () => {
                     onClose={handleCloseModal}
                     onSuccess={() => {}} // Puedes dejarlo vacío o manejarlo según necesites
                 />
-                <SucursalPage></SucursalPage>
+                <div className={styles.pageSucursalContainer}>
+                    <SucursalPage />
+                </div>
             </div> }
         </div>
     );

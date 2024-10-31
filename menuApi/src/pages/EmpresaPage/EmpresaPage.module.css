@@ -1,8 +1,23 @@
-.containerEmpresaPage{
+.pageEmpresaContainer {
+    display: flex;
+    flex-direction: row;
     background-color: rgb(122, 175, 52);
+    width: 100%;
 }
-/* cuando tenga la pagina definida esto no lleva nada, solo el pageEmpresa  */
-.empresaList{
+
+.empresaList {
+    display: flex;
+    flex-direction: column;
     background-color: #526CA5;
     width: 22%;
+}
+.empresaList_title{
+    color: white;
+    text-align: center;
+}
+
+.pageSucursalContainer {
+    display: flex;
+    background-color: blueviolet;
+    width: 78%;
 }
