@@ -1,12 +1,14 @@
+import { IEmpresa2 } from '../../types/dtos/empresa/IEmpresa2';
 import { ICreateSucursal } from '../../types/dtos/sucursal/ICreateSucursal';
 import { ISucursal } from '../../types/dtos/sucursal/ISucursal';
+import { IUpdateSucursal } from '../../types/dtos/sucursal/IUpdateSucursal';
 import { IEmpresa } from '../../types/IEmpresa';
 
 class SucursalService {
     private baseUrl: string = 'http://190.221.207.224:8090/sucursales';
     private sucursales: ISucursal[] = []; // Arreglo para almacenar sucursales
     
-    async createSucursalByEmpresa(sucursalData: ICreateSucursal, empresa: IEmpresa): Promise<ISucursal | null> {
+    async createSucursalByEmpresa(sucursalData: ICreateSucursal, empresa: IEmpresa2): Promise<ISucursal | null> {
         try {
             // Validación de datos de entrada
             if (!sucursalData.nombre || !sucursalData.domicilio) {
@@ -58,7 +60,7 @@ class SucursalService {
     }
 
 
-    async updateSucursalById(idSucursal: number | undefined, sucursalData: Partial<ICreateSucursal>): Promise<ISucursal | null> {
+    async updateSucursalById(idSucursal: number | undefined, sucursalData: Partial<IUpdateSucursal>): Promise<ISucursal | null> {
         try {
             const response = await fetch(`${this.baseUrl}/update/${sucursalData}`, {
                 method: 'PUT',

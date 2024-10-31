@@ -6,15 +6,24 @@
     margin: 10px 0px; 
     box-shadow: 0 2px  rgba(34, 42, 116 , 0.5) ; 
     transition: transform 0.2s; 
+    align-items: center;
+    align-content: center;
 }
 
 .card-empresa:hover {
     transform: scale(1.01); /* sobresale al pasar el mause */
 }
-
+.card_img_container{
+    align-content: center;
+    align-items: center;
+}
 .card-empresa h3 {
     text-align: center;
     margin: 0 0 15px; /* Margen en la parte inferior */
+}
+.img_empresa{
+    max-width: 60%;
+    max-height: 60%;
 }
 
 .card-empresa p {

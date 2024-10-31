@@ -19,7 +19,7 @@ const EmpresaModal: React.FC<EmpresaModalProps> = ({ isOpen, onClose, onSuccess,
         cuit: empresa?.cuit || 0,
         logo: empresa?.logo || null,
     });
-
+                                                                                                                        
     useEffect(() => {
         if (empresa) {
             setFormData({
