@@ -1,5 +1,5 @@
 import { IDomicilio } from "../../IDomicilio";
-import { IEmpresa } from "../../IEmpresa";
+import { IEmpresa2 } from "../empresa/IEmpresa2";
 
 export interface ICreateSucursal {
   id?:number
@@ -10,6 +10,6 @@ export interface ICreateSucursal {
   latitud: number;
   longitud: number;
   domicilio: IDomicilio;
-  empresa:IEmpresa
+  empresa:IEmpresa2
   logo: string | '';
 }

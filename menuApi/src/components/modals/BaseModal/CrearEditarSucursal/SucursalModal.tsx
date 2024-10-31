@@ -11,8 +11,8 @@ import { IEmpresa2 } from '../../../../types/dtos/empresa/IEmpresa2';
 interface SucursalModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSuccess: (sucursal: ISucursal) => void; // Notifica al padre cuando se crea o edita una sucursal
-    sucursal: ISucursal | undefined; // Prop opcional para editar
+    onSuccess: () => void; // Notifica al padre cuando se crea o edita una sucursal
+    sucursal: ISucursal ; // Prop opcional para editar
     empresa:IEmpresa2  // ID de la empresa a la que pertenece la sucursal
 }
 
@@ -62,7 +62,7 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, on
         } else {
             resetForm();
         }
-    }, [sucursal, isOpen]);
+    }, [sucursal]);
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
 
@@ -84,61 +84,33 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     });
 };
 
+     ///handle de sucursal por empresa 
+     const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const sucursalService = new SucursalService();
 
         try {
-            let nuevaSucursal;
             if (sucursal) {
                 // Si estamos editando
-                nuevaSucursal = await sucursalService.updateSucursalById(formData.id, formData);
+                 await sucursalService.updateSucursalById(formData.id, formData.empresa);
             } else {
-                // Si estamos creando, incluye idEmpresa
-                const dataToCreate: ICreateSucursal = {
-                    ...formData,
-                    empresa // Asegúrate de que idEmpresa se pase aquí
-                };
-                nuevaSucursal = await sucursalService.createSucursalByEmpresa(dataToCreate, empresa);
+                
+                 await sucursalService.createSucursalByEmpresa(formData, empresa);
             }
-            if (nuevaSucursal) {
-                onSuccess(nuevaSucursal); // Notificar a la página que la sucursal fue creada o editada
-                onClose(); // Cierra el modal
-            } else {
-                console.error('Error al guardar la sucursal');
-            }
+
+            
+            onSuccess(); // Notificar a la página que la sucursal fue creada o editada
+            onClose(); // Cierra el modal
+           
         } catch (error) {
             console.error('Error al guardar la sucursal:', error);
         }
     };
-    
-    ///handle save de sucursal por empresa 
-    const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
-    const handleSave = async () => {
-    
-        const sucursalService = new SucursalService();
-        if (!activeEmpresa) {
-            console.error('No hay empresa activa');
-            return;
-        }
-
-    try {
-        // Llama al método para crear la sucursal
-        const nuevaSucursal = await sucursalService.createSucursalByEmpresa(formData, activeEmpresa);
-        
-        // Comprueba si se creó la sucursal
-        if (nuevaSucursal) {
-            console.log('Sucursal creada con éxito:', nuevaSucursal);
-            onClose(); // Cierra el modal si se creó la sucursal correctamente
-        } else {
-            console.error('Error al crear la sucursal'); // Manejo de error si la creación falla
-        }
-    } catch (error) {
-        // Manejo de errores al crear la sucursal
-        console.error('Error al crear la sucursal', error);
+    const handleSave=()=>{
+        handleSubmit
     }
-
-    };
     const resetForm = () => {
         setFormData({
             id: 0,
@@ -170,8 +142,8 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     };
     return (
         isOpen && (
-            <BaseModal title={sucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={handleSave} >
-                <form onSubmit={handleSubmit}>
+            <BaseModal title={sucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={handleSave}>
+                <form>
                     <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
                     <div>
                         <label >Horario Apertura</label><input type="time" name="horarioApertura" value={formData.horarioApertura} onChange={handleChange} required />

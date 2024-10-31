@@ -6,7 +6,7 @@ export interface IEmpresa2 {
   nombre?: string;
   razonSocial?: string;
   cuit?: number;
-  logo?: string | null;
+  logo?: string
   sucursales?: ISucursal[];
   pais?: IPais;
-}
+} 

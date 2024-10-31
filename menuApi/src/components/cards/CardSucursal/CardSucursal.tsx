@@ -15,6 +15,7 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal, onView, onEdit })
       <h3>{sucursal.nombre}</h3>
       <p> Apertura: {sucursal.horarioApertura} - {sucursal.horarioCierre}</p>
       <p>{sucursal.esCasaMatriz}</p>
+      <img src={sucursal.logo} alt="" />
       <div className='card__contenedor-botones'>
      
         {<button onClick={() => onView(sucursal)}>

@@ -3,11 +3,11 @@ import { IEmpresa2 } from "../../types/dtos/empresa/IEmpresa2";
 
 
 export interface ActiveEmpresaState {
-    activeEmpresa: IEmpresa2 | null;
+    activeEmpresa: IEmpresa2 | undefined;
 }
 
 const initialState: ActiveEmpresaState = {
-    activeEmpresa: null,
+    activeEmpresa: undefined,
 };
 
 // Slice para manejar la empresa activa
@@ -19,7 +19,7 @@ export const ActiveEmpresaSlice = createSlice({
             state.activeEmpresa = action.payload;
         },
         clearActiveEmpresa: (state) => {
-            state.activeEmpresa = null;
+            state.activeEmpresa = undefined;
         },
     },
 });

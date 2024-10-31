@@ -1,13 +1,13 @@
 import { IDomicilio } from "../../IDomicilio";
-import { IEmpresa } from "../../IEmpresa";
 import { ICategorias } from "../categorias/ICategorias";
+import { IEmpresa2 } from "../empresa/IEmpresa2";
 
 
 
 export interface ISucursal {
   id: number;
   nombre: string;
-  empresa: IEmpresa;
+  empresa: IEmpresa2;
   domicilio: IDomicilio;
 
   latitud: number;
