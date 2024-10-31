@@ -5,9 +5,6 @@ import { IEmpresa } from '../../types/IEmpresa';
 class SucursalService {
     private baseUrl: string = 'http://190.221.207.224:8090/sucursales';
     private sucursales: ISucursal[] = []; // Arreglo para almacenar sucursales
-    private buildUrl(endpoint: string): string {
-        return `${this.baseUrl}/${endpoint}`;
-    }
     
     async createSucursalByEmpresa(sucursalData: ICreateSucursal, empresa: IEmpresa): Promise<ISucursal | null> {
         try {
@@ -20,8 +17,8 @@ class SucursalService {
                 ...sucursalData,
                 idEmpresa: empresa.id,
             };
-    
-            const response = await fetch(this.buildUrl('create'), {
+       
+            const response = await fetch( `${this.baseUrl}/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,24 +57,10 @@ class SucursalService {
         }
     }
 
-    async getEmpresaBySucursal(idSucursal: number): Promise<IEmpresa | null> {
-        try {
-            const response = await fetch(`${this.baseUrl}/sucursal/${idSucursal}/empresa`);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('Error al obtener la empresa asociada a la sucursal', error);
-            return null;
-        }
-    }
 
     async updateSucursalById(idSucursal: number | undefined, sucursalData: Partial<ICreateSucursal>): Promise<ISucursal | null> {
         try {
-            const response = await fetch(`${this.baseUrl}/update/${idSucursal}`, {
+            const response = await fetch(`${this.baseUrl}/update/${sucursalData}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -104,9 +87,6 @@ class SucursalService {
         }
     }
 
-    getSucursales(): ISucursal[] {
-        return this.sucursales;
-    }
 }
 
 export default SucursalService;

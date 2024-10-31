@@ -10,12 +10,12 @@ import { IEmpresa2 } from '../../../../types/dtos/empresa/IEmpresa2';
 interface SucursalModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSuccess: (sucursal: ISucursal) => void;
+    onSuccess: () => void;
     sucursal?: ISucursal;
     empresa: IEmpresa2 ;
 }
 
-const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, onSuccess, sucursal, empresa }) => {
+const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose,onSuccess, sucursal, empresa }) => {
     const getInitialFormData = (): ICreateSucursal => ({
         id: sucursal?.id,
         nombre: sucursal?.nombre || '',
@@ -46,9 +46,11 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, on
     const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
 
     useEffect(() => {
+
         setFormData(getInitialFormData());
     }, [sucursal, isOpen]);
 
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({
@@ -56,33 +58,24 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, on
             [name]: type === 'checkbox' ? checked : value
         }));
     };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        await saveSucursal();
-    };
-
-    const saveSucursal = async () => {
+    const handleSubmit = async () => {
         const sucursalService = new SucursalService();
         try {
             const nuevaSucursal = sucursal
                 ? await sucursalService.updateSucursalById(formData.id, formData)
                 : await sucursalService.createSucursalByEmpresa(formData, activeEmpresa || empresa);
-            if (nuevaSucursal) {
-                onSuccess(nuevaSucursal);
                 onClose();
-            } else {
-                console.error('Error al guardar la sucursal');
-            }
+                onSuccess()
         } catch (error) {
             console.error('Error al guardar la sucursal:', error);
         }
     };
 
+    
     return (
         isOpen && (
-            <BaseModal title={sucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={saveSucursal}>
-                <form onSubmit={handleSubmit}>
+            <BaseModal title={sucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={handleSubmit}>
+                <form >
                     <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
                     <div>
                         <label >Horario Apertura</label><input type="time" name="horarioApertura" value={formData.horarioApertura} onChange={handleChange} required />
