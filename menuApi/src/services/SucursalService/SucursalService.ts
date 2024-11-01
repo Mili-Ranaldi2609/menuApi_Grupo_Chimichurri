@@ -1,17 +1,13 @@
 import { IEmpresa2 } from '../../types/dtos/empresa/IEmpresa2';
 import { ICreateSucursal } from '../../types/dtos/sucursal/ICreateSucursal';
 import { ISucursal } from '../../types/dtos/sucursal/ISucursal';
-import { IUpdateSucursal } from '../../types/dtos/sucursal/IUpdateSucursal';
 import { IEmpresa } from '../../types/IEmpresa';
 
 class SucursalService {
     private baseUrl: string = 'http://190.221.207.224:8090/sucursales';
     private sucursales: ISucursal[] = []; // Arreglo para almacenar sucursales
-    private buildUrl(endpoint: string): string {
-        return `${this.baseUrl}/${endpoint}`;
-    }
     
-    async createSucursalByEmpresa(sucursalData: ICreateSucursal, empresa: IEmpresa2): Promise<ISucursal | null> {
+    async createSucursalByEmpresa(sucursalData: ICreateSucursal, empresa: IEmpresa2 | undefined): Promise<ISucursal | null> {
         try {
             // Validación de datos de entrada
             if (!sucursalData.nombre || !sucursalData.domicilio) {
@@ -20,10 +16,10 @@ class SucursalService {
     
             const dataToSend = {
                 ...sucursalData,
-                idEmpresa: empresa.id,
+                idEmpresa: empresa?.id,
             };
     
-            const response = await fetch(this.buildUrl('create'), {
+            const response = await fetch(`${this.baseUrl}/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -62,34 +58,30 @@ class SucursalService {
         }
     }
 
-    async getEmpresaBySucursal(idSucursal: number): Promise<IEmpresa | null> {
+    async updateSucursalById(idSucursal: number, sucursalData: Partial<ICreateSucursal>,  empresa:IEmpresa2 | undefined ): Promise<ISucursal | null> {
         try {
-            const response = await fetch(`${this.baseUrl}/sucursal/${idSucursal}/empresa`);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('Error al obtener la empresa asociada a la sucursal', error);
-            return null;
-        }
-    }
-
-    async updateSucursalById(idSucursal: number | undefined, sucursalData: Partial<IUpdateSucursal>): Promise<ISucursal | null> {
-        try {
+            
+            
+            const dataToSend = {
+                ...sucursalData,
+                idSucursal:idSucursal,
+                idEmpresa: empresa?.id,
+            };
             const response = await fetch(`${this.baseUrl}/update/${idSucursal}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(sucursalData),
+                body: JSON.stringify(dataToSend),
             });
 
             if (!response.ok) {
+                const errorText = await response.text(); // O response.json() si el servidor responde en JSON
+                console.error("Error en la respuesta del servidor:", errorText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            
+            
 
             const data: ISucursal = await response.json();
 
@@ -106,9 +98,7 @@ class SucursalService {
         }
     }
 
-    getSucursales(): ISucursal[] {
-        return this.sucursales;
-    }
+  
 }
 
 export default SucursalService;

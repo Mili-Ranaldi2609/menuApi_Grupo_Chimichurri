@@ -11,11 +11,6 @@ export const SucursalPage = () => {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleSuccess = () => {
-    handleCloseModal();
-    // Aquí puedes agregar lógica adicional, como refrescar la lista de sucursales.
-  };
-
   // Puedes eliminar esta declaración de 'sucursali' si estás obteniendo las sucursales a través del API
   const sucursali: ISucursal = {
     nombre: "",
@@ -56,20 +51,11 @@ export const SucursalPage = () => {
       <Header nombreVista="sucursales" />
       <div>
         <button onClick={handleOpenModal}>Agregar Sucursal</button>
-      </div>{/*
       
-      
-      <div className="pageEmpresaSucursal">
-        <CardSucursal sucursal={sucursali} />
-      </div>
-      
-      */ }
-      
-      <div>
         <SucursalModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          onSuccess={handleSuccess}
+  
           empresa={sucursali.empresa}
           sucursal={sucursali}
         />

@@ -64,6 +64,8 @@ const ListSucursales: React.FC = () => {
         setSelectedSucursal(null);
         setIsModalOpen(false);
     };
+ 
+
 
     return (
         <div>
@@ -83,8 +85,7 @@ const ListSucursales: React.FC = () => {
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
                     empresa={activeEmpresa}
-                    sucursal={isEditMode && selectedSucursal ? selectedSucursal : undefined}
-                />
+                    sucursal={isEditMode && selectedSucursal ? selectedSucursal : undefined}                />
             )}
             {selectedSucursal && !isEditMode && (
                 <DetalleSucursal
