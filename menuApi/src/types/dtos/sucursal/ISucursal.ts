@@ -5,7 +5,7 @@ import { IEmpresa2 } from "../empresa/IEmpresa2";
 
 
 export interface ISucursal {
-  id: number;
+  id: number | undefined;
   nombre: string;
   empresa: IEmpresa2;
   domicilio: IDomicilio;

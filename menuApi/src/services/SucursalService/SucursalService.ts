@@ -61,7 +61,7 @@ class SucursalService {
         }
     }
 
-    async updateSucursalById(idSucursal: number, sucursalData: Partial<ICreateSucursal>,  empresa:IEmpresa2 | undefined ): Promise<ISucursal | null> {
+    async updateSucursalById(idSucursal: number | undefined, sucursalData: Partial<ICreateSucursal> | undefined,  empresa:IEmpresa2 | undefined ): Promise<ISucursal | null> {
         try {
             
             

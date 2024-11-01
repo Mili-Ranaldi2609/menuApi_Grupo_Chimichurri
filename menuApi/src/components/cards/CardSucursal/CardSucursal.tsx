@@ -1,6 +1,6 @@
 
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal';
-
+import './CardSucursal.css';
 interface CardSucursalProps {
   sucursal: ISucursal;
   onView: (sucursal: ISucursal) => void;
@@ -15,7 +15,7 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal, onView, onEdit })
       <h3>{sucursal.nombre}</h3>
       <p> Apertura: {sucursal.horarioApertura} - {sucursal.horarioCierre}</p>
       <p>{sucursal.esCasaMatriz}</p>
-      <img src={sucursal.logo} alt="" />
+      <img className='img_card_sucursal' src={sucursal.logo} alt="" />
       <div className='card__contenedor-botones'>
      
         {<button onClick={() => onView(sucursal)}>
