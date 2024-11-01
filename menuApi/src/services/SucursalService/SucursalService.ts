@@ -18,8 +18,11 @@ class SucursalService {
                 ...sucursalData,
                 idEmpresa: empresa?.id,
             };
+
     
-            const response = await fetch(`${this.baseUrl}/create`, {
+
+       
+            const response = await fetch( `${this.baseUrl}/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -98,7 +101,6 @@ class SucursalService {
         }
     }
 
-  
 }
 
 export default SucursalService;
