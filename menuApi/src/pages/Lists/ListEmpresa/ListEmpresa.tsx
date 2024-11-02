@@ -68,7 +68,6 @@ const EmpresaList: React.FC = () => {
         Agregar Empresa
       </button>
       
-      <div className={styles.listEmpresa_cards}>
       {empresas.map((empresa) => (
         <CardEmpresa 
           key={empresa.id}
@@ -93,7 +92,6 @@ const EmpresaList: React.FC = () => {
           onClose={handleCloseModal}
         />
       )}
-      </div>
     </div>
   );
 };

@@ -1,15 +1,4 @@
-.modal_fondo {
-    position: fixed; /* para superponer el contenido */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.3); 
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; 
-}
+
 .modal_contenedor {
     background-color: white; 
     box-sizing: border-box;
@@ -45,4 +34,3 @@
 .modal_botones_contenedor button:first-child{
     background-color: #2D2D2D;
 }
-
