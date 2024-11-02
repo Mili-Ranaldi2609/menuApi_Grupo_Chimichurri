@@ -1,4 +1,4 @@
-// SucursalPage.tsx
+
 import { useState } from "react";
 import { Header } from "../../components/Header/Header";
 import SucursalModal from "../../components/modals/BaseModal/CrearEditarSucursal/SucursalModal";
@@ -60,7 +60,7 @@ export const SucursalPage = () => {
           sucursal={sucursali}
         />
       </div>
-      {/* Agregar el componente ListSucursales aquí */}
+
       <ListSucursales />
     </div>
   );

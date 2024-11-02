@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "./CrearEditarEmpresa.css"
 import BaseModal from '../BaseModal';
 import EmpresaService from '../../../../services/EmpresaService/EmpresaService';
 import { IUpdateEmpresaDto } from '../../../../types/dtos/empresa/IUpdateEmpresaDto';
@@ -55,10 +56,12 @@ const EmpresaModal: React.FC<EmpresaModalProps> = ({ isOpen, onClose, onSuccess,
     return (
         isOpen && (
             <BaseModal title={empresa ? "Editar Empresa" : "Crear Empresa"} onClose={onClose} onSave={handleSubmit}>
-                <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre de la Empresa" />
-                <input type="text" name="razonSocial" value={formData.razonSocial} onChange={handleChange} placeholder="Razón Social" />
-                <input type="number" name="cuit" value={formData.cuit} onChange={handleChange} placeholder="CUIT" />
-                <input type="text" name="logo" value={formData.logo ?? ''} onChange={handleChange} placeholder="Logo URL" />
+                <div className='modalEmpresa__contenedor-inputs'>
+                    <input className='modalEmpresa__input' type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre de la Empresa" />
+                    <input className='modalEmpresa__input' type="text" name="razonSocial" value={formData.razonSocial} onChange={handleChange} placeholder="Razón Social" />
+                    <input className='modalEmpresa__input' type="number" name="cuit" value={formData.cuit} onChange={handleChange} placeholder="CUIT" />
+                    <input className='modalEmpresa__input' type="text" name="logo" value={formData.logo ?? ''} onChange={handleChange} placeholder="Logo URL" />
+                </div>
             </BaseModal>
         )
     );
