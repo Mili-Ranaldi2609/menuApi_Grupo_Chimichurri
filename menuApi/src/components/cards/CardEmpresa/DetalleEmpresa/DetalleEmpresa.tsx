@@ -13,9 +13,9 @@ const DetalleEmpresa: React.FC<DetalleEmpresaProps> = ({ empresa, onClose }) => 
     <div className="detalleModal-fondo">
       <div className="detalleModal-contenedor">
         <h2 className='detalleModal__titulo'>Detalle de Empresa</h2>
-        <p>Nombre: {empresa.nombre}</p>
-        <p>Razón Social: {empresa.razonSocial}</p>
-        <p>CUIT: {empresa.cuit}</p>
+        <p><span className='text-b'>Nombre:</span> {empresa.nombre}</p>
+        <p><span className='text-b'>Razón Social:</span> {empresa.razonSocial}</p>
+        <p><span className='text-b'>CUIT: </span>{empresa.cuit}</p>
         <p><img className='detalleModal__imagen' src={empresa.logo} alt="" /></p>
         <button className='detalleModal__boton' onClick={onClose}>Cerrar</button>
       </div>

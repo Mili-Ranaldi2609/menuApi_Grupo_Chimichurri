@@ -1,3 +1,8 @@
+.text-b{
+    font-weight: bold;
+}
+
+
 .detalleModal-fondo {
     position: fixed; /* para superponer el contenido */
     top: 0;
@@ -18,27 +23,28 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
     width: 360px; 
 }
+
+
+.detalleModal-contenedor p{
+    margin: 8px 0;
+}
 .detalleModal__titulo {
     text-align: center;
     margin-top: 0;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 .detalleModal__imagen {
-    width: 240px;
+    width: 232px;
+    max-height: 240px;
+    margin: 8px 0px 0px 0px;
 }
-/* .modal_botones_contenedor{
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 32px;
-} */
+
 .detalleModal__boton{
     padding: 12px 20px;
-    background-color: #6638DE;
+    background-color: #526CA5;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 20px;
-    /* margin-top: 8px; */
+    margin-top: 12px;
 }
