@@ -18,10 +18,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
     width: 360px; 
 }
-.imgDetalle{
-    max-width: 30%;
-    max-height: 30%;
-}
+
 .modal_titulo {
     text-align: center;
     margin-top: 0;
