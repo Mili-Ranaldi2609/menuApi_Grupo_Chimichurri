@@ -2,6 +2,7 @@
 .card-empresa {
     background-color: #d9d9d9; 
     border-radius: 6px; 
+    height: 80px;
     padding: 20px; 
     margin: 10px 30px; 
     box-shadow: 0 2px  rgba(34, 42, 116 , 0.5) ; 
