@@ -6,7 +6,8 @@ interface BaseModalProps {
     title: string;
     children?: ReactNode;
     onClose: () => void;
-    onSave: () => void;
+    onSave?: (e: React.FormEvent) => Promise<void>;
+    idEmpresa?:number | undefined
 }
 
 const BaseModal: React.FC<BaseModalProps> = ({ title, children, onClose, onSave }) => (

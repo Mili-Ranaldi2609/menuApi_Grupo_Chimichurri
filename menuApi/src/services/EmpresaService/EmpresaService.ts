@@ -2,10 +2,9 @@ import { ICreateEmpresaDto } from "../../types/dtos/empresa/ICreateEmpresaDto";
 import { IEmpresa2 } from "../../types/dtos/empresa/IEmpresa2";
 
 import { IUpdateEmpresaDto } from "../../types/dtos/empresa/IUpdateEmpresaDto";
+import { AbstractEmpresa } from "../AbstracEmpresa";
 
-import { AbstractBackendClient } from "../AbstractBackendClient";
-
-class EmpresaService extends AbstractBackendClient<IEmpresa2, ICreateEmpresaDto, IUpdateEmpresaDto> {
+class EmpresaService extends AbstractEmpresa<IEmpresa2, ICreateEmpresaDto, IUpdateEmpresaDto> {
     constructor() {
         super("http://190.221.207.224:8090/empresas"); // URL de la API
     }

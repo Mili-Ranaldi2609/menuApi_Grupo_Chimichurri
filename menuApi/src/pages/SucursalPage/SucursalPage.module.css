@@ -7,3 +7,22 @@
     width:60%;
     background-color: rgb(186, 186, 255);
 }
+
+.listSucursal_boton{
+    background-color: #141C59;
+    align-items: center;
+    align-content: center;
+    color: white;
+    width: 50%;
+    font-size: 16px; 
+    padding: 1rem ;
+    margin: 1rem;
+    border: 2px solid #141C59;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.listSucursal_boton:hover{
+    background-color: #526CA5;
+    /* #445891 */
+}

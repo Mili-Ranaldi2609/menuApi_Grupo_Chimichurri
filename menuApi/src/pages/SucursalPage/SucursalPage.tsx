@@ -1,16 +1,18 @@
 // SucursalPage.tsx
 import { useState } from "react";
 import { Header } from "../../components/Header/Header";
-import SucursalModal from "../../components/modals/BaseModal/CrearEditarSucursal/SucursalModal";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import ListSucursales from "../Lists/ListSucursal/ListSucursal";
-
+import ModalCreateSucursal from "../../components/modals/BaseModal/CrearEditarSucursal/CreateSucursal";
+import styles from"./SucursalPage.module.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 export const SucursalPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
-
+  const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
   // Puedes eliminar esta declaración de 'sucursali' si estás obteniendo las sucursales a través del API
   const sucursali: ISucursal = {
     nombre: "",
@@ -44,19 +46,19 @@ export const SucursalPage = () => {
     },
     logo: "",
     id: 0,
+    calle: ""
   };
 
   return (
     <div className="pageSucursalContainer">
       <Header nombreVista="sucursales" />
       <div>
-        <button onClick={handleOpenModal}>Agregar Sucursal</button>
+        <button className={styles.listSucursal_boton} onClick={handleOpenModal}>Agregar Sucursal</button>
       
-        <SucursalModal
+        <ModalCreateSucursal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-  
-          empresa={sucursali.empresa}
+          idEmpresa={activeEmpresa?.id ||0}
           sucursal={sucursali}
         />
       </div>

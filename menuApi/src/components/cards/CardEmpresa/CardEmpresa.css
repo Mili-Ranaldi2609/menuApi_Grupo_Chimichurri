@@ -8,11 +8,22 @@
     transition: transform 0.2s; 
     align-items: center;
     align-content: center;
+    width: 15vw;
+    height: 48vh;
 }
 
 .card-empresa:hover {
     transform: scale(1.01); /* sobresale al pasar el mause */
 }
+<<<<<<< Updated upstream
+=======
+.card_img_container{
+    align-content: center;
+    align-items: center;
+    width: 50%;
+    height: 50%;
+}
+>>>>>>> Stashed changes
 .card-empresa h3 {
     text-align: center;
     margin: 0 0 15px; /* Margen en la parte inferior */
@@ -22,7 +33,12 @@
     align-items: center;
 }
 .img_empresa{
+<<<<<<< Updated upstream
     max-width: 60%;
+=======
+    max-width: 100%;
+    max-height: 100%;
+>>>>>>> Stashed changes
 }
 
 .card-empresa p {

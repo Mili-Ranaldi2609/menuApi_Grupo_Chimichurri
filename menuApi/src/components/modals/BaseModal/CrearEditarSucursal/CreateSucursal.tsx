@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import SucursalService from '../../../../services/SucursalService/SucursalService';
-import { ICreateSucursal } from '../../../../types/dtos/sucursal/ICreateSucursal';
-import { ISucursal } from '../../../../types/dtos/sucursal/ISucursal';
-import BaseModal from '../BaseModal';
-import { IEmpresa2 } from '../../../../types/dtos/empresa/IEmpresa2';
+import React, { useEffect, useState } from "react";
+import { ICreateSucursal } from "../../../../types/dtos/sucursal/ICreateSucursal";
+import { ISucursal } from "../../../../types/dtos/sucursal/ISucursal";
 
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/store/store';
+import BaseModal from "../BaseModal";
+import { SucursalService } from "../../../../services/SucursalService/SucursalService";
 
 interface SucursalModalProps {
     isOpen: boolean;
     onClose: () => void;
     sucursal?: ISucursal;
-    empresa?: IEmpresa2;
+    idEmpresa: number | 0;
+    onSave?:()=> Promise<void>
 }
 
-const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, sucursal, empresa }) => {
+const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, sucursal, idEmpresa}) => {
+    const sucursalService=new SucursalService("http://190.221.207.224:8090/sucursales/create")
+
     const [formData, setFormData] = useState<ICreateSucursal>({
-        id: sucursal?.id,
         nombre: sucursal?.nombre || '',
         horarioApertura: sucursal?.horarioApertura || '',
         horarioCierre: sucursal?.horarioCierre || '',
@@ -30,45 +29,50 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
             cp: sucursal?.domicilio.cp || 0,
             piso: sucursal?.domicilio.piso || 0,
             nroDpto: sucursal?.domicilio.nroDpto || 0,
-            localidad: {
-                nombre: sucursal?.domicilio.localidad.nombre || '',
-                provincia: {
-                    nombre: sucursal?.domicilio.localidad.provincia.nombre || '',
-                    pais: { nombre: sucursal?.domicilio.localidad.provincia.pais.nombre || '' }
-                }
-            }
+            idLocalidad:sucursal?.domicilio.localidad.id || 1
         },
         logo: sucursal?.logo || '',
-        empresa: { id: sucursal?.empresa.id || 0 }
+        idEmpresa:sucursal?.empresa.id || 0
     });
 
     useEffect(() => {
         if (sucursal) {
             setFormData({
-                id: sucursal.id,
                 nombre: sucursal.nombre,
                 horarioApertura: sucursal.horarioApertura,
                 horarioCierre: sucursal.horarioCierre,
                 esCasaMatriz: sucursal.esCasaMatriz,
                 latitud: sucursal.latitud,
                 longitud: sucursal.longitud,
-                domicilio: sucursal.domicilio,
+                domicilio:{
+                    calle:sucursal.domicilio.calle,
+                    numero:sucursal.domicilio.numero,
+                    cp:sucursal.domicilio.cp,
+                    piso:sucursal.domicilio.piso,
+                    nroDpto:sucursal.domicilio.nroDpto,
+                    idLocalidad:sucursal.domicilio.localidad.id   
+                },
                 logo: sucursal.logo || '',
-                empresa: sucursal.empresa
+                idEmpresa:sucursal.empresa.id
             });
         }
+        console.log("Datos actuales del formulario:", formData);
     }, [sucursal]);
-
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
-
+        formData.idEmpresa=idEmpresa
         setFormData((prev) => {
             const keys = name.split(".");
             let updatedData: any = { ...prev };
 
             keys.reduce((acc, key, index) => {
                 if (index === keys.length - 1) {
-                    acc[key] = type === 'checkbox' ? checked : type === 'number' ? Number(value) : value;
+                    if (key === "idLocalidad") {
+                        acc[key] = Number(value);
+                    } else {
+                        acc[key] = type === 'checkbox' ? checked : type === 'number' ? Number(value) : value;
+                    }
                 } else {
                     acc[key] = { ...acc[key] };
                 }
@@ -78,18 +82,12 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
             return updatedData;
         });
     };
-    
-    const activeSucursal = useSelector((state: RootState) => state.sucursalActiva.activeSucursal);
-    const handleSubmit = async () => {
-        const sucursalService = new SucursalService();
+   
+    const handleSubmit = async (e:React.FormEvent) => {
+        e.preventDefault()
         try {
-            if (sucursal) {
-                // Si estamos editando
-                await sucursalService.updateSucursalById(activeSucursal?.id, activeSucursal, empresa);
-            } else {
+            await sucursalService.post(formData)
                 // Creación de una nueva sucursal
-                await sucursalService.createSucursalByEmpresa(formData, empresa);
-            }
             onClose(); // Cierra el modal
         } catch (error) {
             console.error('Error al guardar la sucursal:', error);
@@ -98,7 +96,7 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
 
     return (
         isOpen && (
-            <BaseModal title={activeSucursal ? "Editar Sucursal" : "Crear Sucursal"} onClose={onClose} onSave={handleSubmit}>
+            <BaseModal title={ "Crear Sucursal"} onClose={onClose} onSave={handleSubmit} idEmpresa={idEmpresa}>
                 <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
                 
                 <div>
@@ -138,10 +136,15 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
                     <label>Nro Departamento</label>
                     <input type="number" name="domicilio.nroDpto" value={formData.domicilio.nroDpto} onChange={handleChange} />
                 </div>
-                
-                <input type="text" name="domicilio.localidad.nombre" value={formData.domicilio.localidad.nombre} onChange={handleChange} placeholder="Localidad" required />
-                <input type="text" name="domicilio.localidad.provincia.nombre" value={formData.domicilio.localidad.provincia.nombre} onChange={handleChange} placeholder="Provincia" required />
-                <input type="text" name="domicilio.localidad.provincia.pais.nombre" value={formData.domicilio.localidad.provincia.pais.nombre} onChange={handleChange} placeholder="País" required />
+                <div>
+                    <label>Localidad id </label>
+                  <input type="number" name="domicilio.idLocalidad" value={formData.domicilio.idLocalidad} onChange={handleChange} required />    
+                </div>
+                <div>
+                    <label>Empresa id </label>
+                  <input type="number" name="idEmpresa" value={idEmpresa} onChange={handleChange} required />    
+                </div>
+
                 
                 <input type="text" name="logo" value={formData.logo} onChange={handleChange} placeholder="Logo URL" />
             </BaseModal>

@@ -6,7 +6,7 @@ import { ISucursal } from '../../../types/dtos/sucursal/ISucursal';
 import { RootState } from '../../../redux/store/store';
 import DetalleSucursal from '../../../components/cards/CardSucursal/DetalleSucursal/DetalleSucursal';
 import CardSucursal from '../../../components/cards/CardSucursal/CardSucursal';
-import ModalCreateSucursal from '../../../components/modals/BaseModal/CrearEditarSucursal/SucursalModal';
+import ModalUpdateSucursal from '../../../components/modals/BaseModal/CrearEditarSucursal/UpdateSucursal';
 
 const ListSucursales: React.FC = () => {
     const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
@@ -81,7 +81,7 @@ const ListSucursales: React.FC = () => {
                 ))}
             </div>
             {isModalOpen && (
-                <ModalCreateSucursal
+                <ModalUpdateSucursal
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
                     empresa={activeEmpresa}
