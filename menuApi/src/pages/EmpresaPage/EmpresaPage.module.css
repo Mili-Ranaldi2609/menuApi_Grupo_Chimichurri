@@ -9,11 +9,17 @@
     flex-direction: column;
     background-color: #526CA5;
     width: 22vw;
+    height: 100vh;
+    overflow: hidden; /* Evita que el contenido desborde */
 }
 .empresaList_title{
     color: white;
     text-align: center;
 }
+.empresaList_container {
+    height: 88vh;
+}
+
 
 .pageSucursalContainer {
     display: flex;

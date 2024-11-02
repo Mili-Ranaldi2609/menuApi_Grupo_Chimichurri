@@ -16,7 +16,9 @@ export const EmpresaPage = () => {
             <div className={styles.empresaList}>
                 {/* <Header nombreVista="Empresas" /> */}
                 <h1 className={styles.empresaList_title}>Empresas</h1>
-                <EmpresaList />
+                <div className={styles.empresaList_container}>
+                    <EmpresaList />
+                </div>
             </div>
             { <div>
                 <EmpresaModal
