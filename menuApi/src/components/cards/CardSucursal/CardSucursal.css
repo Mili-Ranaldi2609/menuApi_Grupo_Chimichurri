@@ -8,8 +8,6 @@
     transition: transform 0.2s; 
     align-items: center;
     align-content: center;
-    width: 45vw;
-    height: 60vh;
 }
 
 .card-sucursal:hover {

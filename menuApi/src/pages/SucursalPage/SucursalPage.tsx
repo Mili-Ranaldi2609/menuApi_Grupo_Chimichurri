@@ -1,10 +1,10 @@
 
 import { useState } from "react";
+import "./SucursalPage.css";
 import { Header } from "../../components/Header/Header";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import ListSucursales from "../Lists/ListSucursal/ListSucursal";
 import ModalCreateSucursal from "../../components/modals/BaseModal/CrearEditarSucursal/CreateSucursal";
-import styles from"./SucursalPage.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 export const SucursalPage = () => {
@@ -50,11 +50,17 @@ export const SucursalPage = () => {
   };
 
   return (
-    <div className="pageSucursalContainer">
-      <Header nombreVista="sucursales" />
-      <div>
-        <button className={styles.listSucursal_boton} onClick={handleOpenModal}>Agregar Sucursal</button>
-      
+    <div className="pageSucursal-container">
+      <div className="">
+        <div className="sucursal__header-contenedor">
+          {activeEmpresa ? (
+            <h2>Sucursales en: {activeEmpresa.nombre}</h2>
+          ) : (
+            <h2>Sucursales</h2>
+          )}
+          <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Sucursal</button>
+        </div>
+
         <ModalCreateSucursal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
@@ -63,7 +69,9 @@ export const SucursalPage = () => {
         />
       </div>
 
-      <ListSucursales />
+      <div className="sucursal__contenedorCard">
+        <ListSucursales />
+      </div>
     </div>
   );
 };

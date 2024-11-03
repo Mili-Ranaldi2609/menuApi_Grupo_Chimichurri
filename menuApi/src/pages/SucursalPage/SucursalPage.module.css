@@ -1,9 +1,0 @@
-.containerSucursalPage{
-    display: flex;
-    justify-content: center ;
-    align-items: center;
-    gap: 2vh;
-    /* height: 100%;
-    width:60%; */
-    background-color: #DCE4FF;
-}

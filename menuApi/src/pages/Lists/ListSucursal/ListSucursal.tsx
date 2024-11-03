@@ -69,7 +69,6 @@ const ListSucursales: React.FC = () => {
 
     return (
         <div>
-            <h2>Sucursales de {activeEmpresa?.nombre}</h2>
             <div className="sucursales-list">
                 {sucursales.map((sucursal) => (
                     <CardSucursal
