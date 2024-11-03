@@ -68,14 +68,16 @@ const EmpresaList: React.FC = () => {
         Agregar Empresa
       </button>
       
-      {empresas.map((empresa) => (
-        <CardEmpresa 
-          key={empresa.id}
-          empresa={empresa}
-          onView={handleShowDetails}
-          onEdit={handleEdit} 
-        />
-      ))}
+      <div className={styles.listEmpresa_cards}>
+        {empresas.map((empresa) => (
+          <CardEmpresa 
+            key={empresa.id}
+            empresa={empresa}
+            onView={handleShowDetails}
+            onEdit={handleEdit} 
+          />
+        ))}
+      </div>
       
       {isModalOpen && (
         <EmpresaModal

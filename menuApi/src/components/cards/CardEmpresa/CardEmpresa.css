@@ -1,4 +1,3 @@
-
 .card-empresa {
     background-color: #d9d9d9; 
     border-radius: 6px; 
@@ -8,8 +7,6 @@
     transition: transform 0.2s; 
     align-items: center;
     align-content: center;
-    width: 15vw;
-    height: 48vh;
 }
 
 .card-empresa:hover {
@@ -19,10 +16,6 @@
     text-align: center;
     margin: 0 0 15px; /* Margen en la parte inferior */
 }
-
-.card-empresa p {
-    margin: 8px 0; 
-} */
 
 .card-empresa button {
     padding: 8px 10px; 

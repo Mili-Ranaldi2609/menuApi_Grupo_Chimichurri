@@ -5,6 +5,7 @@
 }
 
 .empresaList {
+    position: fixed;
     display: flex;
     flex-direction: column;
     background-color: #526CA5;
@@ -25,4 +26,5 @@
     display: flex;
     background-color: #F8F7F6;
     width: 78vw;
+    margin-left: 22vw;
 }
