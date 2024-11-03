@@ -33,8 +33,10 @@
 }
 .detalleModal__imagen {
     width: 232px;
-    max-height: 240px;
+    max-height: 220px;
     margin: 8px 0px 0px 0px;
+    display: block;
+    margin: 0px auto;
 }
 
 .detalleModal__boton{
@@ -44,4 +46,6 @@
     border: none;
     cursor: pointer;
     border-radius: 20px;
+    display: block;
+    margin: 0px auto;
 }
