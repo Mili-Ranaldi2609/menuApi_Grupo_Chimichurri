@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import "./SucursalPage.css";
-import { Header } from "../../components/Header/Header";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import ListSucursales from "../Lists/ListSucursal/ListSucursal";
 import ModalCreateSucursal from "../../components/modals/BaseModal/CrearEditarSucursal/CreateSucursal";

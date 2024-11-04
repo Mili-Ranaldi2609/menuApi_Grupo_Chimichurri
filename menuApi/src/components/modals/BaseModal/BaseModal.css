@@ -8,7 +8,7 @@
     display: flex; 
     justify-content: center;
     align-items: center;
-    z-index: 1000; 
+    z-index: 3000; 
 }
 .modal_contenedor {
     background-color: white; 
@@ -17,6 +17,7 @@
     border-radius: 16px; 
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
     width: 360px; 
+    position: relative;
 }
 
 .modal_titulo {

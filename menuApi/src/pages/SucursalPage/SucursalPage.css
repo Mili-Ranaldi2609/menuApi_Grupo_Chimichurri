@@ -1,24 +1,31 @@
 .pageSucursal-container{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 .sucursal__header-contenedor{
     display: flex;
     height: 12vh;
     justify-content: space-between;
+    align-items: center;
     margin: 0 40px;
 }
 .sucursal__boton{
-    background-color: #F8F7F6;
+    background-color: #141C59;
+    color: white;
     border: 1px solid #141C59;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
     padding: 12px 32px;
 }
+.sucursal__boton:hover{
+    background-color: #141C59;
+    background-color: #F8F7F6;
+    color: black;
+}
 .sucursal__contenedorCard{
     flex-grow: 1;
-    width: calc(78vw - 40px);
     margin: 0 20px 12px 20px;
     box-sizing: border-box; 
     background-color: #DCE4FF;

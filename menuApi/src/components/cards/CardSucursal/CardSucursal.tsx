@@ -15,18 +15,18 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal, onView, onEdit })
       <h3>{sucursal.nombre}</h3>
       <p> Apertura: {sucursal.horarioApertura} - {sucursal.horarioCierre}</p>
       <p>{sucursal.esCasaMatriz}</p>
-      <img className='img_card_sucursal' src={sucursal.logo} alt="" />
+      {sucursal.logo ? (
+        <img className="img_card_sucursal" src={sucursal.logo} alt="Logo de sucursal" />
+      ) : (
+        <span className="material-symbols-outlined img-placeholder icono">add_a_photo</span>
+      )}
       <div className='card__contenedor-botones'>
-     
-        {<button onClick={() => onView(sucursal)}>
-        <span className="material-symbols-outlined">
-visibility
-</span></button>}
-        <button onClick={() => onEdit(sucursal)}>
-        <span className="material-symbols-outlined">
-edit
-</span>
-        </button>
+        <div className="cardSucursal__botones">
+        {<span onClick={() => onView(sucursal)} className="boton material-symbols-outlined">visibility</span>}
+        {<span onClick={() => onEdit(sucursal)} className="boton material-symbols-outlined">edit</span>}
+        </div>
+
+
       </div>
     </div>
   );

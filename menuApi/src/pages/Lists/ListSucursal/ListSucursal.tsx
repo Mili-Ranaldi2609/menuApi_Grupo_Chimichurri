@@ -1,5 +1,6 @@
 // ListSucursales.tsx
 import React, { useEffect, useState } from 'react';
+import "./ListSucursal.css";
 import { useSelector } from 'react-redux';
 
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal';
