@@ -6,7 +6,7 @@ export interface ICreateProducto {
   descripcion: string;
   habilitado: boolean;
   codigo: string;
-  idCategoria: number;
-  idAlergenos: number[];
+  idCategoria: number | undefined;
+  idAlergenos: number[] ;
   imagenes: IImagen[]
 }

@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICreateSucursal } from "../../types/dtos/sucursal/ICreateSucursal";
+import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 
 
 export interface ActiveSucursalState {
-    activeSucursal: ICreateSucursal | undefined;
+    activeSucursal: ISucursal | undefined;
 }
 
 const initialState: ActiveSucursalState = {
@@ -15,7 +15,7 @@ export const ActiveSucursalSlice = createSlice({
     name: "ActiveSucursal",
     initialState,
     reducers: {
-        setActiveSucursal: (state, action: PayloadAction<ICreateSucursal>) => {
+        setActiveSucursal: (state, action: PayloadAction<ISucursal>) => {
             state.activeSucursal = action.payload;
         },
         clearActiveSucursal: (state) => {

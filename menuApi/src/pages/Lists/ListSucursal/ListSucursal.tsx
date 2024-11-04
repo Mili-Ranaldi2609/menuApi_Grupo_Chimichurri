@@ -1,13 +1,14 @@
 // ListSucursales.tsx
 import React, { useEffect, useState } from 'react';
 import "./ListSucursal.css";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal';
 import { RootState } from '../../../redux/store/store';
 import DetalleSucursal from '../../../components/cards/CardSucursal/DetalleSucursal/DetalleSucursal';
 import CardSucursal from '../../../components/cards/CardSucursal/CardSucursal';
 import ModalUpdateSucursal from '../../../components/modals/BaseModal/CrearEditarSucursal/UpdateSucursal';
+import { setActiveSucursal } from '../../../redux/slices/sucursalActivaSlice';
 
 const ListSucursales: React.FC = () => {
     const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
@@ -48,14 +49,17 @@ const ListSucursales: React.FC = () => {
     if (error) {
         return <div>{error}</div>;
     }
+    const dispatch = useDispatch();
 
     const handleShowDetails = (sucursal: ISucursal) => {
+        dispatch(setActiveSucursal(sucursal)); // Actualiza la sucursal activa en Redux
         setSelectedSucursal(sucursal);
         setIsEditMode(false); // Vista solo de detalles
         setIsModalOpen(false);
     };
 
     const handleEdit = (sucursal: ISucursal) => {
+        dispatch(setActiveSucursal(sucursal)); // Actualiza la sucursal activa en Redux
         setSelectedSucursal(sucursal);
         setIsEditMode(true); // Activar modo de edición
         setIsModalOpen(true); // Abre el modal en modo edición

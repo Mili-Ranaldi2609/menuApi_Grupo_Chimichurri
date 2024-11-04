@@ -7,6 +7,7 @@ import EmpresaList from "../Lists/ListEmpresa/ListEmpresa";
 
 export const EmpresaPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+   
 
     /*const handleOpenModal = () => setIsModalOpen(true);*/
     const handleCloseModal = () => setIsModalOpen(false);

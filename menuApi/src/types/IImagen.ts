@@ -1,6 +1,6 @@
 export interface IImagen {
   id?: number;
-  name: string;
+  name: string | undefined ;
   url: string;
   eliminado?:boolean
 }
