@@ -1,40 +1,17 @@
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import { ICreateAlergeno } from "../../types/dtos/alergenos/ICreateAlergeno";
 import { IUpdateAlergeno } from "../../types/dtos/alergenos/IUpdateAlergeno";
+import { IUpdateProducto } from "../../types/dtos/productos/IUpdateProducto";
+import { BackendClient } from "../BackendClient";
 
-import { AbstractAlergeno } from "./AbstractAlergeno";
-
-export class AlergenoService extends AbstractAlergeno<ICreateAlergeno>{
-    create(data: ICreateAlergeno): Promise<ICreateAlergeno> {
-        throw new Error("Method not implemented.");
-    }
-    update(id: number, data: ICreateAlergeno): Promise<ICreateAlergeno> {
-        throw new Error("Method not implemented.");
-    }
-   
- 
-    constructor() {
-        super("http://190.221.207.224:8090/alergenos"); // URL de la API
-    }
-
-    // Método para obtener todas las empresas
-    public async getAll(): Promise<IAlergenos[]> {
-        try {
-            const response = await fetch(this.baseUrl);
-
-            if (!response.ok) {
-                throw new Error(`Error al obtener alergenos: ${response.statusText}`);
-            }
-
-            const data = await response.json();
-            return data as IAlergenos[];
-        } catch (error) {
-            
-            console.error("Error al obtener alergenos:", error);
-            throw error;
-        }
-    }
+export class AlergenoService extends BackendClient<ICreateAlergeno>{
     
+    async getAll(): Promise<IAlergenos[]> {
+        const response=await fetch(`${this.baseURL}`);
+        const data= await response.json();
+        return data as IAlergenos[];
+    }
+
     async getById(id: number): Promise<IAlergenos | null> {
         const response=await fetch(`${this.baseURL}/${id}`);
         if(!response.ok){
@@ -43,6 +20,7 @@ export class AlergenoService extends AbstractAlergeno<ICreateAlergeno>{
         const data=await response.json();
         return data as IAlergenos;        
     }
+    
     async post(data: ICreateAlergeno): Promise<ICreateAlergeno | null> {
         console.log(data)
         const result=await fetch(`${this.baseURL}`,{
@@ -59,7 +37,8 @@ export class AlergenoService extends AbstractAlergeno<ICreateAlergeno>{
         const newData=await result.json();
         return newData as ICreateAlergeno;
     }
-    async put(id: number | undefined, data: IUpdateAlergeno): Promise<IUpdateAlergeno> {
+    
+    async put(id: number | undefined, data: IUpdateAlergeno): Promise<IUpdateProducto> {
         const result=await fetch(`${this.baseURL}/${id}`,{
             method:"PUT",
             headers:{

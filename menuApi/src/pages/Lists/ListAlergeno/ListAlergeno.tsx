@@ -1,93 +1,117 @@
-
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store/store';
+import { Table } from 'react-bootstrap';
+import './ListAlergeno.css';
 import { IAlergenos } from '../../../types/dtos/alergenos/IAlergenos';
-import { AlergenoService } from '../../../services/AlergenoService/AlergenoService';
-import CardAlergeno from '../../../components/cards/CardAlergeno/CardAlergeno';
+import ModalUpdateAlergeno from '../../../components/modals/BaseModal/CrearEditarAlergeno/UpdateAlergeno';
+import DetalleAlergeno from '../../../components/cards/DetalleAlergeno/DetalleAlergeno';
 
+const ListAlergeno: React.FC = () => {
+    const activeSucursal = useSelector((state: RootState) => state.sucursalActiva.activeSucursal);
+    const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedAlergeno, setSelectedAlergeno] = useState<IAlergenos | null>(null);
 
-const AlergenoList: React.FC = () => {
-  const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedAlergeno, setSelectedAlergeno] = useState<IAlergenos | null>(null);
-  const [isEditMode, setIsEditMode] = useState(false);
+    useEffect(() => {
+        const fetchAlergenos = async () => {
+            if (!activeSucursal) {
+                console.error("No hay sucursal activa");
+                return;
+            }
 
-  const fetchAlergenos = async () => {
-    const alergenoService = new AlergenoService();
-    try {
-        const fetchedAlergenos = await alergenoService.getAll();
-        const alergenosFormatted = fetchedAlergenos.map((alergeno) => ({
-          ...alergeno,
-          denominacion: alergeno.denominacion,
-          imagen:{
-            name:alergeno?.imagen.name,
-            url:alergeno?.imagen.url || ''
-           },
-           id: alergeno.id,
-        }));
-        setAlergenos(alergenosFormatted);
-        
-    } catch (error) {
-      console.error("Error al obtener los alergenos:", error);
-      setAlergenos([]);
+            try {
+                const response = await fetch(`http://190.221.207.224:8090/alergenos`);
+                
+                if (!response.ok) {
+                    throw new Error('Error al obtener sucursales');
+                }
+                
+                const data = await response.json();
+                console.log("Datos recibidos de la API:", data);
+                setAlergenos(data);
+            } catch (err) {
+                console.error("Error en la solicitud:", err);
+                setError('Error al obtener los artículos de la sucursal');
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchAlergenos();
+    }, [activeSucursal]);
+    
+    if (loading) {
+        return <div>Cargando...</div>;
     }
-  };
 
-  useEffect(() => {
-    fetchAlergenos();
-  }, []);
+    if (error) {
+        return <div>{error}</div>;
+    }
 
-  const handleShowDetails = (alergeno: IAlergenos) => {
-    setSelectedAlergeno(alergeno);
-    setIsEditMode(false); // Vista solo de detalles
-    setIsModalOpen(false);
-  };
+    const handleShowDetails = (alergeno: IAlergenos) => {
+        setSelectedAlergeno(alergeno);
+        setIsEditMode(false);
+        setIsModalOpen(true);
+    };
 
-  const handleEdit = (alergeno: IAlergenos) => {
-    setSelectedAlergeno(alergeno);
-    setIsEditMode(true); // Activar modo de edición
-    setIsModalOpen(true); // Abre el modal en modo edición
-  };
+    const handleEdit = (alergeno: IAlergenos) => {
+        setSelectedAlergeno(alergeno);
+        setIsEditMode(true);
+        setIsModalOpen(true);
+    };
 
-  const handleCloseModal = () => {
-    setSelectedAlergeno(null);
-    setIsModalOpen(false);
-  };
+    const handleCloseModal = () => {
+        setSelectedAlergeno(null);
+        setIsModalOpen(false);
+        setIsEditMode(false); // Añade esta línea para reiniciar el estado de edición
+    };
+    
 
-  const handleSuccess = () => {
-    fetchAlergenos();
-    handleCloseModal();
-  };
+    return (
+        <div>
+            <div className="alergenos-list">
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {alergenos.map((alergeno) => (
+                            <tr key={alergeno.id}>
+                                <td>{alergeno.denominacion}</td>
+                                <td className='card__botones'>
+                                        <span onClick={() => handleShowDetails(alergeno)} className="boton material-symbols-outlined">visibility</span>
+                                        <span onClick={() => handleEdit(alergeno)} className="boton material-symbols-outlined">edit</span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
+            
+                        {isModalOpen && selectedAlergeno && isEditMode && (
+                <ModalUpdateAlergeno
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    alergeno={selectedAlergeno}
+                />
+            )}
 
-  return (
-    <div >
+            {isModalOpen && selectedAlergeno && !isEditMode && (
+                <DetalleAlergeno
+                    alergeno={selectedAlergeno}
+                    onClose={handleCloseModal}
+                />
+            )}
 
-      
-      <div >
-        {alergenos.map((alergeno) => (
-          <CardAlergeno 
-                key={alergeno.id}
-                onView={handleShowDetails}
-                onEdit={handleEdit} alergeno={alergeno}          />
-        ))}
-      </div>
-      
-      {/*isModalOpen && (
-        <EmpresaModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          onSuccess={handleSuccess}
-          empresa={isEditMode && selectedAlergeno ? selectedAlergeno : undefined} // Si es edición y hay empresa seleccionada, pasa la empresa; si no, undefined para crear
-        />
-      )}
-      
-      {selectedAlergeno && !isEditMode && (
-        <DetalleEmpresa
-          empresa={selectedAlergeno}
-          onClose={handleCloseModal}
-        />
-      )*/}
-    </div>
-  );
+        </div>
+    );
 };
 
-export default AlergenoList;
+export default ListAlergeno;

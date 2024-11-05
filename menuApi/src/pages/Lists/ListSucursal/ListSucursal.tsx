@@ -8,8 +8,6 @@ import { RootState } from '../../../redux/store/store';
 import DetalleSucursal from '../../../components/cards/CardSucursal/DetalleSucursal/DetalleSucursal';
 import CardSucursal from '../../../components/cards/CardSucursal/CardSucursal';
 import ModalUpdateSucursal from '../../../components/modals/BaseModal/CrearEditarSucursal/UpdateSucursal';
-import { setActiveSucursal } from '../../../redux/slices/sucursalActivaSlice';
-
 const ListSucursales: React.FC = () => {
     const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
     const [sucursales, setSucursales] = useState<ISucursal[]>([]);

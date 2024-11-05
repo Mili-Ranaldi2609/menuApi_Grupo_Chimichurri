@@ -5,7 +5,6 @@ import { RootState } from "../../redux/store/store";
 import { IProductos } from "../../types/dtos/productos/IProductos";
 import ListProducto from "../Lists/ListProducto/ListProducto";
 import ModalCreateProducto from "../../components/modals/BaseModal/CrearEditarProducto/CreateProducto";
-import { ICreateProducto } from "../../types/dtos/productos/ICreateProducto";
 export const ProductoPage = ({ onBack }: { onBack: () => void }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
@@ -28,9 +27,14 @@ export const ProductoPage = ({ onBack }: { onBack: () => void }) => {
   return (
     <div className="pageSucursal-container">
       <div className="">
-        <div className="sucursal__header-contenedor">
-   
-            <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Producto</button> 
+        <div className="sucursal__header-contenedor"> 
+          <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Producto</button> 
+        {activeSucursal ? (
+            <h2>Productos en: {activeSucursal.nombre}</h2>
+          ) : (
+            <h2>Productos</h2>
+          )}
+           
             <button onClick={onBack}><span className="material-symbols-outlined">
 keyboard_return
 </span></button>

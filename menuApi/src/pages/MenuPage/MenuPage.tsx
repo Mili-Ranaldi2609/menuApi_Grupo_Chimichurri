@@ -33,7 +33,7 @@ export const MenuPage = () => {
     <>
       {currentView === "menu" ? (
         <>
-           <div className="sucursal__header-contenedor">
+           <div className="menu__header-contenedor">
           {activeSucursal ? (
             <h2>{activeSucursal.nombre}</h2>
           ) : (
@@ -42,8 +42,11 @@ export const MenuPage = () => {
         </div>
 
           <h1>Administración</h1>
-          <button onClick={handleProductosClick}>Productos</button>
-          <button onClick={handleAlergenosClick}>Alergenos</button>
+          <div className="button_menu">
+             <button  onClick={handleProductosClick}>Productos</button>
+          <button  onClick={handleAlergenosClick}>Alergenos</button>
+          </div>
+         
         </>
       ) : currentView === "productos" ? (
         <ProductoPage onBack={handleBackToMenu} />

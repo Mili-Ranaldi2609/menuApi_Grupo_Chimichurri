@@ -1,0 +1,48 @@
+/* MenuPage.css */
+.menu-page {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100vh; /* Para que ocupe toda la altura de la ventana */
+  }
+  
+  .menu__header-contenedor {
+    padding: 10px;
+    background-color: #f5f5f5;
+    text-align: center;
+  }
+  
+  .menu-layout {
+    display: flex;
+    flex-grow: 1; /* Para que ocupe el espacio restante */
+  }
+  
+.button_menu button{
+  background-color: #141C59;
+  color: white;
+  border: 1px solid #141C59;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 12px 32px;
+}
+.button_menu button:hover{
+  background-color: #141C59;
+  background-color: #F8F7F6;
+  color: black;
+}
+  .menu-sidebar {
+    width: 200px; /* Ancho fijo para la barra lateral */
+    background-color: #e0e0e0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .menu-content {
+    flex-grow: 1; /* Ocupa el espacio restante a la derecha */
+    padding: 15px;
+    overflow-y: auto; /* Permite el desplazamiento si el contenido es grande */
+  }
+  

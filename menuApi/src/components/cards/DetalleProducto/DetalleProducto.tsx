@@ -1,7 +1,7 @@
 import React from 'react';
 
-import './DetalleProducto.css'
-import { IProductos } from '../../../../types/dtos/productos/IProductos';
+import './DetalleProducto'
+import { IProductos } from '../../../types/dtos/productos/IProductos';
 
 interface DetalleProductoProps {
   producto: IProductos;

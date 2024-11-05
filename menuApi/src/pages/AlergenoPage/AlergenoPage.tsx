@@ -25,12 +25,13 @@ export const AlergenoPage =  ({ onBack }: { onBack: () => void })=> {
     <div className="pageSucursal-container">
       <div className="">
         <div className="sucursal__header-contenedor">
+          <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Alergeno</button>
+          
           {activeSucursal ? (
             <h2>Alergenos en: {activeSucursal.nombre}</h2>
           ) : (
             <h2>Alergenos</h2>
           )}
-          <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Alergeno</button>
           <button onClick={onBack}><span className="material-symbols-outlined">
 keyboard_return
 </span></button>

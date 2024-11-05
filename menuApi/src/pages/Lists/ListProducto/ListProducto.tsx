@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store';
 import { IProductos } from '../../../types/dtos/productos/IProductos';
 import ModalUpdateProducto from '../../../components/modals/BaseModal/CrearEditarProducto/UpdateProducto';
-import DetalleProducto from '../../../components/cards/CardProducto/DetalleProducto/DetalleProducto';
+import DetalleProducto from '../../../components/cards/DetalleProducto/DetalleProducto';
 import { Table } from 'react-bootstrap';
 import './ListProducto.css';
 
