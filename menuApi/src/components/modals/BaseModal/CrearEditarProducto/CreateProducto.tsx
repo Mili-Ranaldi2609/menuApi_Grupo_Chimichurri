@@ -18,10 +18,10 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
 
     const [formData, setFormData] = useState<ICreateProducto>({
         denominacion: producto?.denominacion || '',
-        precioVenta: producto?.precioVenta || 0,
+        precioVenta:producto?.precioVenta || 0,//parseint
         descripcion: producto?.descripcion || '',
         habilitado: producto?.habilitado || false,
-        idCategoria: producto?.categoria?.id || undefined,
+        idCategoria: producto?.categoria?.id || undefined,//parse int
         codigo: producto?.codigo || '',
         idAlergenos: producto?.alergenos?.map((alergeno) => alergeno.id) || [],
         imagenes: producto?.imagenes || [{ name: '', url: '' }] as IImagen[], // 

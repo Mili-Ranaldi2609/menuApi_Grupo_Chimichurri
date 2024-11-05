@@ -2,8 +2,19 @@ import { ICreateProducto } from "../../types/dtos/productos/ICreateProducto";
 import { IProductos } from "../../types/dtos/productos/IProductos";
 import { IUpdateProducto } from "../../types/dtos/productos/IUpdateProducto";
 import { BackendClient } from "../BackendClient";
+import { AbstractProducto } from "./AbstractProducto";
 
-export class ProductoService extends BackendClient<ICreateProducto>{
+export class ProductoService extends AbstractProducto<IProductos,ICreateProducto,IUpdateProducto>{
+    constructor() {
+        super("http://190.221.207.224:8090/productos"); // URL de la API
+    }
+    create(data: ICreateProducto): Promise<IProductos> {
+        throw new Error("Method not implemented.");
+    }
+    update(id: number, data: IUpdateProducto): Promise<IProductos> {
+        throw new Error("Method not implemented.");
+    }
+
     
     async getAll(): Promise<IProductos[]> {
         const response=await fetch(`${this.baseURL}`);

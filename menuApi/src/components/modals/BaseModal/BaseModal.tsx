@@ -1,6 +1,6 @@
 //MODAL BASE PARA REUTILIZAR
 import {ReactNode } from 'react' ;
-import './BaseModal.css'; 
+import styles from './BaseModal.module.css'; 
 
 interface BaseModalProps {
     title: string;
@@ -11,11 +11,11 @@ interface BaseModalProps {
 }
 
 const BaseModal: React.FC<BaseModalProps> = ({ title, children, onClose, onSave }) => (
-    <div className="modal_fondo">
-        <div className="modal_contenedor">
-            <h2 className='modal_titulo'>{title}</h2>
+    <div className={styles.modal_fondo }>
+        <div className={styles.modal_contenedor}>
+            <h2 className={styles.modal_titulo}>{title}</h2>
             {children}
-            <div className="modal_botones_contenedor">
+            <div className={styles.modal_botones_contenedor}>
                 <button onClick={onClose}>Cerrar</button>
                 {<button onClick={onSave}>Guardar</button>}
             </div>

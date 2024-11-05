@@ -1,6 +1,5 @@
 import React from 'react';
-
-import './DetalleProducto'
+import styles from './DetalleProducto.module.css'
 import { IProductos } from '../../../types/dtos/productos/IProductos';
 
 interface DetalleProductoProps {
@@ -10,38 +9,38 @@ interface DetalleProductoProps {
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ producto: producto, onClose }) => {
   return (
-    <div className='modal-fondo'>
-      <div className="modal_contenedor">
-        <h2 className='modal_titulo'>Detalle de Producto</h2>
-      <p><span className='text-b'>Denominacion</span>{producto.denominacion}</p>
-      <p><span className="text-b">Descripcion </span> {producto.descripcion}</p>
-      <p><span className="text-b">Categoria: </span> {producto.categoria.denominacion}
+    <div className={styles.modal_fondo}>
+      <div className={styles.modal_contenedor}>
+        <h2 className={styles.modal_titulo}>Detalle de Producto</h2>
+      <p><span className={styles.text_b}>Denominacion</span>{producto.denominacion}</p>
+      <p><span className={styles.text_b}>Descripcion </span> {producto.descripcion}</p>
+      <p><span className={styles.text_b}>Categoria: </span> {producto.categoria.denominacion}
       </p>
-      <p><span className="text-b">Habilitado? </span> {producto.habilitado}</p>
+      <p><span className={styles.text_b}>Habilitado? </span> {producto.habilitado}</p>
         {/* Mostrar todas las imágenes */}
-        <div className="imagenes-container">
-          <span className="text-b">Imágenes:</span>
-          <div className="imagenes">
+        <div >
+          <span className={styles.text_b}>Imágenes:</span>
+          <div className={styles.imagenes}>
             {producto.imagenes.map((imagen, index) => (
+              
               <img 
                 key={index} 
                 src={imagen.url} 
                 alt={`Imagen ${index + 1} de ${producto.denominacion}`} 
-                className="imagen-detalle"
               />
             ))}
           </div>
         </div>
           
         {/* Mostrar todos los alérgenos */}
-        <p><span className="text-b">Alergenos:</span> 
+        <p><span className={styles.text_b}>Alergenos:</span> 
           {producto.alergenos.length > 0 ? 
             producto.alergenos.map(alergeno => alergeno.id).join(', ') : 
             'No hay alérgenos'}
         </p>
-      <p><span className="text-b">Precio: </span> {producto.precioVenta}</p>
-      <p><span className="text-b">Categoria: </span> {producto.categoria.denominacion}</p>
-      <div className='modal_botones_contenedor'>
+      <p><span className={styles.text_b}>Precio: </span> {producto.precioVenta}</p>
+      <p><span className={styles.text_b}>Categoria: </span> {producto.categoria.denominacion}</p>
+      <div className={styles.modal_botones_contenedor }>
         <button onClick={onClose}>Cerrar</button>
       </div>
       

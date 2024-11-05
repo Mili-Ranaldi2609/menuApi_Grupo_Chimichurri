@@ -74,7 +74,7 @@ const ListAlergeno: React.FC = () => {
     return (
         <div>
             <div className="alergenos-list">
-                <Table striped bordered hover size="sm">
+            <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
                             <th>Nombre</th>

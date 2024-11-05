@@ -1,5 +1,5 @@
 // Clase abstracta que define métodos para operaciones CRUD en un servicio genérico
-export abstract class AbstractAlergeno<T, CreateDto = T, UpdateDto = T> {
+export abstract class AbstractProducto<T, CreateDto = T, UpdateDto = T> {
     protected baseUrl: string;
 
     constructor(baseUrl: string) {
