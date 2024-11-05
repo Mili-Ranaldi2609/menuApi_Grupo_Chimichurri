@@ -1,4 +1,5 @@
 
+import { Table } from 'react-bootstrap';
 import { IProductos } from '../../../types/dtos/productos/IProductos';
 interface CardProductosProps {
   producto: IProductos;
@@ -10,25 +11,29 @@ interface CardProductosProps {
 const CardProducto: React.FC<CardProductosProps> = ({ producto, onView, onEdit }) => {
   
   return (
-    <div className='card-sucursal'>
-     <h3>{producto.denominacion}</h3>
-      <p>Descripción: {producto.descripcion}</p>
-      <p>Habilitado: {producto.habilitado ? "Sí" : "No"}</p>
-      {producto.imagenes && producto.imagenes.length > 0 ? (
-        <img className="img_card_producto" src={producto.imagenes[0].url} alt={`Imagen de ${producto.denominacion}`} />
-      ) : (
-        <span className="material-symbols-outlined img-placeholder icono">add_a_photo</span>
-      )}
-      <div className='card__contenedor-botones'>
+
+    <div className='card-producto'>
+  
+  <Table striped bordered hover>
+      <tbody className='body_productos'>
+        <tr>
+          <td>{producto.denominacion}</td>
+          <td>{producto.descripcion}</td>
+          <td>{producto.habilitado ? "Sí" : "No"}</td>
+          <td>{producto.precioVenta}</td>
+          <td>{producto.categoria.denominacion}</td>
+          <td>
+       
         <div className="cardSucursal__botones">
         {<span onClick={() => onView(producto)} className="boton material-symbols-outlined">visibility</span>}
         {<span onClick={() => onEdit(producto)} className="boton material-symbols-outlined">edit</span>}
         </div>
-
-
-      </div>
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+     
     </div>
   );
 };
-
 export default CardProducto;

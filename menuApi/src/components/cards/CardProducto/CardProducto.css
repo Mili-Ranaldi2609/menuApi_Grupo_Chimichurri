@@ -1,0 +1,59 @@
+/* Estilos generales para la tarjeta de producto */
+.card-producto {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    margin: 1rem 0;
+  }
+  
+  /* Estilos de la tabla */
+  .card-producto .table {
+    margin: 0;
+    width: 100%;
+  }
+  
+  .card-producto .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa; /* Color de fila alternada */
+  }
+  
+  .card-producto .table-hover tbody tr:hover {
+    background-color: #e9ecef; /* Color al pasar el cursor */
+  }
+  
+  .body_productos td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  /* Estilos para los botones */
+  .cardSucursal__botones {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .boton {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #007bff;
+    transition: color 0.2s ease;
+  }
+  
+  .boton:hover {
+    color: #0056b3; /* Cambia de color al pasar el cursor */
+  }
+  
+  /* Opcional: Cambiar el color según el icono */
+  .boton.visibility {
+    color: #28a745;
+  }
+  
+  .boton.edit {
+    color: #ffc107;
+  }
+  

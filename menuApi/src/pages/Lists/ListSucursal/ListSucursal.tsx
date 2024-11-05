@@ -52,14 +52,14 @@ const ListSucursales: React.FC = () => {
     const dispatch = useDispatch();
 
     const handleShowDetails = (sucursal: ISucursal) => {
-        dispatch(setActiveSucursal(sucursal)); // Actualiza la sucursal activa en Redux
+      
         setSelectedSucursal(sucursal);
         setIsEditMode(false); // Vista solo de detalles
         setIsModalOpen(false);
     };
 
     const handleEdit = (sucursal: ISucursal) => {
-        dispatch(setActiveSucursal(sucursal)); // Actualiza la sucursal activa en Redux
+
         setSelectedSucursal(sucursal);
         setIsEditMode(true); // Activar modo de edición
         setIsModalOpen(true); // Abre el modal en modo edición

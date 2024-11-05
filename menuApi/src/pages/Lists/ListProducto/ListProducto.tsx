@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store';
 import { IProductos } from '../../../types/dtos/productos/IProductos';
-import CardProducto from '../../../components/cards/CardProducto/CardProducto';
 import ModalUpdateProducto from '../../../components/modals/BaseModal/CrearEditarProducto/UpdateProducto';
+import DetalleProducto from '../../../components/cards/CardProducto/DetalleProducto/DetalleProducto';
+import { Table } from 'react-bootstrap';
+import './ListProducto.css';
 
 const ListProducto: React.FC = () => {
     const activeSucursal = useSelector((state: RootState) => state.sucursalActiva.activeSucursal);
@@ -13,23 +15,23 @@ const ListProducto: React.FC = () => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProducto, setSelectedProducto] = useState<IProductos | null>(null);
+
     useEffect(() => {
         const fetchProductos = async () => {
             if (!activeSucursal) {
                 console.error("No hay sucursal activa");
                 return;
             }
-    
+
             try {
                 const response = await fetch(`http://190.221.207.224:8090/articulos/porSucursal/${activeSucursal.id}`);
                 
                 if (!response.ok) {
-                    console.error("Error al obtener los artículos:", response.statusText);
-                    throw new Error('Error al obtener los artículos de la sucursal');
+                    throw new Error('Error al obtener sucursales');
                 }
                 
                 const data = await response.json();
-                console.log("Datos recibidos de la API:", data); // Verifica aquí si los datos tienen la estructura esperada
+                console.log("Datos recibidos de la API:", data);
                 setProductos(data);
             } catch (err) {
                 console.error("Error en la solicitud:", err);
@@ -52,48 +54,70 @@ const ListProducto: React.FC = () => {
 
     const handleShowDetails = (producto: IProductos) => {
         setSelectedProducto(producto);
-        setIsEditMode(false); // Vista solo de detalles
+        setIsEditMode(false);
         setIsModalOpen(true);
     };
 
     const handleEdit = (producto: IProductos) => {
         setSelectedProducto(producto);
-        setIsEditMode(true); // Activar modo de edición
-        setIsModalOpen(true); // Abre el modal en modo edición
+        setIsEditMode(true);
+        setIsModalOpen(true);
     };
 
     const handleCloseModal = () => {
         setSelectedProducto(null);
         setIsModalOpen(false);
+        setIsEditMode(false); // Añade esta línea para reiniciar el estado de edición
     };
+    
 
     return (
         <div>
-            <div className="sucursales-list">
-                {productos.map((producto) => (
-                    <CardProducto
-                        key={producto.id}
-                        onView={handleShowDetails}
-                        onEdit={handleEdit} 
-                        producto={producto}                
-                    />
-                ))}
+            <div className="productos-list">
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Categoria</th>
+                            <th>Precio</th>
+                            <th>Habilitado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {productos.map((producto) => (
+                            <tr key={producto.id}>
+                                <td>{producto.denominacion}</td>
+                                <td>{producto.descripcion}</td>
+                                <td>{producto.categoria.denominacion}</td>
+                                <td>{producto.precioVenta}</td>
+                                <td >{producto.habilitado  ? "Sí" : "No"}</td>
+                                <td className='card__botones'>
+                                        <span onClick={() => handleShowDetails(producto)} className="boton material-symbols-outlined">visibility</span>
+                                        <span onClick={() => handleEdit(producto)} className="boton material-symbols-outlined">edit</span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
             </div>
             
-            {isModalOpen && selectedProducto && (
+                        {isModalOpen && selectedProducto && isEditMode && (
                 <ModalUpdateProducto
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
-                    producto={isEditMode && selectedProducto ? selectedProducto : undefined}
+                    producto={selectedProducto}
                 />
             )}
 
-            {/*selectedProducto && !isEditMode && (
+            {isModalOpen && selectedProducto && !isEditMode && (
                 <DetalleProducto
                     producto={selectedProducto}
                     onClose={handleCloseModal}
                 />
-            )*/}
+            )}
+
         </div>
     );
 };
