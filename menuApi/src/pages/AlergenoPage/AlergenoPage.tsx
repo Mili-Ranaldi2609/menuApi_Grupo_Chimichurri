@@ -5,7 +5,7 @@ import { RootState } from "../../redux/store/store";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import ModalCreateAlergeno from "../../components/modals/BaseModal/CrearEditarAlergeno/CreateAlergeno";
 import ListAlergeno from "../Lists/ListAlergeno/ListAlergeno";
-export const AlergenoPage =  ({ onBack }: { onBack: () => void })=> {
+export const AlergenoPage =  ()=> {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   const handleOpenModal = () => setIsModalOpen(true);
@@ -32,9 +32,6 @@ export const AlergenoPage =  ({ onBack }: { onBack: () => void })=> {
           ) : (
             <h2>Alergenos</h2>
           )}
-          <button onClick={onBack}><span className="material-symbols-outlined">
-keyboard_return
-</span></button>
         </div>
 
         <ModalCreateAlergeno

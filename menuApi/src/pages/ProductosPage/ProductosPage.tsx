@@ -5,7 +5,7 @@ import { RootState } from "../../redux/store/store";
 import { IProductos } from "../../types/dtos/productos/IProductos";
 import ListProducto from "../Lists/ListProducto/ListProducto";
 import ModalCreateProducto from "../../components/modals/BaseModal/CrearEditarProducto/CreateProducto";
-export const ProductoPage = ({ onBack }: { onBack: () => void }) => {
+export const ProductoPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   
   const handleOpenModal = () => setIsModalOpen(true);
@@ -35,9 +35,6 @@ export const ProductoPage = ({ onBack }: { onBack: () => void }) => {
             <h2>Productos</h2>
           )}
            
-            <button onClick={onBack}><span className="material-symbols-outlined">
-keyboard_return
-</span></button>
         </div>
        
         <ModalCreateProducto
