@@ -5,7 +5,8 @@ import { IProductos } from '../../../types/dtos/productos/IProductos';
 import ModalUpdateProducto from '../../../components/modals/BaseModal/CrearEditarProducto/UpdateProducto';
 import DetalleProducto from '../../../components/cards/DetalleProducto/DetalleProducto';
 import { Table } from 'react-bootstrap';
-import './ListProducto.css';
+import styles from  './ListProducto.module.css';
+import { ProductoService } from '../../../services/ProductoService/ProductoService';
 
 const ListProducto: React.FC = () => {
     const activeSucursal = useSelector((state: RootState) => state.sucursalActiva.activeSucursal);
@@ -16,33 +17,31 @@ const ListProducto: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProducto, setSelectedProducto] = useState<IProductos | null>(null);
 
-    useEffect(() => {
-        const fetchProductos = async () => {
-            if (!activeSucursal) {
-                console.error("No hay sucursal activa");
-                return;
-            }
+    const productoService = new ProductoService()
+   
+    const fetchProductos = async () => {
+        if (!activeSucursal) {
+            console.error("No hay sucursal activa");
+            return;
+        }
 
-            try {
-                const response = await fetch(`http://190.221.207.224:8090/articulos/porSucursal/${activeSucursal.id}`);
-                
-                if (!response.ok) {
-                    throw new Error('Error al obtener sucursales');
-                }
-                
-                const data = await response.json();
-                console.log("Datos recibidos de la API:", data);
-                setProductos(data);
-            } catch (err) {
-                console.error("Error en la solicitud:", err);
-                setError('Error al obtener los artículos de la sucursal');
-            } finally {
-                setLoading(false);
-            }
-        };
-    
+        try {
+            setLoading(true);
+            const data = await productoService.getAll();
+            setProductos(data);
+        } catch (err) {
+            console.error("Error al obtener los artículos de la sucursal:", err);
+            setError('Error al obtener los artículos de la sucursal');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchProductos();
     }, [activeSucursal]);
+
+
     
     if (loading) {
         return <div>Cargando...</div>;
@@ -69,11 +68,20 @@ const ListProducto: React.FC = () => {
         setIsModalOpen(false);
         setIsEditMode(false); // Añade esta línea para reiniciar el estado de edición
     };
-    
+    const handleDelete = async (id: number) => {
+        try {
+            await productoService.delete(id); // Llama al método delete del servicio
+            setProductos(productos.filter(producto => producto.id !== id)); // Actualiza el estado
+        } catch (error) {
+            console.error("Error al eliminar el producto:", error);
+            setError('Error al eliminar el producto');
+        }
+    };
+
 
     return (
         <div>
-            <div className="productos-list">
+            <div className={styles.productos_list}>
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
@@ -93,9 +101,10 @@ const ListProducto: React.FC = () => {
                                 <td>{producto.categoria.denominacion}</td>
                                 <td>{producto.precioVenta}</td>
                                 <td >{producto.habilitado  ? "Sí" : "No"}</td>
-                                <td className='card__botones'>
-                                        <span onClick={() => handleShowDetails(producto)} className="boton material-symbols-outlined">visibility</span>
-                                        <span onClick={() => handleEdit(producto)} className="boton material-symbols-outlined">edit</span>
+                                <td className={styles.card__botones}>
+                                        <span onClick={() => handleShowDetails(producto)} id={styles.boton}className="material-symbols-outlined">visibility</span>
+                                        <span onClick={() => handleEdit(producto)} id={styles.boton} className="material-symbols-outlined">edit</span>
+                                        <span id={styles.boton} onClick={() => handleDelete(producto.id)}className="material-symbols-outlined">delete</span>
                                 </td>
                             </tr>
                         ))}

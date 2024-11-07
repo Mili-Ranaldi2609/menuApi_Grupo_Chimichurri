@@ -1,7 +1,8 @@
-.text-b{
+.text_b{
     font-weight: bold;
 }
-.modal-fondo {
+
+.detalleModal_fondo {
     position: fixed; /* para superponer el contenido */
     top: 0;
     left: 0;
@@ -13,7 +14,7 @@
     align-items: center;
     z-index: 1000; 
 }
-.modal_contenedor {
+.detalleModal_contenedor {
     background-color: white; 
     box-sizing: border-box;
     padding: 20px 32px; 
@@ -22,12 +23,23 @@
     width: 360px; 
 }
 
-.modal_titulo {
+.detalleModal_contenedor p{
+    margin: 8px 0;
+}
+.detalleModal__titulo {
     text-align: center;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
-.modal_botones_contenedor button{
+.detalleModal__imagen {
+    width: 232px;
+    max-height: 220px;
+    margin: 8px 0px 0px 0px;
+    display: block;
+    margin: 0px auto;
+}
+
+.detalleModal__boton{
     padding: 12px 20px;
     background-color: #526CA5;
     color: white;
@@ -36,7 +48,4 @@
     border-radius: 20px;
     display: block;
     margin: 0px auto;
-}
-.imagen img{
-    width: 30%
 }

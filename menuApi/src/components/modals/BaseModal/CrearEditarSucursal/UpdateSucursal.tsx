@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./CreateUpdateSucursal.css";
+import styles from "./CreateUpdateSucursal.module.css";
 import { IEmpresa2 } from "../../../../types/dtos/empresa/IEmpresa2";
 import BaseModal from "../BaseModal";
 import { SucursalService } from "../../../../services/SucursalService/SucursalService";
@@ -102,7 +102,7 @@ const ModalUpdateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
     return (
         isOpen && (
             <BaseModal title={ "Editar Sucursal"} onClose={onClose} onSave={handleSubmit}>
-                <input className="modalSucursal__input" type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
+                <input className={styles.modalSucursal__input} type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
                 
                 <div>
                     <label>Horario Apertura</label>
@@ -111,41 +111,41 @@ const ModalUpdateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
                 
                 <div>
                     <label>Horario Cierre</label>
-                    <input className="modalSucursal__input" type="time" name="horarioCierre" value={formData.horarioCierre} onChange={handleChange} required />
+                    <input className={styles.modalSucursal__input} type="time" name="horarioCierre" value={formData.horarioCierre} onChange={handleChange} required />
                 </div>
                 
                 <label>
-                    <input className="modalSucursal__input" type="checkbox" name="esCasaMatriz" checked={formData.esCasaMatriz} onChange={handleChange} />
+                    <input className={styles.modalSucursal__input}type="checkbox" name="esCasaMatriz" checked={formData.esCasaMatriz} onChange={handleChange} />
                     Es Casa Matriz
                 </label>
                 
                 <h3>Domicilio</h3>
-                <input className="modalSucursal__input" type="text" name="domicilio.calle" value={formData.domicilio.calle} onChange={handleChange} placeholder="Calle" required />
+                <input className={styles.modalSucursal__input} type="text" name="domicilio.calle" value={formData.domicilio.calle} onChange={handleChange} placeholder="Calle" required />
                 
                 <div>
                     <label>Numero Calle</label>
-                    <input className="modalSucursal__input" type="number" name="domicilio.numero" value={formData.domicilio.numero} onChange={handleChange} required />
+                    <input className={styles.modalSucursal__input} type="number" name="domicilio.numero" value={formData.domicilio.numero} onChange={handleChange} required />
                 </div>
                 
                 <div>
                     <label>Codigo Postal</label>
-                    <input className="modalSucursal__input" type="number" name="domicilio.cp" value={formData.domicilio.cp} onChange={handleChange} required />
+                    <input className={styles.modalSucursal__input} type="number" name="domicilio.cp" value={formData.domicilio.cp} onChange={handleChange} required />
                 </div>
                 
                 <div>
                     <label>Piso</label>
-                    <input className="modalSucursal__input" type="number" name="domicilio.piso" value={formData.domicilio.piso} onChange={handleChange} />
+                    <input className={styles.modalSucursal__input} type="number" name="domicilio.piso" value={formData.domicilio.piso} onChange={handleChange} />
                 </div>
                 
                 <div>
                     <label>Nro Departamento</label>
-                    <input className="modalSucursal__input" type="number" name="domicilio.nroDpto" value={formData.domicilio.nroDpto} onChange={handleChange} />
+                    <input className={styles.modalSucursal__input} type="number" name="domicilio.nroDpto" value={formData.domicilio.nroDpto} onChange={handleChange} />
                 </div>
                 
-                <input className="modalSucursal__input" type="text" name="domicilio.idLocalidad" value={formData.domicilio.idLocalidad} onChange={handleChange} placeholder="Localidad" required />
+                <input className={styles.modalSucursal__input} type="text" name="domicilio.idLocalidad" value={formData.domicilio.idLocalidad} onChange={handleChange} placeholder="Localidad" required />
                
                 
-                <input className="modalSucursal__input" type="text" name="logo" value={formData.logo} onChange={handleChange} placeholder="Logo URL" />
+                <input className={styles.modalSucursal__input} type="text" name="logo" value={formData.logo} onChange={handleChange} placeholder="Logo URL" />
             </BaseModal>
         )
     );

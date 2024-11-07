@@ -1,9 +1,9 @@
-.pageSucursal-container{
+.pageSucursal_container{
     display: flex;
     flex-direction: column;
     width: 100%;
 }
-.sucursal__header-contenedor{
+.sucursal__header_contenedor{
     display: flex;
     height: 12vh;
     justify-content: space-between;

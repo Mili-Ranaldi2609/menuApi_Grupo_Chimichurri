@@ -1,4 +1,4 @@
-.card-sucursal {
+.card_sucursal {
     border-radius: 6px; 
     border: 3px solid rgb(34, 42, 116);
     background-color: #DCE4FF;
@@ -10,15 +10,15 @@
     z-index: 1;
 }
 
-.card-sucursal:hover {
+.card_sucursal:hover {
     transform: scale(1.01); /* sobresale al pasar el mause */
 }
-.card-sucursal h3 {
+.card_sucursal h3 {
     text-align: center;
     margin: 0 0 20px; 
     text-transform: uppercase;
 }
-.card-sucursal p{
+.card_sucursal p{
     text-align: center;
     margin-bottom: 20px;
 }
@@ -46,7 +46,7 @@
     gap: 28px;
 }
 
-.card-sucursal .boton {
+.card_sucursal #boton {
     font-size: 32px;
     color: rgb(34, 42, 116); 
     cursor: pointer;

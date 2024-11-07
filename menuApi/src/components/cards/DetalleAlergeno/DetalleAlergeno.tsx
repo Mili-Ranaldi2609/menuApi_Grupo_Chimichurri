@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './DetalleAlergeno.css'
+import styles from './DetalleAlergeno.module.css'
 import { IAlergenos } from '../../../types/dtos/alergenos/IAlergenos';
 
 interface DetalleAlergenoProps {
@@ -10,13 +10,13 @@ interface DetalleAlergenoProps {
 
 const DetalleAlergeno: React.FC<DetalleAlergenoProps> = ({ alergeno: alergeno, onClose }) => {
   return (
-    <div className='modal-fondo'>
-      <div className="modal_contenedor">
-        <h2 className='modal_titulo'>Detalle de Producto</h2>
-      <p><span className='text-b'>Denominacion</span>{alergeno.denominacion}</p>
+    <div className={styles.modal_fondo}>
+      <div className={styles.modal_contenedor}>
+        <h2 className={styles.modal_titulo}>Detalle de Producto</h2>
+      <p><span className={styles.text_b}>Denominacion</span>{alergeno.denominacion}</p>
         <div className="imagenes-container">
-          <span className="text-b">Imágenes:</span>
-          <div className="imagen">
+          <span className={styles.text_b}>Imágenes:</span>
+          <div className={styles.imagen}>
               <img 
                 src={alergeno.imagen.url} 
                 className="imagen-detalle"
@@ -25,7 +25,7 @@ const DetalleAlergeno: React.FC<DetalleAlergenoProps> = ({ alergeno: alergeno, o
           </div>
         </div>
           
-      <div className='modal_botones_contenedor'>
+      <div className={styles.modal_botones_contenedor}>
         <button onClick={onClose}>Cerrar</button>
       </div>
       

@@ -1,4 +1,4 @@
-.sucursales-list {
+.sucursales_list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Mínimo 3 columnas, adaptables */
     gap: 16px; /* Espacio entre tarjetas */

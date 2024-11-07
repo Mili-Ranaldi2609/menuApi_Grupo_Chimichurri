@@ -1,16 +1,18 @@
 // Clase abstracta que define métodos para operaciones CRUD en un servicio genérico
 export abstract class AbstractProducto<T, CreateDto = T, UpdateDto = T> {
-    protected baseUrl: string;
-
-    constructor(baseUrl: string) {
-        this.baseUrl = baseUrl;
+    
+    protected baseURL: string;
+    
+    constructor(baseURL: string) {
+            this.baseURL = baseURL;
     }
-
+    
+    
     abstract getAll(): Promise<T[]>;
     abstract getById(id: number): Promise<T | null>;
 
-    abstract create(data: CreateDto): Promise<T>;
-    abstract update(id: number, data: UpdateDto): Promise<T>;
+    abstract post(data: CreateDto): Promise<T>;
+    abstract put(id: number, data: UpdateDto): Promise<T>;
 
     // Método abstracto para eliminar un elemento por su ID
     abstract delete(id: number): Promise<void>;

@@ -1,6 +1,6 @@
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal';
 import { useDispatch } from 'react-redux';
-import './CardSucursal.css';
+import styles from './CardSucursal.module.css';
 import { setActiveSucursal } from '../../../redux/slices/sucursalActivaSlice';
 
 interface CardSucursalProps {
@@ -19,20 +19,20 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal, onView, onEdit })
   };
   
   return (
-    <div className='card-sucursal'>
+    <div className={styles.card_sucursal}>
       <h3>{sucursal.nombre}</h3>
       <p> Apertura: {sucursal.horarioApertura} - {sucursal.horarioCierre}</p>
       <p>{sucursal.esCasaMatriz}</p>
       {sucursal.logo ? (
-        <img className="img_card_sucursal" src={sucursal.logo} alt="Logo de sucursal" />
+        <img className={styles.img_card_sucursal} src={sucursal.logo} alt="Logo de sucursal" />
       ) : (
         <span className="material-symbols-outlined img-placeholder icono">add_a_photo</span>
       )}
-      <div className='card__contenedor-botones'>
-        <div className="cardSucursal__botones">
-          <span onClick={() => onView(sucursal)} className="boton material-symbols-outlined">visibility</span>
-          <span onClick={() => onEdit(sucursal)} className="boton material-symbols-outlined">edit</span>
-          <span onClick={handleLoginClick} className="boton material-symbols-outlined">login</span>
+      <div className='card__contenedor_botones'>
+        <div className={styles.cardSucursal__botones}>
+          <span onClick={() => onView(sucursal)} className="material-symbols-outlined" id={styles.boton}>visibility</span>
+          <span onClick={() => onEdit(sucursal)} className="material-symbols-outlined" id={styles.boton}>edit</span>
+          <span onClick={handleLoginClick} className="material-symbols-outlined" id={styles.boton}>login</span>
         </div>
       </div>
     </div>

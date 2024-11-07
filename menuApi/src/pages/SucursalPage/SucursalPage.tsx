@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import "./SucursalPage.css";
+import styles from"./SucursalPage.module.css";
 import { ISucursal } from "../../types/dtos/sucursal/ISucursal";
 import ListSucursales from "../Lists/ListSucursal/ListSucursal";
 import ModalCreateSucursal from "../../components/modals/BaseModal/CrearEditarSucursal/CreateSucursal";
@@ -49,15 +49,15 @@ export const SucursalPage = () => {
   };
 
   return (
-    <div className="pageSucursal-container">
+    <div className={styles.pageSucursal_container}>
       <div className="">
-        <div className="sucursal__header-contenedor">
+        <div className={styles.sucursal__header_contenedor}>
           {activeEmpresa ? (
             <h2>Sucursales en: {activeEmpresa.nombre}</h2>
           ) : (
             <h2>Sucursales</h2>
           )}
-          <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Sucursal</button>
+          <button className={styles.sucursal__boton} onClick={handleOpenModal}>Agregar Sucursal</button>
         </div>
 
         <ModalCreateSucursal
@@ -68,7 +68,7 @@ export const SucursalPage = () => {
         />
       </div>
 
-      <div className="sucursal__contenedorCard">
+      <div className={styles.sucursal__contenedorCard}>
         <ListSucursales />
       </div>
     </div>

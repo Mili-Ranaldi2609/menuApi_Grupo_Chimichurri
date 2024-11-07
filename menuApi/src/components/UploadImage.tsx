@@ -1,8 +1,8 @@
 import { FC } from "react";
 import Swal from "sweetalert2";
 import noImage from "../assets/images/noImage.jpeg";
-import { IImagen } from "../../types/IImagen";
-import { ImageService } from "../../services/ImageService/ImageService";
+import { IImagen } from "../types/IImagen";
+import { ImageService } from "../services/ImageService/ImageService";
 import { Button } from "react-bootstrap";
 
 

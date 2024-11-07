@@ -1,26 +1,27 @@
-import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
-import { ICreateAlergeno } from "../../types/dtos/alergenos/ICreateAlergeno";
-import { IUpdateAlergeno } from "../../types/dtos/alergenos/IUpdateAlergeno";
+
+import { ICategorias } from "../../types/dtos/categorias/ICategorias";
+import { ICreateCategoria } from "../../types/dtos/categorias/ICreateCategoria";
+import { IUpdateCategoria } from "../../types/dtos/categorias/IUpdateCategoria";
 import { BackendClient } from "../BackendClient";
 
-export class AlergenoService extends BackendClient<ICreateAlergeno>{
+export class CategoriaService extends BackendClient<ICreateCategoria>{
     
-    async getAll(): Promise<IAlergenos[]> {
+    async getAll(): Promise<ICategorias[]> {
         const response=await fetch(`${this.baseURL}`);
         const data= await response.json();
-        return data as IAlergenos[];
+        return data as ICategorias[];
     }
 
-    async getById(id: number): Promise<IAlergenos | null> {
+    async getById(id: number): Promise<ICategorias | null> {
         const response=await fetch(`${this.baseURL}/${id}`);
         if(!response.ok){
             return null;
         }
         const data=await response.json();
-        return data as IAlergenos;        
+        return data as ICategorias;        
     }
     
-    async post(data: ICreateAlergeno): Promise<ICreateAlergeno | null> {
+    async post(data: ICreateCategoria): Promise<ICreateCategoria | null> {
         console.log(data)
         const result=await fetch(`${this.baseURL}`,{
             method:"POST",
@@ -34,10 +35,10 @@ export class AlergenoService extends BackendClient<ICreateAlergeno>{
             return null;
         }
         const newData=await result.json();
-        return newData as ICreateAlergeno;
+        return newData as ICreateCategoria;
     }
     
-    async put(id: number | undefined, data: IUpdateAlergeno): Promise<IUpdateAlergeno> {
+    async put(id: number | undefined, data: IUpdateCategoria): Promise<IUpdateCategoria> {
         const result=await fetch(`${this.baseURL}/${id}`,{
             method:"PUT",
             headers:{
@@ -46,14 +47,14 @@ export class AlergenoService extends BackendClient<ICreateAlergeno>{
             body:JSON.stringify(data),
         });
         const newData=await result.json();
-        return newData as IUpdateAlergeno;
+        return newData as IUpdateCategoria;
     }
     async delete(id: number): Promise<void> {
         const response = await fetch(`${this.baseURL}/${id}`, {
             method: "DELETE",
         });
         if (!response.ok) {
-            throw new Error(`Error al eliminar el alérgeno con ID ${id}`);
+            throw new Error(`Error al eliminar la categoria con ID ${id}`);
         }
     }
 }

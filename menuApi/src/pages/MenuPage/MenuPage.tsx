@@ -4,12 +4,13 @@ import { AlergenoPage } from "../AlergenoPage/AlergenoPage";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { setActiveSucursal } from "../../redux/slices/sucursalActivaSlice";
+import { CategoriaPage } from "../CategoriaPage/CategoriaPage";
+import styles from "./MenuPage.module.css";
 
 export const MenuPage = () => {
-  const [activePage, setActivePage] = useState<"productos" | "alergenos" | null>(null);
+  const [activePage, setActivePage] = useState<"productos" | "alergenos" | "categorias" | null>(null);
 
   const activeSucursal = useSelector((state: RootState) => state.sucursalActiva.activeSucursal);
-  console.log("Sucursal activa en MenuPage:", activeSucursal);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,12 +21,12 @@ export const MenuPage = () => {
   }, [dispatch, activeSucursal]);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className={styles.menu_page}>
       {/* Sidebar */}
-      <div style={{ width: "250px", padding: "20px", borderRight: "1px solid #ccc" }}>
+      <div className={styles.menu_sidebar}>
         {/* Mostrar el nombre principal solo si no hay una página activa */}
         {!activePage && (
-          <div className="menu__header-contenedor">
+          <div className={styles.menu_header_container}>
             {activeSucursal ? (
               <h2>{activeSucursal.nombre}</h2>
             ) : (
@@ -34,20 +35,24 @@ export const MenuPage = () => {
           </div>
         )}
         <h1>Administración</h1>
-        <div className="button_menu">
+        <div className={styles.button_menu}>
           <button onClick={() => setActivePage("productos")}>
             Productos
           </button>
           <button onClick={() => setActivePage("alergenos")}>
             Alergenos
           </button>
+          <button onClick={() => setActivePage("categorias")}>
+            Categorias
+          </button>
         </div>
       </div>
 
       {/* Content Area */}
-      <div style={{ flex: 1, padding: "20px" }}>
+      <div className={styles.content_area}>
         {activePage === "productos" && <ProductoPage />}
         {activePage === "alergenos" && <AlergenoPage />}
+        {activePage === "categorias" && <CategoriaPage />}
       </div>
     </div>
   );

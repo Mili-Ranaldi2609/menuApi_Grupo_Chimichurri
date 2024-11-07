@@ -1,8 +1,7 @@
-.text-b{
+.text_b{
     font-weight: bold;
 }
-
-.detalleModal-fondo {
+.modal_fondo {
     position: fixed; /* para superponer el contenido */
     top: 0;
     left: 0;
@@ -14,7 +13,7 @@
     align-items: center;
     z-index: 1000; 
 }
-.detalleModal-contenedor {
+.modal_contenedor {
     background-color: white; 
     box-sizing: border-box;
     padding: 20px 32px; 
@@ -23,23 +22,15 @@
     width: 360px; 
 }
 
-.detalleModal-contenedor p{
-    margin: 8px 0;
+.imgDetalle{
+    max-height: 160px;
 }
-.detalleModal__titulo {
+.modal_titulo {
     text-align: center;
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
-.detalleModal__imagen {
-    width: 232px;
-    max-height: 220px;
-    margin: 8px 0px 0px 0px;
-    display: block;
-    margin: 0px auto;
-}
-
-.detalleModal__boton{
+.modal_botones_contenedor button{
     padding: 12px 20px;
     background-color: #526CA5;
     color: white;

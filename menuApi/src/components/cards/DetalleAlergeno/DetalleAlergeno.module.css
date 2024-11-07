@@ -1,7 +1,7 @@
-.text-b{
+.text_b{
     font-weight: bold;
 }
-.modal-fondo {
+.modal_fondo {
     position: fixed; /* para superponer el contenido */
     top: 0;
     left: 0;
@@ -22,9 +22,6 @@
     width: 360px; 
 }
 
-.imgDetalle{
-    max-height: 160px;
-}
 .modal_titulo {
     text-align: center;
     margin-top: 0;
@@ -39,4 +36,7 @@
     border-radius: 20px;
     display: block;
     margin: 0px auto;
+}
+.imagen img{
+    width: 30%
 }

@@ -1,6 +1,6 @@
 // ListSucursales.tsx
 import React, { useEffect, useState } from 'react';
-import "./ListSucursal.css";
+import styles from "./ListSucursal.module.css";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal';
@@ -72,7 +72,7 @@ const ListSucursales: React.FC = () => {
 
     return (
         <div>
-            <div className="sucursales-list">
+            <div className={styles.sucursales_list}>
                 {sucursales.map((sucursal) => (
                     <CardSucursal
                         key={sucursal.id}

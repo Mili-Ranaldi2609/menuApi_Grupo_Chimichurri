@@ -1,40 +1,40 @@
 /* ListProducto.css */
-.productos-list table {
+.productos_list table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.productos-list th,
-.productos-list td {
+.productos_list th,
+.productos_list td {
     border: 1px solid #ccc; /* Ajusta el color según prefieras */
     padding: 8px;
     text-align: left;
 }
 
-.productos-list th {
+.productos_list th {
     background-color: #f4f4f4; /* Color de fondo para los encabezados */
     font-weight: bold;
 }
 
-.productos-list tr:nth-child(even) {
+.productos_list tr:nth-child(even) {
     background-color: #f9f9f9; /* Color alternado para filas pares */
 }
 
-.productos-list tr:hover {
+.productos_list tr:hover {
     background-color: #e6f7ff; /* Color de fondo al pasar el ratón por encima */
 }
 
-.productos-list .card__botones {
+.productos_list .card__botones {
     display: flex;
     gap: 8px; /* Espacio entre los botones */
 }
 
-.productos-list .boton {
+.productos_list #boton {
     cursor: pointer;
     color: #007bff;
     transition: color 0.3s ease;
 }
 
-.productos-list .boton:hover {
+.productos_list #boton:hover {
     color: #0056b3;
 }

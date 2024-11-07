@@ -1,13 +1,15 @@
 import { ICreateProducto } from "../../types/dtos/productos/ICreateProducto";
 import { IProductos } from "../../types/dtos/productos/IProductos";
 import { IUpdateProducto } from "../../types/dtos/productos/IUpdateProducto";
-import { BackendClient } from "../BackendClient";
 import { AbstractProducto } from "./AbstractProducto";
 
 export class ProductoService extends AbstractProducto<IProductos,ICreateProducto,IUpdateProducto>{
-    constructor() {
-        super("http://190.221.207.224:8090/productos"); // URL de la API
-    }
+   
+    constructor(baseUrl: string = "http://190.221.207.224:8090/articulos") {  // URL predeterminada
+            super(baseUrl);
+     }
+    
+    
     create(data: ICreateProducto): Promise<IProductos> {
         throw new Error("Method not implemented.");
     }
@@ -31,7 +33,7 @@ export class ProductoService extends AbstractProducto<IProductos,ICreateProducto
         return data as IProductos;        
     }
     
-    async post(data: ICreateProducto): Promise<ICreateProducto | null> {
+    async post(data: ICreateProducto): Promise<IProductos | null> {
         console.log(data)
         const result=await fetch(`${this.baseURL}`,{
             method:"POST",
@@ -45,7 +47,7 @@ export class ProductoService extends AbstractProducto<IProductos,ICreateProducto
             return null;
         }
         const newData=await result.json();
-        return newData as ICreateProducto;
+        return newData as IProductos;
     }
     
     async put(id: number | undefined, data: IUpdateProducto): Promise<IUpdateProducto> {
@@ -59,13 +61,13 @@ export class ProductoService extends AbstractProducto<IProductos,ICreateProducto
         const newData=await result.json();
         return newData as IUpdateProducto;
     }
-    
     async delete(id: number): Promise<void> {
-        const response = await fetch(`${this.baseUrl}/${id}`, {
-        method: "POST",
+        const response = await fetch(`${this.baseURL}/${id}`, {  // Cambiar a this.baseURL
+            method: "DELETE",
         });
         if (!response.ok) {
             throw new Error(`Error al eliminar el elemento con ID ${id}`);
         }
     }
+    
 }

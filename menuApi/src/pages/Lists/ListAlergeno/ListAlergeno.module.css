@@ -1,40 +1,40 @@
 /* ListProducto.css */
-.alergenos-list table {
+.alergenos_list table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.alergenos-list th,
-.alergenos-list td {
+.alergenos_list th,
+.alergenos_list td {
     border: 1px solid #ccc; /* Ajusta el color según prefieras */
     padding: 8px;
     text-align: left;
 }
 
-.alergenos-list th {
+.alergenos_list th {
     background-color: #f4f4f4; /* Color de fondo para los encabezados */
     font-weight: bold;
 }
 
-.alergenos-list tr:nth-child(even) {
+.alergenos_list tr:nth-child(even) {
     background-color: #f9f9f9; /* Color alternado para filas pares */
 }
 
-.alergenos-list tr:hover {
+.alergenos_list tr:hover {
     background-color: #e6f7ff; /* Color de fondo al pasar el ratón por encima */
 }
 
-.alergenos-list .card__botones {
+.alergenos_list .card__botones {
     display: flex;
     gap: 8px; /* Espacio entre los botones */
 }
 
-.alergenos-list .boton {
+.alergenos_list #boton {
     cursor: pointer;
     color: #007bff;
     transition: color 0.3s ease;
 }
 
-.alergenos-list .boton:hover {
+.alergenos_list #boton:hover {
     color: #0056b3;
 }

@@ -1,4 +1,4 @@
-.card-empresa {
+.card_empresa {
     background-color: #d9d9d9; 
     border-radius: 6px; 
     padding: 20px; 
@@ -9,15 +9,15 @@
     align-content: center;
 }
 
-.card-empresa:hover {
+.card_empresa:hover {
     transform: scale(1.01); /* sobresale al pasar el mause */
 }
-.card-empresa h3 {
+.card_empresa h3 {
     text-align: center;
     margin: 0 0 15px; /* Margen en la parte inferior */
 }
 
-.card-empresa button {
+.card_empresa button {
     padding: 8px 10px; 
     border: none; 
     border-radius: 4px; 
@@ -26,13 +26,13 @@
     cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
     transition: background-color 0.2s;
 }
-.card__contenedor-botones{
+.card__contenedor_botones{
     display: flex; 
     justify-content: center; 
     align-items: center; 
     gap: 10px; 
 }
 
-.card-empresa button:hover {
+.card_empresa button:hover {
     background-color: #0056b3; 
 }

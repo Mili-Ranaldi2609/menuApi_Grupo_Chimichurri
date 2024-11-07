@@ -1,195 +1,183 @@
-import React, { useEffect, useState } from "react";
-import BaseModal from "../BaseModal";
-import { IProductos } from "../../../../types/dtos/productos/IProductos";
+import React, { FormEvent, useEffect, useState } from "react";
 import { ProductoService } from "../../../../services/ProductoService/ProductoService";
+
+import { ISucursal } from "../../../../types/dtos/sucursal/ISucursal";
+import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
+import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
+import { useForm } from "../../../../hooks/useForm";
+import { IProductos } from "../../../../types/dtos/productos/IProductos";
+import BaseModal from "../BaseModal";
 import { ICreateProducto } from "../../../../types/dtos/productos/ICreateProducto";
-import { IImagen } from "../../../../types/IImagen";
 
 interface ProductoModalProps {
     isOpen: boolean;
     onClose: () => void;
-    producto?: IProductos;
-    idCategoria?: number | 0;
-    onSave?: () => Promise<void>;
+    sucursal?: ISucursal;
+    initialForm: ICreateProducto;
+    onSave?: (newProducto: IProductos) => void;  // Propiedad para comunicar el producto creado
+    handleCrearProducto: () => void;
 }
 
-const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, producto }) => {
+const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, sucursal, initialForm, handleCrearProducto, onSave }) => {
     const productoService = new ProductoService("http://190.221.207.224:8090/articulos/create");
-
-    const [formData, setFormData] = useState<ICreateProducto>({
-        denominacion: producto?.denominacion || '',
-        precioVenta:producto?.precioVenta || 0,//parseint
-        descripcion: producto?.descripcion || '',
-        habilitado: producto?.habilitado || false,
-        idCategoria: producto?.categoria?.id || undefined,//parse int
-        codigo: producto?.codigo || '',
-        idAlergenos: producto?.alergenos?.map((alergeno) => alergeno.id) || [],
-        imagenes: producto?.imagenes || [{ name: '', url: '' }] as IImagen[], // 
-    });
+    const [categorias, setCategorias] = useState<ICategorias[]>([]);
+    const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
+    const [showAlergenos, setShowAlergenos] = useState(false);
+    const { onInputChange, formState, setFormState } = useForm<ICreateProducto>(initialForm);
 
     useEffect(() => {
-        if (producto) {
-            setFormData({
-                denominacion: producto?.denominacion || '',
-                precioVenta: producto?.precioVenta || 0,
-                descripcion: producto?.descripcion || '',
-                habilitado: producto?.habilitado || false,
-                idCategoria: producto?.categoria?.id || undefined,
-                codigo: producto?.codigo || '',
-                idAlergenos: producto?.alergenos?.map((alergeno) => alergeno.id) || [],
-                imagenes: producto?.imagenes.length ? producto.imagenes : [{ name: 'nombre_por_defecto', url: '' }],
-            });
+        if (sucursal?.id) {
+            fetch(`http://190.221.207.224:8090/categorias/allCategoriasPorSucursal/${sucursal.id}`)
+                .then((response) => response.json())
+                .then((data) => setCategorias(data))
+                .catch((error) => console.error("Error fetching categorias:", error));
+
+            fetch("http://190.221.207.224:8090/alergenos")
+                .then((response) => response.json())
+                .then((data) => setAlergenos(data))
+                .catch((error) => console.error("Error fetching alergenos:", error));
         }
-    }, [producto]);
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type } = e.target;
-    
-        setFormData((prev) => {
-            const keys = name.split(".");
-            let updatedData: any = { ...prev };
-    
-            keys.reduce((acc, key, index) => {
-                if (index === keys.length - 1) {
-                    if (key.startsWith("idAlergenos")) {
-                        const alergenIndex = Number(key.split(".")[1]);
-                        if (!updatedData.idAlergenos[alergenIndex]) {
-                            updatedData.idAlergenos[alergenIndex] = 0; // Inicializa si no existe
-                        }
-                        acc[keys[0]][alergenIndex] = Number(value); // Asegúrate de convertir a número
-                    } else if (key === "habilitado") {
-                        acc[key] = e.target.checked;
-                    } else if (key.startsWith("imagenes")) {
-                        const imageIndex = Number(key.split(".")[1]);
-                        if (!updatedData.imagenes[imageIndex]) {
-                            updatedData.imagenes[imageIndex] = { name: '', url: '' };
-                        }
-                        acc[keys[0]][imageIndex].url = value;
-                    } else {
-                        acc[key] = type === 'number' ? Number(value) : value;
-                    }
-                } else {
-                    acc[key] = { ...acc[key] };
-                }
-                return acc[key];
-            }, updatedData);
-    
-            return updatedData;
+    }, [sucursal?.id]);
+
+    const handleAlergenosChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value, checked } = event.target;
+        const alergenoId = parseInt(value);
+        setFormState({
+            ...formState,
+            idAlergenos: checked
+                ? [...formState.idAlergenos, alergenoId]
+                : formState.idAlergenos.filter((id: number) => id !== alergenoId),
         });
     };
-    
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleCategoriaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setFormState({
+            ...formState,
+            idCategoria: parseInt(event.target.value),
+        });
+    };
+
+    const handleImagenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const url = event.target.value;
+        setFormState({
+            ...formState,
+            imagenes: [{ name: formState.denominacion, url }],
+        });
+    };
+
+    const onSubmit = async (event: FormEvent<Element>) => {
+        event.preventDefault();
         try {
-            await productoService.post(formData);
-            onClose(); // Cierra el modal
+            const newProducto = await productoService.post(formState); // Llamada al servicio
+
+            if (newProducto) {
+                onSave?.(newProducto);  // Llamamos a `onSave` si está definido
+                handleCrearProducto();  // Llamada a la función para cualquier otra acción requerida
+                onClose();              // Cerramos el modal al finalizar
+            }
         } catch (error) {
-            console.error('Error al guardar el producto:', error);
+            console.error("Error al crear producto:", error);
         }
     };
 
     return (
         isOpen && (
-            <BaseModal title={"Crear Artículo"} onClose={onClose} onSave={handleSubmit}>
-                <input
-                    className="modalProducto__input"
-                    type="text"
-                    name="denominacion"
-                    value={formData.denominacion}
-                    onChange={handleChange}
-                    placeholder="Nombre"
-                    required
-                />
-
-                <div>
-                    <label>Descripción</label>
+            <BaseModal title="Crear Artículo" onClose={onClose} onSave={onSubmit}>
+                <form onSubmit={onSubmit}>
                     <input
                         className="modalProducto__input"
                         type="text"
+                        name="denominacion"
+                        value={formState.denominacion}
+                        onChange={onInputChange}
+                        placeholder="Nombre"
+                        required
+                    />
+                    <div>
+                        <label>Precio</label>
+                        <input
+                            className="modalProducto__input"
+                            type="number"
+                            name="precioVenta"
+                            value={formState.precioVenta}
+                            onChange={onInputChange}
+                            required
+                        />
+                    </div>
+                    <label>
+                        <input
+                            className="modalProducto__input"
+                            type="checkbox"
+                            name="habilitado"
+                            checked={formState.habilitado}
+                            onChange={onInputChange}
+                        />
+                        Habilitado
+                    </label>
+                    <input
+                        className="modalProducto__input"
+                        type="text"
+                        name="codigo"
+                        value={formState.codigo}
+                        onChange={onInputChange}
+                        placeholder="Código"
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="Ingrese una descripcion"
                         name="descripcion"
-                        value={formData.descripcion}
-                        onChange={handleChange}
-                        required
+                        value={formState.descripcion}
+                        onChange={onInputChange}
                     />
-                </div>
-
-                <div>
-                    <label>Precio</label>
                     <input
-                        className="modalProducto__input"
-                        type="number"
-                        name="precioVenta"
-                        value={formData.precioVenta}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
-                <label>
-                    <input
-                        className="modalProducto__input"
-                        type="checkbox"
-                        name="habilitado"
-                        checked={formData.habilitado}
-                        onChange={handleChange}
-                    />
-                    Habilitado
-                </label>
-
-                <input
-                    className="modalProducto__input"
-                    type="text"
-                    name="codigo"
-                    value={formData.codigo}
-                    onChange={handleChange}
-                    placeholder="Código"
-                    required
-                />
-
-                <div>
-                    <label>Nombre Imagen y URL</label>
-                    <input
-                        className="modalProducto__input"
                         type="text"
-                        name="imagenes.[0].name"
-                        value={formData.imagenes[0]?.name || ''}
-                        onChange={handleChange}
-                        placeholder="Nombre de la Imagen"
-                        required
+                        placeholder="Ingrese una imagen"
+                        onChange={handleImagenChange}
+                        value={formState.imagenes[0]?.url || ""}
                     />
-                    <input
-                        className="modalProducto__input"
-                        type="text"
-                        name="imagenes.0.url"
-                        value={formData.imagenes[0]?.url || ''}
-                        onChange={handleChange}
-                        placeholder="URL de la Imagen"
-                        required
-                    />
-                </div>
 
-                <div>
-                    <label>ID Alérgeno</label>
-                    <input
-                        className="modalProducto__input"
-                        type="number"
-                        name="idAlergenos.0"
-                        value={formData.idAlergenos[0] || ''}
-                        onChange={handleChange}
-                    />
-                </div>
+                    <div className="pAlergenosContainer">
+                        <p className="pAlergenos">Seleccione los alergenos</p>
+                        <span
+                            className="material-symbols-outlined"
+                            onClick={() => setShowAlergenos((prev) => !prev)}
+                        >
+                            arrow_drop_down
+                        </span>
+                    </div>
 
-                <div>
-                    <label>ID Categoría</label>
-                    <input
-                        className="modalProducto__input"
-                        type="number"
-                        name="idCategoria"
-                        value={formData.idCategoria || ''}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
+                    {showAlergenos && (
+                        <div className="divAlergenos">
+                            {alergenos.map((alergeno) => (
+                                <div key={alergeno.id} className="divInputs">
+                                    <input
+                                        type="checkbox"
+                                        value={alergeno.id}
+                                        onChange={handleAlergenosChange}
+                                        checked={formState.idAlergenos.includes(alergeno.id)}
+                                    />
+                                    <p>{alergeno.denominacion}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    <select
+                        name="categoria"
+                        id="categoria"
+                        onChange={handleCategoriaChange}
+                        value={formState.idCategoria}
+                    >
+                        <option value="">Seleccione una categoria</option>
+                        {categorias.map((categoria) => (
+                            <option key={categoria.id} value={categoria.id}>
+                                {categoria.denominacion}
+                            </option>
+                        ))}
+                    </select>
+                    <button type="submit">Guardar Producto</button>
+                </form>
             </BaseModal>
         )
     );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store';
 import { Table } from 'react-bootstrap';
-import './ListAlergeno.css';
+import styles from './ListAlergeno.module.css';
 import { IAlergenos } from '../../../types/dtos/alergenos/IAlergenos';
 import ModalUpdateAlergeno from '../../../components/modals/BaseModal/CrearEditarAlergeno/UpdateAlergeno';
 import DetalleAlergeno from '../../../components/cards/DetalleAlergeno/DetalleAlergeno';
@@ -73,7 +73,7 @@ const ListAlergeno: React.FC = () => {
 
     return (
         <div>
-            <div className="alergenos-list">
+            <div className={styles.alergenos_list}>
             <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
@@ -85,9 +85,10 @@ const ListAlergeno: React.FC = () => {
                         {alergenos.map((alergeno) => (
                             <tr key={alergeno.id}>
                                 <td>{alergeno.denominacion}</td>
-                                <td className='card__botones'>
-                                        <span onClick={() => handleShowDetails(alergeno)} className="boton material-symbols-outlined">visibility</span>
-                                        <span onClick={() => handleEdit(alergeno)} className="boton material-symbols-outlined">edit</span>
+                                <td className={styles.card__botones}>
+                                        <span onClick={() => handleShowDetails(alergeno)} id={styles.boton} className="material-symbols-outlined">visibility</span>
+                                        <span onClick={() => handleEdit(alergeno)} id={styles.boton} className="material-symbols-outlined">edit</span>
+                                        
                                 </td>
                             </tr>
                         ))}
