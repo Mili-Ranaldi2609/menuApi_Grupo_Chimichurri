@@ -8,6 +8,6 @@ export interface ICategorias {
   sucursal?: ISucursal | undefined;
   sucursales?:ISucursal[] ;
   subCategorias: ICategorias[];
-  categoriaPadre?: ICategorias | null;
+  categoriaPadre?: ICategorias | undefined;
   articulos: IProductos | undefined;
 }

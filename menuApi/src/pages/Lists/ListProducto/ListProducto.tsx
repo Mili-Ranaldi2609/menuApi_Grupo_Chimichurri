@@ -24,11 +24,17 @@ const ListProducto: React.FC = () => {
             console.error("No hay sucursal activa");
             return;
         }
-
+    
         try {
             setLoading(true);
-            const data = await productoService.getAll();
-            setProductos(data);
+            const response = await fetch(`http://190.221.207.224:8090/articulos/porSucursal/${activeSucursal.id}`);
+                    
+            if (!response.ok) {
+                throw new Error('Error al obtener los artículos');
+            }
+    
+            const data = await response.json();  // Convierte la respuesta en formato JSON
+            setProductos(data);  // Actualiza el estado con los productos
         } catch (err) {
             console.error("Error al obtener los artículos de la sucursal:", err);
             setError('Error al obtener los artículos de la sucursal');
@@ -36,6 +42,7 @@ const ListProducto: React.FC = () => {
             setLoading(false);
         }
     };
+    
 
     useEffect(() => {
         fetchProductos();

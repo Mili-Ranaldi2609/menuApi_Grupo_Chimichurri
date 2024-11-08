@@ -47,13 +47,13 @@ const ModalUpdateCategoria: React.FC<CategoriaModalProps> = ({
                 onClose();
             }
         } catch (error) {
-            console.error("Error al crear producto:", error);
+            console.error("Error al crear categoria:", error);
         }
     };
 
     return (
         isOpen && (
-            <BaseModal title="Modificar Artículo" onClose={onClose} onSave={onSubmit}>
+            <BaseModal title="Modificar Categoria" onClose={onClose} onSave={onSubmit}>
                 <form onSubmit={onSubmit}>
                     <input
                         className="modalCategoria__input"

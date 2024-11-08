@@ -13,8 +13,8 @@ const DetalleSucursal: React.FC<DetalleSucursalProps> = ({ sucursal, onClose }) 
     <div className={styles.modal_fondo}>
       <div className={styles.modal_contenedor}>
         <h2 className={styles.modal_titulo}>Detalle de Sucursal</h2>
-      <p><span className={styles.text_b}>Nombre: </span> Nombre: {sucursal.nombre}</p>
-      <p><span className={styles.text_b}>Empresa: </span> {sucursal.empresa.name}</p>
+      <p><span className={styles.text_b}>Nombre: </span>{sucursal.nombre}</p>
+      <p><span className={styles.text_b}>Empresa: </span> {sucursal.empresa.id}</p>
       <p><span className={styles.text_b}>Domcilio: </span> {sucursal.domicilio.calle} {sucursal.domicilio.numero}, {sucursal.domicilio.cp} - {sucursal.domicilio.localidad.nombre},  {sucursal.domicilio.localidad.provincia.nombre}
       </p>
       <p><span className={styles.text_b}>¿Casa Matriz?: </span> {sucursal.esCasaMatriz}</p>

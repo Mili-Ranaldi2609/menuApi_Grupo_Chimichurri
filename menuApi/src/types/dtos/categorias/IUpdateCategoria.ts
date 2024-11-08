@@ -1,10 +1,10 @@
 import { baseDto } from "../baseDto/baseDto";
 
 export interface IUpdateCategoria extends baseDto {
-  id: number;
+  id: number | undefined;
   denominacion: string;
-  eliminado: boolean;
+  eliminado?: boolean;
   idEmpresa: number;
-  idSucursales: number[] | undefined
+  idSucursales?: number[] | undefined
   idCategoriaPadre?: number | null;
 }
