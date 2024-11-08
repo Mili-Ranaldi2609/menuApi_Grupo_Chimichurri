@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
-import ModalCreateAlergeno from "../../components/modals/BaseModal/CrearEditarAlergeno/CreateAlergeno";
+import ModalCreateCategoria from "../../components/modals/BaseModal/CrearEditarAlergeno/CreateAlergeno";
 import ListAlergeno from "../Lists/ListAlergeno/ListAlergeno";
 export const AlergenoPage =  ()=> {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,7 +34,7 @@ export const AlergenoPage =  ()=> {
           )}
         </div>
 
-        <ModalCreateAlergeno
+        <ModalCreateCategoria
           isOpen={isModalOpen}
           onClose={handleCloseModal} alergeno={alergenoi}        />
       </div>

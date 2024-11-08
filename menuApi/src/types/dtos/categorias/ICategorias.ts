@@ -5,8 +5,9 @@ export interface ICategorias {
   id: number | undefined;
   denominacion: string;
   eliminado: boolean;
-  sucursales: ISucursal[];
+  sucursal?: ISucursal | undefined;
+  sucursales?:ISucursal[] ;
   subCategorias: ICategorias[];
   categoriaPadre?: ICategorias | null;
-  articulos: IProductos;
+  articulos: IProductos | undefined;
 }

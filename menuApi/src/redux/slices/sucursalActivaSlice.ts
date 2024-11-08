@@ -12,7 +12,7 @@ const initialState: ActiveSucursalState = {
 
 // Slice para manejar la empresa activa
 export const ActiveSucursalSlice = createSlice({
-    name: "ActiveSucursal",
+    name: "ActiveCategoria",
     initialState,
     reducers: {
         setActiveSucursal: (state, action: PayloadAction<ISucursal>) => {

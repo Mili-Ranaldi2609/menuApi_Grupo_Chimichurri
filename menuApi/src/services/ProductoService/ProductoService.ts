@@ -8,16 +8,6 @@ export class ProductoService extends AbstractProducto<IProductos,ICreateProducto
     constructor(baseUrl: string = "http://190.221.207.224:8090/articulos") {  // URL predeterminada
             super(baseUrl);
      }
-    
-    
-    create(data: ICreateProducto): Promise<IProductos> {
-        throw new Error("Method not implemented.");
-    }
-    update(id: number, data: IUpdateProducto): Promise<IProductos> {
-        throw new Error("Method not implemented.");
-    }
-
-    
     async getAll(): Promise<IProductos[]> {
         const response=await fetch(`${this.baseURL}`);
         const data= await response.json();
