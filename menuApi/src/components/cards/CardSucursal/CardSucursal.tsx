@@ -26,9 +26,9 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal, onView, onEdit })
       {sucursal.logo ? (
         <img className={styles.img_card_sucursal} src={sucursal.logo} alt="Logo de sucursal" />
       ) : (
-        <span className="material-symbols-outlined img-placeholder icono">add_a_photo</span>
+        <span className="material-symbols-outlined img-placeholder" id={styles.icono}>add_a_photo</span>
       )}
-      <div className='card__contenedor_botones'>
+      <div className={styles.card__contenedor_botones}>
         <div className={styles.cardSucursal__botones}>
           <span onClick={() => onView(sucursal)} className="material-symbols-outlined" id={styles.boton}>visibility</span>
           <span onClick={() => onEdit(sucursal)} className="material-symbols-outlined" id={styles.boton}>edit</span>

@@ -22,37 +22,36 @@ export const MenuPage = () => {
 
   return (
     <div className={styles.menu_page}>
-      {/* Sidebar */}
-      <div className={styles.menu_sidebar}>
-        {/* Mostrar el nombre principal solo si no hay una página activa */}
-        {!activePage && (
-          <div className={styles.menu_header_container}>
-            {activeSucursal ? (
-              <h2>{activeSucursal.nombre}</h2>
-            ) : (
-              <h2>Error Al Cargar</h2>
-            )}
-          </div>
-        )}
-        <h1>Administración</h1>
-        <div className={styles.button_menu}>
-          <button onClick={() => setActivePage("productos")}>
-            Productos
-          </button>
-          <button onClick={() => setActivePage("alergenos")}>
-            Alergenos
-          </button>
-          <button onClick={() => setActivePage("categorias")}>
-            Categorias
-          </button>
-        </div>
+      <div className={styles.page_header}>
+        <h1>{activeSucursal?.nombre}</h1>
       </div>
 
-      {/* Content Area */}
-      <div className={styles.content_area}>
-        {activePage === "productos" && <ProductoPage />}
-        {activePage === "alergenos" && <AlergenoPage />}
-        {activePage === "categorias" && <CategoriaPage />}
+      <div className={styles.page_content}>
+        {/* Sidebar */}
+        <div className={styles.menu_sidebar}>
+          <h2>Administración</h2>
+          <div className={styles.button_menu}>
+            <button onClick={() => setActivePage("productos")} 
+            className={activePage === "productos" ? styles.activeButton : ""}>
+              Productos
+            </button>
+            <button onClick={() => setActivePage("alergenos")}
+            className={activePage === "alergenos" ? styles.activeButton : ""}>
+              Alergenos
+            </button>
+            <button onClick={() => setActivePage("categorias")}
+            className={activePage === "categorias" ? styles.activeButton : ""}>
+              Categorias
+            </button>
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className={styles.content_area}>
+          {activePage === "productos" && <ProductoPage />}
+          {activePage === "alergenos" && <AlergenoPage />}
+          {activePage === "categorias" && <CategoriaPage />}
+        </div>
       </div>
     </div>
   );

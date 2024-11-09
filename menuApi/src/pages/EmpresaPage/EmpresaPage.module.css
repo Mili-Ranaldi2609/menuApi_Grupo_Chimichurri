@@ -1,3 +1,7 @@
+*{
+    margin: 0;
+    font-family:Arial, Helvetica, sans-serif;
+}
 .pageEmpresaContainer {
     display: flex;
     flex-direction: row;
@@ -6,7 +10,7 @@
 }
 
 .empresaList {
-    position: fixed;
+    /* position: fixed; */
     display: flex;
     flex-direction: column;
     background-color: #526CA5;
@@ -16,7 +20,10 @@
 }
 .empresaList_title{
     color: white;
-    text-align: center;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; 
+    height: 22vh;
 }
 .empresaList_container {
     height: 88vh;

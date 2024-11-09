@@ -1,6 +1,7 @@
 .text_b{
     font-weight: bold;
 }
+
 .modal_fondo {
     position: fixed; /* para superponer el contenido */
     top: 0;
