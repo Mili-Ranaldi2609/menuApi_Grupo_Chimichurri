@@ -1,13 +1,12 @@
 // ListSucursales.tsx
 import React, { useEffect, useState } from 'react';
 import styles from "./ListSucursal.module.css";
-import { useDispatch, useSelector } from 'react-redux';
-
 import { ISucursal } from '../../../types/dtos/sucursal/ISucursal';
 import { RootState } from '../../../redux/store/store';
 import DetalleSucursal from '../../../components/cards/CardSucursal/DetalleSucursal/DetalleSucursal';
 import CardSucursal from '../../../components/cards/CardSucursal/CardSucursal';
 import ModalUpdateSucursal from '../../../components/modals/BaseModal/CrearEditarSucursal/UpdateSucursal';
+import { useSelector } from 'react-redux';
 const ListSucursales: React.FC = () => {
     const activeEmpresa = useSelector((state: RootState) => state.empresaActiva.activeEmpresa);
     const [sucursales, setSucursales] = useState<ISucursal[]>([]);
@@ -47,7 +46,6 @@ const ListSucursales: React.FC = () => {
     if (error) {
         return <div>{error}</div>;
     }
-    const dispatch = useDispatch();
 
     const handleShowDetails = (sucursal: ISucursal) => {
       

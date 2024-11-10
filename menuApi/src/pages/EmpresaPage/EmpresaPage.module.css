@@ -31,3 +31,8 @@
     margin-left: 22vw;
     overflow-y: auto;
 }
+.sucursalHidden {
+    z-index: -1;
+    opacity: 0.5;
+    pointer-events: none;
+}

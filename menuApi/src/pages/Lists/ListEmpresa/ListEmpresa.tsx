@@ -87,13 +87,14 @@ const EmpresaList: React.FC = () => {
           empresa={isEditMode && selectedEmpresa ? selectedEmpresa : undefined} // Si es edición y hay empresa seleccionada, pasa la empresa; si no, undefined para crear
         />
       )}
-      
-      {selectedEmpresa && !isEditMode && (
+
+    {selectedEmpresa && !isEditMode && !isModalOpen && (
         <DetalleEmpresa
-          empresa={selectedEmpresa}
-          onClose={handleCloseModal}
+            empresa={selectedEmpresa}
+            onClose={handleCloseModal}
         />
-      )}
+    )}
+
     </div>
   );
 };

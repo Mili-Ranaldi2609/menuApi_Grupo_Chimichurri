@@ -29,6 +29,7 @@ export const EmpresaPage = () => {
                 />
                 <div className={styles.pageSucursalContainer}>
                     <SucursalPage />
+
                 </div>
             </div> }
         </div>
