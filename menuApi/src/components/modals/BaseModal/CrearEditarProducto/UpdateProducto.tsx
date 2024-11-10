@@ -73,8 +73,10 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
         e.preventDefault();
         try {
             await productoService.put(formData.id, formData);
+            console.log(formData);
+            
             onClose(); // Cierra el modal
-            window.location.reload();
+            
         } catch (error) {
             console.error('Error al guardar el producto:', error);
         }

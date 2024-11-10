@@ -7,7 +7,6 @@
     transition: transform 0.2s; 
     align-items: center;
     position: relative;
-    z-index: 1;
 }
 
 .card_sucursal:hover {
@@ -26,10 +25,10 @@
     display: block;
     max-height: 120px;
     margin: 0 auto ;
-    margin-bottom: 16px;
+    margin-bottom: 28px;
 }
 /* icono de camara */
-.icono{
+#icono{
     font-size: 100px;
     display: flex;
     align-items: center;
@@ -38,7 +37,10 @@
 }
 
 
-
+.card__contenedor_botones{
+    display: flex;
+    justify-content: center;
+}
 .cardSucursal__botones {
     position: absolute;
     bottom: 16px; 

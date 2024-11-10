@@ -6,10 +6,11 @@ import { RootState } from "../../redux/store/store";
 import { setActiveSucursal } from "../../redux/slices/sucursalActivaSlice";
 import { CategoriaPage } from "../CategoriaPage/CategoriaPage";
 import styles from "./MenuPage.module.css";
+import { useNavigate } from "react-router-dom";
 
 export const MenuPage = () => {
   const [activePage, setActivePage] = useState<"productos" | "alergenos" | "categorias" | null>(null);
-
+  const navigate = useNavigate(); 
   const activeSucursal = useSelector((state: RootState) => state.sucursalActiva.activeSucursal);
   const dispatch = useDispatch();
 
@@ -22,37 +23,37 @@ export const MenuPage = () => {
 
   return (
     <div className={styles.menu_page}>
-      {/* Sidebar */}
-      <div className={styles.menu_sidebar}>
-        {/* Mostrar el nombre principal solo si no hay una página activa */}
-        {!activePage && (
-          <div className={styles.menu_header_container}>
-            {activeSucursal ? (
-              <h2>{activeSucursal.nombre}</h2>
-            ) : (
-              <h2>Error Al Cargar</h2>
-            )}
-          </div>
-        )}
-        <h1>Administración</h1>
-        <div className={styles.button_menu}>
-          <button onClick={() => setActivePage("productos")}>
-            Productos
-          </button>
-          <button onClick={() => setActivePage("alergenos")}>
-            Alergenos
-          </button>
-          <button onClick={() => setActivePage("categorias")}>
-            Categorias
-          </button>
-        </div>
+      <div className={styles.page_header}>
+        <span  onClick={() => navigate("/principal")} id={styles.back_button} className="material-symbols-outlined">arrow_back</span>
+        <h1>{activeSucursal?.nombre}</h1>
       </div>
 
-      {/* Content Area */}
-      <div className={styles.content_area}>
-        {activePage === "productos" && <ProductoPage />}
-        {activePage === "alergenos" && <AlergenoPage />}
-        {activePage === "categorias" && <CategoriaPage />}
+      <div className={styles.page_content}>
+        {/* Sidebar */}
+        <div className={styles.menu_sidebar}>
+          <h2>Administración</h2>
+          <div className={styles.button_menu}>
+            <button onClick={() => setActivePage("productos")} 
+            className={activePage === "productos" ? styles.activeButton : ""}>
+              Productos
+            </button>
+            <button onClick={() => setActivePage("alergenos")}
+            className={activePage === "alergenos" ? styles.activeButton : ""}>
+              Alergenos
+            </button>
+            <button onClick={() => setActivePage("categorias")}
+            className={activePage === "categorias" ? styles.activeButton : ""}>
+              Categorias
+            </button>
+          </div>
+        </div>
+
+        {/* Content Area */}
+        <div className={styles.content_area}>
+          {activePage === "productos" && <ProductoPage />}
+          {activePage === "alergenos" && <AlergenoPage />}
+          {activePage === "categorias" && <CategoriaPage />}
+        </div>
       </div>
     </div>
   );

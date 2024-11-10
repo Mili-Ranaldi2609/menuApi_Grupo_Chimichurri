@@ -66,6 +66,7 @@ const ModalCreateAlergeno: React.FC<AlergenoModalProps> = ({ isOpen, onClose,  a
             await alergenoService.post(formData)
                 // Creación de una nueva sucursal
             onClose(); // Cierra el modal
+            window.location.reload()
         } catch (error) {
             console.error('Error al guardar el alergeno:', error);
         }

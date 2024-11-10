@@ -1,30 +1,81 @@
 /* MenuPage.css */
-
+*{
+  box-sizing: border-box;
+}
 .menu_page {
+  width: 100vw;
+  height: 100vh;
+}
+.page_header{
+  display: flex;
+  background-color: #526CA5;
+  height: 10vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+.page_header h1{
+  color: white;
+  font-weight: normal;
+}
+
+.page_content{
+  flex-grow: 1;
   display: flex;
 }
 
 .menu_sidebar {
-  width: 250px;
+  height: 90vh;
+  width: 20vw;
   padding: 20px;
-  border-right: 1px solid #ccc;
+  background-color: #DCE4FF;
 }
-
-.menu_header_container h2 {
-  font-size: 1.5rem;
-  color: #333;
+.menu_sidebar h2{
+  font-weight: normal;
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 16px;
 }
 
 .button_menu button {
+  background-color: #DCE4FF;
+  border: 1px solid #526CA5;
+  border-radius: 4px;
   display: block;
   width: 100%;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 16px;
+  margin: 8px 0;
   font-size: 1rem;
   cursor: pointer;
 }
 
+.button_menu button:hover {
+  background-color: #B4C2E1;
+}
+
+.button_menu .activeButton {
+  background-color: #526CA5;
+  color: white;
+}
+
 .content_area {
-  flex: 1;
+  display: flex;
+  width: 80vw;
+  height: 90vh;
   padding: 20px;
+  overflow-y: auto;
+}
+
+#back_button {
+  position: absolute; /* Fija la posición del icono en el header */
+  left: 20px; /* Margen desde el borde izquierdo */
+  font-size: 2rem; /* Tamaño de la flecha */
+  color: white; /* Color de la flecha */
+  cursor: pointer; /* Cambia el cursor a pointer para indicar que es interactivo */
+  transition: transform 0.2s ease, color 0.2s ease; /* Animación para hover */
+}
+
+#back_button:hover {
+  color: #B4C2E1; /* Cambia el color de la flecha al pasar el mouse */
+  transform: scale(1.1); /* Aumenta ligeramente el tamaño al hacer hover */
 }
