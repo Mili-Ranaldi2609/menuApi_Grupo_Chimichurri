@@ -84,6 +84,7 @@ const ListCategoria: React.FC = () => {
         setIsEditMode(false);
         setIsCreateSubCategoriaModalOpen(false); 
         setIsUpdateSubCategoriaModalOpen(false);
+        
     };
     const handleModificarSubCategoria = (updatedSubCategoria: ICategorias) => {
         setCategorias((prevCategorias) =>
@@ -96,7 +97,7 @@ const ListCategoria: React.FC = () => {
                         ),
                     };
                 }
-                return categoria;
+                return updatedSubCategoria;
             })
         );
     };
@@ -122,6 +123,7 @@ const ListCategoria: React.FC = () => {
     const handleCreateSubCategoria = (categoria: ICategorias) => {
         setSelectedCategoria(categoria); // Guarda la categoría padre seleccionada
         setIsCreateSubCategoriaModalOpen(true); // Abre el modal de creación de subcategoría
+        
     };
 
     const initialForm: IUpdateCategoria = selectedCategoria ? {
