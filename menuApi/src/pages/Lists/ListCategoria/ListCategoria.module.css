@@ -1,0 +1,31 @@
+.categorias_tabla_container{
+    width: 100%;
+}
+.categoria_container {
+    width: 100%;
+    background-color: #F8F7F6;
+    padding: 8px 16px; 
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 4px solid #ddd; /* ver tamaño de linea*/
+}
+
+.categoria_text {
+    font-size: 1rem;
+    color: #333;
+    /* width: 70%; */
+}
+
+.categoria_icons {
+    display: flex;
+    gap: 16px; 
+    color: #526CA5; 
+    cursor: pointer;
+    font-size: 1.2rem;
+    align-items: center;
+}
+
+.categoria_icons span:hover {
+    color: #2b3e8a; 
+}

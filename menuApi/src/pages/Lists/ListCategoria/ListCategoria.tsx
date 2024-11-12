@@ -1,4 +1,5 @@
 import { Table } from "react-bootstrap";
+import styles from "./ListCategoria.module.css";
 import ModalUpdateCategoria from "../../../components/modals/BaseModal/CrearEditarCategorias/UpdateCategoria";
 import { ICategorias } from "../../../types/dtos/categorias/ICategorias";
 import { RootState } from "../../../redux/store/store";
@@ -143,24 +144,18 @@ const ListCategoria: React.FC = () => {
     return (
         <div>
             <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>Denominación</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <tbody className={styles.categorias_tabla_container}>
                     {categorias.map((categoria) => (
                         <React.Fragment key={categoria.id}>
-                            <tr>
-                                <td>{categoria.denominacion}</td>
-                                <td>
-                                <span
-                                    onClick={() => handleToggleSubcategories(categoria.id!, categoria)}
-                                    className="material-symbols-outlined"
-                                >
-                                    {isSubcategoriesVisible[categoria.id!] ? "arrow_drop_up" : "arrow_drop_down"}
-                                </span>
+                            <tr className={styles.categoria_container}>
+                                <td className={styles.categoria_text}>{categoria.denominacion}</td>
+                                <td className={styles.categoria_icons}>
+                                    <span
+                                        onClick={() => handleToggleSubcategories(categoria.id!, categoria)}
+                                        className="material-symbols-outlined"
+                                    >
+                                        {isSubcategoriesVisible[categoria.id!] ? "arrow_drop_up" : "arrow_drop_down"}
+                                    </span>
 
                                     <span onClick={() => handleEdit(categoria)} className="material-symbols-outlined">edit</span>
                                     <span
@@ -205,7 +200,7 @@ const ListCategoria: React.FC = () => {
                     idEmpresa={activeSucursal?.empresa.id}
                 />
             )}
-             {isUpdateSubCategoriaModalOpen && selectedSubCategoria && (
+            {isUpdateSubCategoriaModalOpen && selectedSubCategoria && (
             <ModalUpdateSubCategoria
                 isOpen={isUpdateSubCategoriaModalOpen}
                 onClose={handleCloseModal}

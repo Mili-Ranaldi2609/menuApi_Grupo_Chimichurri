@@ -64,18 +64,21 @@
   height: 90vh;
   padding: 20px;
   overflow-y: auto;
+  background-color: #F8F7F6;
 }
 
 #back_button {
-  position: absolute; /* Fija la posición del icono en el header */
-  left: 20px; /* Margen desde el borde izquierdo */
-  font-size: 2rem; /* Tamaño de la flecha */
-  color: white; /* Color de la flecha */
-  cursor: pointer; /* Cambia el cursor a pointer para indicar que es interactivo */
-  transition: transform 0.2s ease, color 0.2s ease; /* Animación para hover */
+  position: absolute; 
+  left: 32px; 
+  font-size: 2rem; 
+  color: white; 
+  cursor: pointer; 
+  transition: transform 0.2s ease, color 0.2s ease; 
+  border: 1px solid white;
+  padding: 2px 20px;
 }
 
 #back_button:hover {
-  color: #B4C2E1; /* Cambia el color de la flecha al pasar el mouse */
-  transform: scale(1.1); /* Aumenta ligeramente el tamaño al hacer hover */
+  color: #B4C2E1; 
+  transform: scale(1.1); 
 }
