@@ -75,8 +75,9 @@ const ListAlergeno: React.FC = () => {
             await alergenoService.delete(id); // Llama al método delete del servicio
             setAlergenos(alergenos.filter(alergeno => alergeno.id !== id)); // Actualiza el estado
         } catch (error) {
+            alert("Error al eliminar el alergeno, producto asociado al mismo, ")
             console.error("Error al eliminar el alergeno:", error);
-            setError('Error al eliminar el alergeno');
+            
         }
     };
 
