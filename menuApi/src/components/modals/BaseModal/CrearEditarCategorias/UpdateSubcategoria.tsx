@@ -15,7 +15,7 @@ interface SubCategoriaModalProps {
 }
 
 
-const ModalUpdateSubCategoria: React.FC<SubCategoriaModalProps> = ({ isOpen, onClose,idCategoriaPadre,categoria, idEmpresa}) => {
+const ModalUpdateSubCategoria: React.FC<SubCategoriaModalProps> = ({ isOpen, onClose,idCategoriaPadre,categoria, idEmpresa,handleModificarSubCategoria}) => {
     const categoriaService=new CategoriasService("http://190.221.207.224:8090/categorias/update")
     
     const [formData, setFormData] = useState<IUpdateCategoria>({
@@ -56,9 +56,17 @@ const ModalUpdateSubCategoria: React.FC<SubCategoriaModalProps> = ({ isOpen, onC
                 return;
             }
             
-            await categoriaService.put(formData.id, formData);
+            const updatedData=await categoriaService.put(formData.id, formData);
+            if (updatedData) {
+                const newCategoria: ICategorias = {
+                    ...updatedData,
+                    id: updatedData.id,
+                    denominacion: updatedData.denominacion,
+                    // Asegúrate de incluir otras propiedades necesarias en ICategorias
+                };
+            handleModificarSubCategoria(newCategoria)
             onClose(); // Cierra el modal
-        } catch (error) {
+        }} catch (error) {
             console.error('Error al actualizar la subcategoría:', error);
         }
     };

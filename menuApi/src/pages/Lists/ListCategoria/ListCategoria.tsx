@@ -1,4 +1,5 @@
 import { Table } from "react-bootstrap";
+import styles from "./ListCategoria.module.css";
 import ModalUpdateCategoria from "../../../components/modals/BaseModal/CrearEditarCategorias/UpdateCategoria";
 import { ICategorias } from "../../../types/dtos/categorias/ICategorias";
 import { RootState } from "../../../redux/store/store";
@@ -84,23 +85,8 @@ const ListCategoria: React.FC = () => {
         setIsEditMode(false);
         setIsCreateSubCategoriaModalOpen(false); 
         setIsUpdateSubCategoriaModalOpen(false);
-        
     };
-    const handleModificarSubCategoria = (updatedSubCategoria: ICategorias) => {
-        setCategorias((prevCategorias) =>
-            prevCategorias.map((categoria) => {
-                if (categoria.id === updatedSubCategoria.categoriaPadre?.id) {
-                    return {
-                        ...categoria,
-                        subCategorias: categoria.subCategorias?.map((subcategoria) =>
-                            subcategoria.id === updatedSubCategoria.id ? updatedSubCategoria : subcategoria
-                        ),
-                    };
-                }
-                return updatedSubCategoria;
-            })
-        );
-    };
+    
     
     const handleModificarCategoria = (updatedCategoria: ICategorias) => {
         setCategorias((prevCategorias) => 
@@ -123,8 +109,25 @@ const ListCategoria: React.FC = () => {
     const handleCreateSubCategoria = (categoria: ICategorias) => {
         setSelectedCategoria(categoria); // Guarda la categoría padre seleccionada
         setIsCreateSubCategoriaModalOpen(true); // Abre el modal de creación de subcategoría
-        
     };
+    
+    const handleModificarSubCategoria = (updatedSubCategoria: ICategorias) => {
+        setCategorias((prevCategorias) =>
+            prevCategorias.map((categoria) => {
+                if (categoria.id === updatedSubCategoria.categoriaPadre?.id) {
+                    return {
+                        ...categoria,
+                        subCategorias: categoria.subCategorias?.map((subcategoria) =>
+                            subcategoria.id === updatedSubCategoria.id ? updatedSubCategoria : subcategoria
+                        ),
+                    };
+                }
+                return categoria;
+            })
+        );
+        setIsUpdateSubCategoriaModalOpen(false); // Cierra el modal de actualización de subcategoría
+    };
+    
 
     const initialForm: IUpdateCategoria = selectedCategoria ? {
         id: selectedCategoria.id!,
@@ -145,24 +148,18 @@ const ListCategoria: React.FC = () => {
     return (
         <div>
             <Table striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>Denominación</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <tbody className={styles.categorias_tabla_container}>
                     {categorias.map((categoria) => (
                         <React.Fragment key={categoria.id}>
-                            <tr>
-                                <td>{categoria.denominacion}</td>
-                                <td>
-                                <span
-                                    onClick={() => handleToggleSubcategories(categoria.id!, categoria)}
-                                    className="material-symbols-outlined"
-                                >
-                                    {isSubcategoriesVisible[categoria.id!] ? "arrow_drop_up" : "arrow_drop_down"}
-                                </span>
+                            <tr className={styles.categoria_container}>
+                                <td className={styles.categoria_text}>{categoria.denominacion}</td>
+                                <td className={styles.categoria_icons}>
+                                    <span
+                                        onClick={() => handleToggleSubcategories(categoria.id!, categoria)}
+                                        className="material-symbols-outlined"
+                                    >
+                                        {isSubcategoriesVisible[categoria.id!] ? "arrow_drop_up" : "arrow_drop_down"}
+                                    </span>
 
                                     <span onClick={() => handleEdit(categoria)} className="material-symbols-outlined">edit</span>
                                     <span
@@ -198,7 +195,8 @@ const ListCategoria: React.FC = () => {
                 />
             )}
 
-            {isCreateSubCategoriaModalOpen && selectedCategoria && (
+          
+                {isCreateSubCategoriaModalOpen && selectedCategoria && (
                 <ModalCreateSubCategoria
                     isOpen={isCreateSubCategoriaModalOpen}
                     onClose={handleCloseModal}  // Cierra el modal de subcategoría
@@ -207,15 +205,18 @@ const ListCategoria: React.FC = () => {
                     idEmpresa={activeSucursal?.empresa.id}
                 />
             )}
-             {isUpdateSubCategoriaModalOpen && selectedSubCategoria && (
-            <ModalUpdateSubCategoria
-                isOpen={isUpdateSubCategoriaModalOpen}
-                onClose={handleCloseModal}
-                categoria={selectedSubCategoria}
-                idCategoriaPadre={selectedSubCategoria?.categoriaPadre?.id || activeCategoria?.id} // Usar activeCategoria como respaldo
-                idEmpresa={activeSucursal?.empresa.id}
-                handleModificarSubCategoria={handleModificarSubCategoria}
-            />
+            {isUpdateSubCategoriaModalOpen && selectedSubCategoria && (
+       
+       
+       <ModalUpdateSubCategoria
+           isOpen={isUpdateSubCategoriaModalOpen}
+           onClose={handleCloseModal}
+           categoria={selectedSubCategoria}
+           idCategoriaPadre={selectedSubCategoria?.categoriaPadre?.id || activeCategoria?.id}
+           idEmpresa={activeSucursal?.empresa.id}
+           handleModificarSubCategoria={handleModificarSubCategoria}
+       />
+       
         )}
 
 

@@ -6,6 +6,7 @@ import styles from './ListAlergeno.module.css';
 import { IAlergenos } from '../../../types/dtos/alergenos/IAlergenos';
 import ModalUpdateAlergeno from '../../../components/modals/BaseModal/CrearEditarAlergeno/UpdateAlergeno';
 import DetalleAlergeno from '../../../components/cards/DetalleAlergeno/DetalleAlergeno';
+import { AlergenoService } from '../../../services/AlergenoService/AlergenoService';
 
 const ListAlergeno: React.FC = () => {
     const activeSucursal = useSelector((state: RootState) => state.sucursalActiva.activeSucursal);
@@ -15,7 +16,7 @@ const ListAlergeno: React.FC = () => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedAlergeno, setSelectedAlergeno] = useState<IAlergenos | null>(null);
-
+    const alergenoService= new AlergenoService(`http://190.221.207.224:8090/alergenos`)
     useEffect(() => {
         const fetchAlergenos = async () => {
             if (!activeSucursal) {
@@ -69,7 +70,15 @@ const ListAlergeno: React.FC = () => {
         setIsModalOpen(false);
         setIsEditMode(false); // Añade esta línea para reiniciar el estado de edición
     };
-    
+    const handleDelete = async (id: number) => {
+        try {
+            await alergenoService.delete(id); // Llama al método delete del servicio
+            setAlergenos(alergenos.filter(alergeno => alergeno.id !== id)); // Actualiza el estado
+        } catch (error) {
+            console.error("Error al eliminar el alergeno:", error);
+            setError('Error al eliminar el alergeno');
+        }
+    };
 
     return (
         <div>
@@ -88,6 +97,7 @@ const ListAlergeno: React.FC = () => {
                                 <td className={styles.card__botones}>
                                         <span onClick={() => handleShowDetails(alergeno)} id={styles.boton} className="material-symbols-outlined">visibility</span>
                                         <span onClick={() => handleEdit(alergeno)} id={styles.boton} className="material-symbols-outlined">edit</span>
+                                        <span onClick={() => handleDelete(alergeno.id)} id={styles.boton}className="material-symbols-outlined">delete</span>
                                         
                                 </td>
                             </tr>

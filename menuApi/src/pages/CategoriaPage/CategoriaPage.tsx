@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import styles from "./CategoriaPage.module.css"
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { ICategorias } from "../../types/dtos/categorias/ICategorias";
@@ -22,16 +23,10 @@ export const CategoriaPage =  ()=> {
   };
 
   return (
-    <div className="pageCategoria_container">
+    <div className={styles.pageCategoria_container}>
       <div className="">
-        <div className="categoria__header_contenedor">
-          <button className="categoria__boton" onClick={handleOpenModal}>Agregar Categoria</button>
-          
-          {activeSucursal ? (
-            <h2>Categorias en: {activeSucursal.nombre}</h2>
-          ) : (
-            <h2>Categorias</h2>
-          )}
+        <div className={styles.categoria__boton_contenedor}>
+          <button className={styles.categoria__boton} onClick={handleOpenModal}>Agregar Categoria</button>
         </div>
 
         <ModalCreateCategoria
@@ -39,7 +34,7 @@ export const CategoriaPage =  ()=> {
           onClose={handleCloseModal} categoria={categoriai}    idEmpresa={activeSucursal?.empresa.id}    />
       </div>
 
-      <div className="categoria__contenedorCard">
+      <div className={styles.categoria__contenedorCard}>
         <ListCategoria/>
       </div>
     </div>

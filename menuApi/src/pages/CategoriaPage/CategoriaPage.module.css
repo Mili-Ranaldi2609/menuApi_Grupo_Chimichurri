@@ -1,0 +1,36 @@
+.pageCategoria_container{
+    flex-grow: 1;
+    margin: 8px 12px 8px 12px;
+    box-sizing: border-box; 
+    background-color: #DCE4FF;
+    border-radius: 8px;
+}
+
+.categoria__boton_contenedor{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.categoria__boton{
+    display: block;
+    background-color: #B4C2E1;
+    border: 1px solid #526CA5;
+    border-radius: 4px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    cursor: pointer; 
+    transition: transform 0.2s ease, color 0.2s ease; 
+    margin-top: 16px;
+    margin-right: 28px;
+    margin-bottom: 20px;
+}
+.categoria__boton:hover {
+    background-color: #526CA5;
+    color: white; 
+    transform: scale(1.02); 
+}
+
+.categoria__contenedorCard{
+    width: 85%;
+    margin: 0 auto;
+}

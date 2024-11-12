@@ -50,7 +50,7 @@ const ModalCreateSubCategoria: React.FC<SubCategoriaModalProps> = ({ isOpen, onC
             await categoriaService.post(formData)
                 // Creación de una nueva sucursal
             onClose(); // Cierra el modal
-            
+            window.location.reload()
         } catch (error) {
             console.error('Error al guardar la categoria:', error);
         }

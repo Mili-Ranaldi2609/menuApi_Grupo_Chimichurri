@@ -80,7 +80,8 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
             console.error("Error al crear producto:", error);
         }
     };
-
+    
+    
     return (
         isOpen && (
             <BaseModal title="Crear Artículo" onClose={onClose} onSave={onSubmit}>
@@ -101,9 +102,15 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
                             type="number"
                             name="precioVenta"
                             value={formState.precioVenta}
-                            onChange={onInputChange}
+                            onChange={(e) =>
+                                setFormState({
+                                    ...formState,
+                                    precioVenta: parseInt(e.target.value, 10) || 0,  // Convierte el valor a número o usa 0 si es NaN
+                                })
+                            }
                             required
                         />
+
                     </div>
                     <label>
                         <input
@@ -161,7 +168,7 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
                                     <p>{alergeno.denominacion}</p>
                                 </div>
                             ))}
-                        </div>
+                        </div> 
                     )}
 
                     <select
