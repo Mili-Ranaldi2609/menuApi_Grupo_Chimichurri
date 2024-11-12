@@ -36,11 +36,10 @@
     background-color: #F8F7F6;
     width: 78vw;
     height: 100vh;
-    margin-left: 22vw;
     overflow-y: auto;
 }
-.sucursalHidden {
+/* .sucursalHidden {
     z-index: -1;
     opacity: 0.5;
     pointer-events: none;
-}
+} */
