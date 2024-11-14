@@ -76,7 +76,7 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
             console.log(formData);
             
             onClose(); // Cierra el modal
-            
+           
         } catch (error) {
             console.error('Error al guardar el producto:', error);
         }
@@ -122,7 +122,9 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
                     />
                     Habilitado
                 </label>
-                <label>
+                
+                <div>
+                   <label>
                     Imagen URL:
                     <input
                         type="text"
@@ -137,8 +139,10 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
                             }));
                         }}
                     />
-                </label>
+                </label> 
+                </div>
                 <div>
+
                     <label>Categoria</label>
                     <input
                         type="number"

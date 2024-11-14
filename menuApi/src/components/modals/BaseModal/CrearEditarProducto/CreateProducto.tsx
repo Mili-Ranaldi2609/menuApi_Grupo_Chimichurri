@@ -74,7 +74,7 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
                 onSave?.(newProducto);  // Llamamos a `onSave` si está definido
                 handleCrearProducto();  // Llamada a la función para cualquier otra acción requerida
                 onClose();   
-                           // Cerramos el modal al finalizar
+                window.location.reload()           // Cerramos el modal al finalizar
             }
         } catch (error) {
             console.error("Error al crear producto:", error);

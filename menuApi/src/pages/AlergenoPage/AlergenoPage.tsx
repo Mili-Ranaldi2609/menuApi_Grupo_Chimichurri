@@ -1,7 +1,5 @@
 
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import ModalCreateCategoria from "../../components/modals/BaseModal/CrearEditarAlergeno/CreateAlergeno";
 import ListAlergeno from "../Lists/ListAlergeno/ListAlergeno";
@@ -10,7 +8,6 @@ export const AlergenoPage =  ()=> {
   
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
-  const activeSucursal = useSelector((state: RootState) => state.sucursalActiva.activeSucursal);
   // Puedes eliminar esta declaración de 'sucursali' si estás obteniendo las sucursales a través del API
   const alergenoi: IAlergenos = {
     id: 0,
@@ -27,11 +24,6 @@ export const AlergenoPage =  ()=> {
         <div className="sucursal__header-contenedor">
           <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Alergeno</button>
           
-          {activeSucursal ? (
-            <h2>Alergenos en: {activeSucursal.nombre}</h2>
-          ) : (
-            <h2>Alergenos</h2>
-          )}
         </div>
 
         <ModalCreateCategoria

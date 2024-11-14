@@ -49,8 +49,15 @@ export class ProductoService extends AbstractProducto<IProductos,ICreateProducto
             body:JSON.stringify(data),
         });
         const newData=await result.json();
+        if (!result.ok) {
+            console.error("Failed to update data:", result.statusText, "Status code:", result.status);
+          
+        }
+       
         return newData as IUpdateProducto;
     }
+    
+    
     async delete(id: number): Promise<void> {
         const response = await fetch(`${this.baseURL}/${id}`, {  // Cambiar a this.baseURL
             method: "DELETE",

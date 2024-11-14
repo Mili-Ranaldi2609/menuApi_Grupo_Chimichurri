@@ -16,9 +16,10 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ producto: producto, o
       <p><span className={styles.text_b}>Descripcion </span> {producto.descripcion}</p>
       <p><span className={styles.text_b}>Categoria: </span> {producto.categoria.denominacion}
       </p>
-      <p><span className={styles.text_b}>Habilitado? </span> {producto.habilitado}</p>
+      <p><span className={styles.text_b}>Habilitado? </span> {producto.habilitado? "Si" : "No"}</p>
         {/* Mostrar todas las imágenes */}
         <div >
+          
           <span className={styles.text_b}>Imágenes:</span>
           <div className={styles.imagenes}>
             {producto.imagenes.map((imagen, index) => (
@@ -39,7 +40,6 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ producto: producto, o
             'No hay alérgenos'}
         </p>
       <p><span className={styles.text_b}>Precio: </span> {producto.precioVenta}</p>
-      <p><span className={styles.text_b}>Categoria: </span> {producto.categoria.denominacion}</p>
       <div className={styles.modal_botones_contenedor }>
         <button onClick={onClose}>Cerrar</button>
       </div>

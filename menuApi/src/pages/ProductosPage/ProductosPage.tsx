@@ -45,12 +45,7 @@ export const ProductoPage = () => {
       <div className="">
         <div className="sucursal__header-contenedor"> 
           <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Producto</button> 
-        {activeSucursal ? (
-            <h2>Productos en: {activeSucursal.nombre}</h2>
-          ) : (
-            <h2>Productos</h2>
-          )}
-           
+        
         </div>
        
         <ModalCreateProducto
