@@ -27,7 +27,7 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
 
     useEffect(() => {
         if (sucursal?.id) {
-            fetch(`http://190.221.207.224:8090/categorias/allCategoriasPorSucursal/${sucursal.id}`)
+            fetch(`http://190.221.207.224:8090/categorias/allSubCategoriasPorSucursal/${sucursal.id}`)
                 .then((response) => response.json())
                 .then((data) => setCategorias(data))
                 .catch((error) => console.error("Error fetching categorias:", error));
