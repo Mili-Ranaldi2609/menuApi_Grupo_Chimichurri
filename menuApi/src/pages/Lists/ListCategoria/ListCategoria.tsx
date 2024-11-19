@@ -4,7 +4,7 @@ import ModalUpdateCategoria from "../../../components/modals/BaseModal/CrearEdit
 import { ICategorias } from "../../../types/dtos/categorias/ICategorias";
 import { RootState } from "../../../redux/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { IUpdateCategoria } from "../../../types/dtos/categorias/IUpdateCategoria";
 import ModalCreateSubCategoria from "../../../components/modals/BaseModal/CrearEditarCategorias/CreateSubcategoria";
 import ModalUpdateSubCategoria from "../../../components/modals/BaseModal/CrearEditarCategorias/UpdateSubcategoria";
@@ -174,9 +174,9 @@ const ListCategoria: React.FC = () => {
                             {/* Mostrar las subcategorías directamente desde `subCategorias` */}
                             {isSubcategoriesVisible[categoria.id!] && categoria.subCategorias?.length > 0 && (
                                 categoria.subCategorias.map((subcategoria) => (
-                                    <tr key={subcategoria.id} style={{ paddingLeft: "20px" }}>
-                                        <td>{subcategoria.denominacion}</td>
-                                        <td>-</td>
+                                    <tr key={subcategoria.id} className={styles.subcategoria_row}>
+                                        <td colSpan={3} className={styles.subcategoria_text} >{subcategoria.denominacion}</td>
+                                        {/* <td>-</td> */}
                                         <td><span onClick={() => handleEditSubCategoria(subcategoria)}className="material-symbols-outlined">ink_pen</span></td>
                                     </tr>
                                 ))

@@ -1,20 +1,23 @@
+table {
+    width: 100%;
+}
 .categorias_tabla_container{
     width: 100%;
 }
 .categoria_container {
-    width: 100%;
+    width: 100%; 
     background-color: #F8F7F6;
     padding: 8px 16px; 
     display: flex;
     justify-content: space-between; 
     align-items: center; 
-    border-bottom: 4px solid #ddd; /* ver tamaño de linea*/
+    border-bottom: 1px solid #ddd; 
+    box-sizing: border-box; 
 }
 
 .categoria_text {
     font-size: 1rem;
     color: #333;
-    /* width: 70%; */
 }
 
 .categoria_icons {
@@ -29,3 +32,11 @@
 .categoria_icons span:hover {
     color: #2b3e8a; 
 }
+
+.subcategoria_row td {
+    padding: 8px 16px; 
+    background-color: #F8F7F6;
+    color: #333;
+    text-align: left; 
+}
+
