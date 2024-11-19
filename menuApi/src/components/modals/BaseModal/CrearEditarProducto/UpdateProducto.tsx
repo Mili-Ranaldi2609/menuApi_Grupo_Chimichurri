@@ -5,7 +5,9 @@ import { IUpdateProducto } from "../../../../types/dtos/productos/IUpdateProduct
 import { IImagen } from "../../../../types/IImagen";
 import { ProductoService } from "../../../../services/ProductoService/ProductoService";
 import { ISucursal } from "../../../../types/dtos/sucursal/ISucursal";
-
+import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
+import Select from "react-select"; 
+import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
 interface ProductoModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -14,9 +16,10 @@ interface ProductoModalProps {
     onSave?: () => Promise<void>;
 }
 
-const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, producto }) => {
+const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, producto , sucursal}) => {
     const productoService = new ProductoService("http://190.221.207.224:8090/articulos/update");
-
+    const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
+    const [categorias, setCategorias] = useState<ICategorias[]>([]);
     const [formData, setFormData] = useState<IUpdateProducto>({
         id: producto?.id,
         denominacion: producto?.denominacion || '',
@@ -44,29 +47,51 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
             });
         }
     }, [producto]);
+    useEffect(() => {
+        const fetchAlergenos = async () => {
+            try {
+                const response = await fetch("http://190.221.207.224:8090/alergenos");
+                const data = await response.json();
+                setAlergenos(data);
+            } catch (error) {
+                console.error("Error al obtener los alérgenos:", error);
+            }
+        };
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-    ) => {
-        const { name, value, type } = e.target;
+        fetchAlergenos();
+    }, []);
+    // Obtener categorías basadas en la sucursal
+    useEffect(() => {
+        if (sucursal?.id) {
+            const fetchCategorias = async () => {
+                try {
+                    const response = await fetch(`http://190.221.207.224:8090/categorias/allSubCategoriasPorSucursal/${sucursal.id}`);
+                    const data = await response.json();
+                    setCategorias(data);
+                } catch (error) {
+                    console.error("Error al obtener las categorías:", error);
+                }
+            };
 
-        if (name === "idAlergenos") {
-            const selectedAlergeno = Number(value); // Convertir a número
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                idAlergenos: [selectedAlergeno], // Almacena el ID como un array
-            }));
-        } else if (type === "checkbox") {
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                [name]: e.target.checked,
-            }));
-        } else {
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                [name]: value,
-            }));
+            fetchCategorias();
         }
+    }, [sucursal]);
+    const handleChange = (
+        selectedOptions: any
+    ) => {
+        const selectedAlergenos = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            idAlergenos: selectedAlergenos,
+        }));
+    };
+
+
+    const handleCategoryChange = (selectedOption: any) => {
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            idCategoria: selectedOption?.value || 1, // Por si no seleccionan nada
+        }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -81,6 +106,15 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
             console.error('Error al guardar el producto:', error);
         }
     };
+    const alergenoOptions = alergenos.map((alergeno) => ({
+        value: alergeno.id,
+        label: alergeno.denominacion,
+    }));
+
+    const categoriaOptions = categorias.map((categoria) => ({
+        value: categoria.id,
+        label: categoria.denominacion,  // Suponiendo que 'nombre' es el campo que deseas mostrar
+    }));
 
     return (
         isOpen && (
@@ -142,22 +176,26 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
                 </label> 
                 </div>
                 <div>
-
                     <label>Categoria</label>
-                    <input
-                        type="number"
+                    <Select
+                        placeholder="Selecciona una categoría"
                         name="idCategoria"
-                        value={formData.idCategoria}
-                        onChange={handleChange}
+                        options={categoriaOptions}
+                        value={categoriaOptions.find(option => option.value === formData.idCategoria)}
+                        onChange={handleCategoryChange}
                     />
                 </div>
                 <div>
-                    <label>Alergeno</label>
-                    <input
-                        type="number" // Input de tipo número
-                        name="idAlergenos" // Nombre para el manejo del cambio
-                        value={formData.idAlergenos[0] || ''} // Muestra el primer alérgeno como valor
-                        onChange={handleChange} // Maneja el cambio
+                    <label>Alérgenos</label>
+                    <Select
+                        placeholder="No posee alergenos"
+                        isMulti
+                        name="idAlergenos"
+                        options={alergenoOptions}
+                        value={alergenoOptions.filter(option => formData.idAlergenos.includes(option.value))}
+                        onChange={handleChange}
+                        getOptionLabel={(e) => e.label}
+                        getOptionValue={(e) => e.value.toString()}
                     />
                 </div>
             </BaseModal>

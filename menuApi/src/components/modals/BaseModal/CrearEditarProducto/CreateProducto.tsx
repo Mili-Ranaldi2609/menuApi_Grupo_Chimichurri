@@ -1,6 +1,5 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import { ProductoService } from "../../../../services/ProductoService/ProductoService";
-
 import { ISucursal } from "../../../../types/dtos/sucursal/ISucursal";
 import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
 import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
@@ -8,6 +7,8 @@ import { useForm } from "../../../../hooks/useForm";
 import { IProductos } from "../../../../types/dtos/productos/IProductos";
 import BaseModal from "../BaseModal";
 import { ICreateProducto } from "../../../../types/dtos/productos/ICreateProducto";
+import Select from "react-select";
+import { log } from "console";
 
 interface ProductoModalProps {
     isOpen: boolean;
@@ -22,8 +23,13 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
     const productoService = new ProductoService("http://190.221.207.224:8090/articulos/create");
     const [categorias, setCategorias] = useState<ICategorias[]>([]);
     const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
-    const [showAlergenos, setShowAlergenos] = useState(false);
     const { onInputChange, formState, setFormState } = useForm<ICreateProducto>(initialForm);
+
+    const options = alergenos.map((alergeno) => ({
+        value: alergeno.id,
+        label: alergeno.denominacion,
+    }));
+    
 
     useEffect(() => {
         if (sucursal?.id) {
@@ -39,23 +45,6 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
         }
     }, [sucursal?.id]);
 
-    const handleAlergenosChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value, checked } = event.target;
-        const alergenoId = parseInt(value);
-        setFormState({
-            ...formState,
-            idAlergenos: checked
-                ? [...formState.idAlergenos, alergenoId]
-                : formState.idAlergenos.filter((id: number) => id !== alergenoId),
-        });
-    };
-
-    const handleCategoriaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setFormState({
-            ...formState,
-            idCategoria: parseInt(event.target.value),
-        });
-    };
 
     const handleImagenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const url = event.target.value;
@@ -73,8 +62,10 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
             if (newProducto) {
                 onSave?.(newProducto);  // Llamamos a `onSave` si está definido
                 handleCrearProducto();  // Llamada a la función para cualquier otra acción requerida
+                console.log("producto creado",newProducto);
+                
                 onClose();   
-                window.location.reload()           // Cerramos el modal al finalizar
+                        // Cerramos el modal al finalizar
             }
         } catch (error) {
             console.error("Error al crear producto:", error);
@@ -145,45 +136,43 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
                         value={formState.imagenes[0]?.url || ""}
                     />
 
-                    <div className="pAlergenosContainer">
-                        <p className="pAlergenos">Seleccione los alergenos</p>
-                        <span
-                            className="material-symbols-outlined"
-                            onClick={() => setShowAlergenos((prev) => !prev)}
-                        >
-                            arrow_drop_down
-                        </span>
-                    </div>
+                <Select
+                        isMulti
+                        options={options}
+                        className="multiSelect"
+                        classNamePrefix="select"
+                        placeholder="Selecciona los alergenos..." 
+                        onChange={(selectedOptions) => {
+                            const selectedIds = selectedOptions.map((option) => option.value);
+                            setFormState({ ...formState, idAlergenos: selectedIds });
+                        }}
+                        value={options.filter((option) =>
+                            formState.idAlergenos.includes(option.value)
+                        )}
+                    />
 
-                    {showAlergenos && (
-                        <div className="divAlergenos">
-                            {alergenos.map((alergeno) => (
-                                <div key={alergeno.id} className="divInputs">
-                                    <input
-                                        type="checkbox"
-                                        value={alergeno.id}
-                                        onChange={handleAlergenosChange}
-                                        checked={formState.idAlergenos.includes(alergeno.id)}
-                                    />
-                                    <p>{alergeno.denominacion}</p>
-                                </div>
-                            ))}
-                        </div> 
-                    )}
+<Select
+  options={categorias.map((categoria) => ({
+    value: categoria.id,
+    label: categoria.denominacion,
+  }))}
+  className="categoriaSelect"
+  classNamePrefix="select"
+  placeholder="Selecciona una categoría..."
+  onChange={(selectedOption) => {
+    const selectedId = selectedOption?.value || 0; // Maneja undefined como 0 o cualquier valor predeterminado que prefieras
+    setFormState({ ...formState, idCategoria: selectedId });
+  }}
+  value={
+    categorias
+      .filter((categoria) => categoria.id === formState.idCategoria)
+      .map((categoria) => ({
+        value: categoria.id,
+        label: categoria.denominacion,
+      }))[0] || null
+  }
+/>
 
-                    <select
-                        name="categoria"
-                        id="categoria"
-                        onChange={handleCategoriaChange}
-                        value={formState.idCategoria}
-                    >
-                        <option value="">Seleccione una categoria</option>
-                        {categorias.map((categoria) => (
-                            <option key={categoria.id} value={categoria.id}>
-                                {categoria.denominacion}
-                            </option>
-                        ))}
-                    </select>
                   
                 </form>
             </BaseModal>

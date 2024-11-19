@@ -36,7 +36,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ producto: producto, o
         {/* Mostrar todos los alérgenos */}
         <p><span className={styles.text_b}>Alergenos:</span> 
           {producto.alergenos.length > 0 ? 
-            producto.alergenos.map(alergeno => alergeno.id).join(', ') : 
+            producto.alergenos.map(alergeno => alergeno.denominacion).join(', ') : 
             'No hay alérgenos'}
         </p>
       <p><span className={styles.text_b}>Precio: </span> {producto.precioVenta}</p>

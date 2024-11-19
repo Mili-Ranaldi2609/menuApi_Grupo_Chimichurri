@@ -124,6 +124,7 @@ const ListProducto: React.FC = () => {
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
                     producto={selectedProducto}
+                    sucursal={activeSucursal}
                 />
             )}
 
