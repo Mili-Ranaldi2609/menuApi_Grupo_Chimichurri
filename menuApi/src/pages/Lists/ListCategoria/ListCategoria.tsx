@@ -177,7 +177,7 @@ const ListCategoria: React.FC = () => {
                                     <tr key={subcategoria.id} className={styles.subcategoria_row}>
                                         <td colSpan={3} className={styles.subcategoria_text} >{subcategoria.denominacion}</td>
                                         {/* <td>-</td> */}
-                                        <td><span onClick={() => handleEditSubCategoria(subcategoria)}className="material-symbols-outlined">ink_pen</span></td>
+                                        <td><span onClick={() => handleEditSubCategoria(subcategoria)}className="material-symbols-outlined" id={styles.subcategoria_icons}>ink_pen</span></td>
                                     </tr>
                                 ))
                             )}

@@ -1,5 +1,7 @@
 table {
     width: 100%;
+    display: grid;
+    border-collapse: collapse;
 }
 .categorias_tabla_container{
     width: 100%;
@@ -12,7 +14,9 @@ table {
     justify-content: space-between; 
     align-items: center; 
     border-bottom: 1px solid #ddd; 
+    border-top: 1px solid #ddd; 
     box-sizing: border-box; 
+    grid-template-columns: 2;
 }
 
 .categoria_text {
@@ -38,5 +42,11 @@ table {
     background-color: #F8F7F6;
     color: #333;
     text-align: left; 
+    width: 100%;
+}
+#subcategoria_icons{
+    color: #526CA5; 
+    cursor: pointer;
+    align-items: center;
 }
 

@@ -1,4 +1,4 @@
-
+import styles from "./AlergenoPage.module.css";
 import { useState } from "react";
 import { IAlergenos } from "../../types/dtos/alergenos/IAlergenos";
 import ModalCreateCategoria from "../../components/modals/BaseModal/CrearEditarAlergeno/CreateAlergeno";
@@ -22,7 +22,7 @@ export const AlergenoPage =  ()=> {
     <div className="pageSucursal-container">
       <div className="">
         <div className="sucursal__header-contenedor">
-          <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Alergeno</button>
+          <button className={styles.alergenos__boton} onClick={handleOpenModal}>Agregar Alergeno</button>
           
         </div>
 
