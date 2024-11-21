@@ -1,4 +1,7 @@
-
+.productosPage_content{
+    width: 90%;
+    margin: 0 auto;
+}
 .productos__boton{
     display: block;
     background-color: #526CA5;

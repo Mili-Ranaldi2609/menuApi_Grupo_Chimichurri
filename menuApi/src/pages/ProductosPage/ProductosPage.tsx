@@ -41,8 +41,8 @@ export const ProductoPage = () => {
 
   
   return (
-    <div className="pageSucursal-container">
-      <div className="">
+    <div className={styles.productosPage_content}>
+      <div>
         <div className={styles.productos_contenedor_boton}> 
           <button className={styles.productos__boton} onClick={handleOpenModal}>Agregar Producto</button> 
         

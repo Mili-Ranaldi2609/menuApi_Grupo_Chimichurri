@@ -19,9 +19,9 @@ export const AlergenoPage =  ()=> {
   };
 
   return (
-    <div className="pageSucursal-container">
+    <div className={styles.pageAlergenos_conteiner}>
       <div className="">
-        <div className="sucursal__header-contenedor">
+        <div className={styles.alergenos_contenedor_boton}>
           <button className={styles.alergenos__boton} onClick={handleOpenModal}>Agregar Alergeno</button>
           
         </div>

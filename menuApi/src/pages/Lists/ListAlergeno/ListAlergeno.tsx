@@ -82,16 +82,14 @@ const ListAlergeno: React.FC = () => {
     };
 
     return (
-        <div>
+        <div >
             <div className={styles.alergenos_list}>
-            <Table striped bordered hover size="sm">
-                    <thead>
+                <Table striped bordered hover size="sm">
+                    <tbody>
                         <tr>
                             <th>Nombre</th>
                             <th>Acciones</th>
                         </tr>
-                    </thead>
-                    <tbody>
                         {alergenos.map((alergeno) => (
                             <tr key={alergeno.id}>
                                 <td>{alergeno.denominacion}</td>
@@ -107,7 +105,7 @@ const ListAlergeno: React.FC = () => {
                 </Table>
             </div>
             
-                        {isModalOpen && selectedAlergeno && isEditMode && (
+            {isModalOpen && selectedAlergeno && isEditMode && (
                 <ModalUpdateAlergeno
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}

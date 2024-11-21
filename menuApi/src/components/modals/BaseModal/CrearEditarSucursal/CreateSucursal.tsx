@@ -97,16 +97,17 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
 
     return (
         isOpen && (
+            <div className={styles.modalSucursal}>
             <BaseModal title={ "Crear Sucursal"} onClose={onClose} onSave={handleSubmit} idEmpresa={idEmpresa}>
                 <input className={styles.modalSucursal__input} type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
                 
-                <div>
-                    <label>Horario Apertura</label>
+                <div className={styles.sucursal_conteiner_input}>
+                    <label>Horario Apertura </label>
                     <input className={styles.modalSucursal__input} type="time" name="horarioApertura" value={formData.horarioApertura} onChange={handleChange} required />
                 </div>
                 
                 <div>
-                    <label>Horario Cierre</label>
+                    <label>Horario Cierre </label>
                     <input className={styles.modalSucursal__input} type="time" name="horarioCierre" value={formData.horarioCierre} onChange={handleChange} required />
                 </div>
                 
@@ -119,22 +120,22 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
                 <input className={styles.modalSucursal__input} type="text" name="domicilio.calle" value={formData.domicilio.calle} onChange={handleChange} placeholder="Calle" required />
                 
                 <div>
-                    <label>Numero Calle</label>
+                    <label>Num Calle </label>
                     <input className={styles.modalSucursal__input} type="number" name="domicilio.numero" value={formData.domicilio.numero} onChange={handleChange} required />
                 </div>
                 
-                <div>
+                <div className={styles.sucursal_conteiner_input}>
                     <label>Codigo Postal</label>
                     <input className={styles.modalSucursal__input} type="number" name="domicilio.cp" value={formData.domicilio.cp} onChange={handleChange} required />
                 </div>
                 
                 <div>
-                    <label>Piso</label>
+                    <label>Piso </label>
                     <input className={styles.modalSucursal__input} type="number" name="domicilio.piso" value={formData.domicilio.piso} onChange={handleChange} />
                 </div>
                 
                 <div>
-                    <label>Nro Departamento</label>
+                    <label>Nro Depto </label>
                     <input className={styles.modalSucursal__input} type="number" name="domicilio.nroDpto" value={formData.domicilio.nroDpto} onChange={handleChange} />
                 </div>
                 <div>
@@ -149,6 +150,7 @@ const ModalCreateSucursal: React.FC<SucursalModalProps> = ({ isOpen, onClose, su
                 
                 <input className={styles.modalSucursal__input} type="text" name="logo" value={formData.logo} onChange={handleChange} placeholder="Logo URL" />
             </BaseModal>
+            </div>
         )
     );
 };

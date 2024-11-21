@@ -1,4 +1,5 @@
 import React, { FormEvent } from "react";
+import styles from "./modalCategoria.module.css";
 import { ISucursal } from "../../../../types/dtos/sucursal/ISucursal";
 import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
 import { useForm } from "../../../../hooks/useForm";
@@ -55,8 +56,8 @@ const ModalUpdateCategoria: React.FC<CategoriaModalProps> = ({
         isOpen && (
             <BaseModal title="Modificar Categoria" onClose={onClose} onSave={onSubmit}>
                 <form onSubmit={onSubmit}>
-                    <input
-                        className="modalCategoria__input"
+                    <input 
+                        className={styles.modalcategoria__input}
                         type="text"
                         name="denominacion"
                         value={formState.denominacion}

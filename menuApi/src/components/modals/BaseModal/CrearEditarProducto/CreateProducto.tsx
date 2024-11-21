@@ -1,3 +1,4 @@
+import styles from "./CrearEditarProducto.module.css";
 import React, { FormEvent, useEffect, useState } from "react";
 import { ProductoService } from "../../../../services/ProductoService/ProductoService";
 import { ISucursal } from "../../../../types/dtos/sucursal/ISucursal";
@@ -76,7 +77,7 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
     return (
         isOpen && (
             <BaseModal title="Crear Artículo" onClose={onClose} onSave={onSubmit}>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={onSubmit} className={styles.modalProducto__contenedor_inputs}>
                     <input
                         className="modalProducto__input"
                         type="text"
@@ -87,7 +88,7 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
                         required
                     />
                     <div>
-                        <label>Precio</label>
+                        <label>Precio </label>
                         <input
                             className="modalProducto__input"
                             type="number"

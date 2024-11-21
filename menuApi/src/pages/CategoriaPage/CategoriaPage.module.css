@@ -1,10 +1,10 @@
 .pageCategoria_container{
     flex-grow: 1;
-    /* margin: 8px 12px 8px 12px; */
-    box-sizing: border-box; 
     background-color: #DCE4FF;
+    box-sizing: border-box; 
     border-radius: 8px;
-    height: 100%;
+    margin: 0 30px;
+    margin-top: 16px;
 }
 
 .categoria__boton_contenedor{

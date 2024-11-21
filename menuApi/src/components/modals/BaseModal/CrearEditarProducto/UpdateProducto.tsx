@@ -1,3 +1,4 @@
+import styles from "./CrearEditarProducto.module.css";
 import React, { useEffect, useState } from "react";
 import BaseModal from "../BaseModal";
 import { IProductos } from "../../../../types/dtos/productos/IProductos";
@@ -119,6 +120,7 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
     return (
         isOpen && (
             <BaseModal title={"Editar Producto"} onClose={onClose} onSave={handleSubmit}>
+                <div className={styles.modalProducto__contenedor_inputs}>
                 <input
                     type="text"
                     name="denominacion"
@@ -197,6 +199,7 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
                         getOptionLabel={(e) => e.label}
                         getOptionValue={(e) => e.value.toString()}
                     />
+                </div>
                 </div>
             </BaseModal>
         )

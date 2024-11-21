@@ -1,3 +1,17 @@
+.pageAlergenos_conteiner{
+    flex-grow: 1;
+    background-color: #DCE4FF;
+    box-sizing: border-box; 
+    border-radius: 8px;
+    margin: 0 30px;
+    margin-top: 16px;
+
+}
+.alergenos_contenedor_boton{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 .alergenos__boton{
     display: block;
     background-color: #526CA5;
