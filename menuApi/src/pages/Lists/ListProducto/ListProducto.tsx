@@ -90,7 +90,7 @@ const ListProducto: React.FC = () => {
         <div>
             <div className={styles.productos_list}>
                 <Table striped bordered hover size="sm">
-                    <thead>
+                    <tbody>
                         <tr>
                             <th>Nombre</th>
                             <th>Descripcion</th>
@@ -99,8 +99,6 @@ const ListProducto: React.FC = () => {
                             <th>Habilitado</th>
                             <th>Acciones</th>
                         </tr>
-                    </thead>
-                    <tbody>
                         {productos.map((producto) => (
                             <tr key={producto.id}>
                                 <td>{producto.denominacion}</td>

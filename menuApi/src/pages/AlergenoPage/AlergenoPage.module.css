@@ -1,18 +1,18 @@
-.pageCategoria_container{
+.pageAlergenos_conteiner{
     flex-grow: 1;
     background-color: #DCE4FF;
     box-sizing: border-box; 
     border-radius: 8px;
     margin: 0 30px;
     margin-top: 16px;
-}
 
-.categoria__boton_contenedor{
+}
+.alergenos_contenedor_boton{
     width: 100%;
     display: flex;
     justify-content: flex-end;
 }
-.categoria__boton{
+.alergenos__boton{
     display: block;
     background-color: #526CA5;
     border: 1px solid #526CA5;
@@ -26,13 +26,8 @@
     margin-right: 28px;
     margin-bottom: 20px;
 }
-.categoria__boton:hover {
+.alergenos__boton:hover {
     background-color: #B4C2E1;
     color: black;
     transform: scale(1.02); 
-}
-
-.categoria__contenedorCard{
-    width: 85%;
-    margin: 0 auto;
 }

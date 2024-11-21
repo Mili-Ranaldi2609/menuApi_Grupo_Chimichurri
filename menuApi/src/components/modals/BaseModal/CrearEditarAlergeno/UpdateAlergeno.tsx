@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BaseModal from "../BaseModal";
+import styles from "./CrearEditarAlergeno.module.css";
 import { ISucursal } from "../../../../types/dtos/sucursal/ISucursal";
 import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
 import { IUpdateAlergeno } from "../../../../types/dtos/alergenos/IUpdateAlergeno";
@@ -76,34 +77,35 @@ const ModalUpdateAlergeno: React.FC<ProductoModalProps> = ({ isOpen, onClose, al
     return (
         isOpen && (
             <BaseModal title={"Editar Alergeno"} onClose={onClose} onSave={handleSubmit}>
-                <input
-                    type="text"
-                    name="denominacion"
-                    value={formData.denominacion}
-                    onChange={handleChange}
-                    placeholder="Nombre"
-                    required
-                />
-                <div>
-                    <label>Imagen nombre y url</label>
+                <div className={styles.modalAlergeno__contenedor_inputs}>
                     <input
                         type="text"
-                        name="imagen.name"
-                        value={formData.imagen.name}
-                        onChange={handleImageChange}
-                        placeholder="img name"                        
+                        name="denominacion"
+                        value={formData.denominacion}
+                        onChange={handleChange}
+                        placeholder="Nombre"
                         required
                     />
-                    <input
-                        type="text"
-                        name="imagen.url"
-                        value={formData.imagen.url}
-                        onChange={handleImageChange}
-                        placeholder="img url"
-                        required
-                    />
+                    <div>
+                        <label>Imagen nombre y url</label>
+                        <input
+                            type="text"
+                            name="imagen.name"
+                            value={formData.imagen.name}
+                            onChange={handleImageChange}
+                            placeholder="img name"                        
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="imagen.url"
+                            value={formData.imagen.url}
+                            onChange={handleImageChange}
+                            placeholder="img url"
+                            required
+                        />
+                    </div>
                 </div>
-                
             </BaseModal>
         )
     );

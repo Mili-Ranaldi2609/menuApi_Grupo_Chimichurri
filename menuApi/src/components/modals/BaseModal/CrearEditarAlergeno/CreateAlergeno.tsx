@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BaseModal from "../BaseModal";
+import styles from "./CrearEditarAlergeno.module.css";
 import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
 import { ICreateAlergeno } from "../../../../types/dtos/alergenos/ICreateAlergeno";
 import { AlergenoService } from "../../../../services/AlergenoService/AlergenoService";
@@ -75,14 +76,15 @@ const ModalCreateAlergeno: React.FC<AlergenoModalProps> = ({ isOpen, onClose,  a
     return (
         isOpen && (
             <BaseModal title={ "Crear Alergeno"} onClose={onClose} onSave={handleSubmit} >
-                <input className="modalAlergeno__input" type="text" name="denominacion" value={formData.denominacion} onChange={handleChange} placeholder="denominacion" required />
-                
-                <div>
-                    <label>Nombre imagen y url: </label>
-                    <input className="modalAlergeno__input" type="text" name="imagen.name" value={formData.imagen.name} onChange={handleChange} required placeholder="nombre img"/>
-                     <input className="modalAlergeno__input" type="text" name="imagen.url" value={formData.imagen.url} onChange={handleChange} required placeholder="url img" />
+                <div className={styles.modalAlergeno__contenedor_inputs}>
+                    <input className="modalAlergeno__input" type="text" name="denominacion" value={formData.denominacion} onChange={handleChange} placeholder="denominacion" required />
+                    
+                    <div>
+                        <label>Nombre imagen y url: </label>
+                        <input className="modalAlergeno__input" type="text" name="imagen.name" value={formData.imagen.name} onChange={handleChange} required placeholder="nombre img"/>
+                        <input className="modalAlergeno__input" type="text" name="imagen.url" value={formData.imagen.url} onChange={handleChange} required placeholder="url img" />
+                    </div>
                 </div>
-                     
             </BaseModal>
         )
     );

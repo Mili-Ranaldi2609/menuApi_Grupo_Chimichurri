@@ -1,4 +1,4 @@
-
+import styles from "./ProductosPage.module.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
@@ -41,19 +41,18 @@ export const ProductoPage = () => {
 
   
   return (
-    <div className="pageSucursal-container">
-      <div className="">
-        <div className="sucursal__header-contenedor"> 
-          <button className="sucursal__boton" onClick={handleOpenModal}>Agregar Producto</button> 
+    <div className={styles.productosPage_content}>
+      <div>
+        <div className={styles.productos_contenedor_boton}> 
+          <button className={styles.productos__boton} onClick={handleOpenModal}>Agregar Producto</button> 
         
         </div>
-       
+
         <ModalCreateProducto
           isOpen={isModalOpen}
           onClose={handleCloseModal} sucursal={activeSucursal} initialForm={initialForm} handleCrearProducto={handleCrearProductoIntermedio}                   
                   
                   />
-       
       </div>
 
       <div className="sucursal__contenedorCard">

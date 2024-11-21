@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BaseModal from "../BaseModal";
+import styles from "./modalCategoria.module.css";
 import { ICreateCategoria } from "../../../../types/dtos/categorias/ICreateCategoria";
 import { CategoriasService } from "../../../../services/CategoriaService/CategoriaService";
 import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
@@ -59,9 +60,7 @@ const ModalCreateSubCategoria: React.FC<SubCategoriaModalProps> = ({ isOpen, onC
     return (
         isOpen && (
             <BaseModal title={ "Crear Categoria Hija"} onClose={onClose} onSave={handleSubmit} >
-                <input className="modalCategoria__input" type="text" name="denominacion" value={formData.denominacion} onChange={handleChange} placeholder="denominacion" required />
-               
-                     
+                <input className={styles.modalcategoria__input} type="text" name="denominacion" value={formData.denominacion} onChange={handleChange} placeholder="denominacion" required />
             </BaseModal>
         )
     );
