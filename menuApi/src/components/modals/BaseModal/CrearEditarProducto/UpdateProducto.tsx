@@ -77,7 +77,7 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
             fetchCategorias();
         }
     }, [sucursal]);
-    const handleChange = (
+    const handleChangeAlergenos = (
         selectedOptions: any
     ) => {
         const selectedAlergenos = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
@@ -86,7 +86,16 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
             idAlergenos: selectedAlergenos,
         }));
     };
-
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value, type, checked } = e.target;
+        const fieldValue = type === "checkbox" ? checked : value;
+    
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: fieldValue,
+        }));
+    };
+    
 
     const handleCategoryChange = (selectedOption: any) => {
         setFormData((prevFormData) => ({
@@ -100,7 +109,7 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
         try {
             await productoService.put(formData.id, formData);
             console.log(formData);
-            
+            window.location.reload()
             onClose(); // Cierra el modal
            
         } catch (error) {
@@ -195,7 +204,7 @@ const ModalUpdateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, pr
                         name="idAlergenos"
                         options={alergenoOptions}
                         value={alergenoOptions.filter(option => formData.idAlergenos.includes(option.value))}
-                        onChange={handleChange}
+                        onChange={handleChangeAlergenos}
                         getOptionLabel={(e) => e.label}
                         getOptionValue={(e) => e.value.toString()}
                     />

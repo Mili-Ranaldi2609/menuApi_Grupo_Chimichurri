@@ -49,18 +49,15 @@ const ModalUpdateAlergeno: React.FC<ProductoModalProps> = ({ isOpen, onClose, al
         }));
     };
     
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]; // Asegúrate de que el archivo existe
-        if (file) {
-            setFormData((prevData) => ({
-                ...prevData,
-                imagen: {
-                    ...prevData.imagen,
-                    url: URL.createObjectURL(file), // Esto crea una URL para la vista previa
-                    name: file.name,
-                },
-            }));
-        }
+    const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            imagen: {
+                ...prevData.imagen,
+                [name]: value,
+            },
+        }));
     };
     
     const handleSubmit = async (e: React.FormEvent) => {
@@ -90,17 +87,17 @@ const ModalUpdateAlergeno: React.FC<ProductoModalProps> = ({ isOpen, onClose, al
                         <label>Imagen nombre y url</label>
                         <input
                             type="text"
-                            name="imagen.name"
+                            name="name"
                             value={formData.imagen.name}
-                            onChange={handleImageChange}
+                            onChange={handleNestedChange}
                             placeholder="img name"                        
                             required
                         />
                         <input
                             type="text"
-                            name="imagen.url"
+                            name="url"
                             value={formData.imagen.url}
-                            onChange={handleImageChange}
+                            onChange={handleNestedChange}
                             placeholder="img url"
                             required
                         />
