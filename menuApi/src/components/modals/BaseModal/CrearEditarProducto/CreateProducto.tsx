@@ -8,7 +8,6 @@ import { IProductos } from "../../../../types/dtos/productos/IProductos";
 import BaseModal from "../BaseModal";
 import { ICreateProducto } from "../../../../types/dtos/productos/ICreateProducto";
 import Select from "react-select";
-import { log } from "console";
 
 interface ProductoModalProps {
     isOpen: boolean;
@@ -63,7 +62,7 @@ const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, su
                 onSave?.(newProducto);  // Llamamos a `onSave` si está definido
                 handleCrearProducto();  // Llamada a la función para cualquier otra acción requerida
                 console.log("producto creado",newProducto);
-                
+                window.location.reload()
                 onClose();   
                         // Cerramos el modal al finalizar
             }
