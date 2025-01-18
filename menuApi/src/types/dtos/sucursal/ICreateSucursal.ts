@@ -1,4 +1,3 @@
-
 export interface ICreateSucursal {
   nombre: string;
   horarioApertura: string;
@@ -12,8 +11,8 @@ export interface ICreateSucursal {
     cp: number;
     piso: number;
     nroDpto: number;
-    idLocalidad: number;
+    idLocalidad: number ;
   };
-  idEmpresa: number;
-  logo: string | null;
+  idEmpresa: number | 0;
+  logo: string | '';
 }

@@ -1,0 +1,12 @@
+.modalSucursal__input{
+    padding: 2px; 
+    box-sizing: border-box; 
+    font-size: 1rem; 
+    border: 1px solid #545454; 
+    border-radius: 6px; 
+    background-color: #e7ebf1; 
+    
+}
+.modalSucursal__input, input{
+    margin-bottom: 4px;
+}

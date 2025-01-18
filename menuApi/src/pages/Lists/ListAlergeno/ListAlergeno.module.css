@@ -1,0 +1,38 @@
+/* ListProducto.css */
+.alergenos_list table {
+    width: 100%;
+    display: grid;
+    border-collapse: collapse;
+}
+
+.alergenos_list th,
+.alergenos_list td {
+    border: 1px solid #ccc; /* Ajusta el color según prefieras */
+    background-color: #F8F7F6;
+    padding: 8px 16px;
+    text-align: left;
+    align-items: center; 
+    border-bottom: 1px solid #ddd; 
+    border-top: 1px solid #ddd; 
+    box-sizing: border-box; 
+}
+.alergenos_list th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+
+.alergenos_list .card__botones {
+    display: flex;
+    gap: 8px;
+}
+
+.alergenos_list #boton {
+    cursor: pointer;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.alergenos_list #boton:hover {
+    color: #0056b3;
+}

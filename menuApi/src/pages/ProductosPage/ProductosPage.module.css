@@ -1,0 +1,23 @@
+.productosPage_content{
+    width: 90%;
+    margin: 0 auto;
+}
+.productos__boton{
+    display: block;
+    background-color: #526CA5;
+    border: 1px solid #526CA5;
+    color: white; 
+    border-radius: 4px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    cursor: pointer; 
+    transition: transform 0.2s ease, color 0.2s ease; 
+    margin-top: 16px;
+    margin-right: 28px;
+    margin-bottom: 20px;
+}
+.productos__boton:hover {
+    background-color: #B4C2E1;
+    color: black;
+    transform: scale(1.02); 
+}

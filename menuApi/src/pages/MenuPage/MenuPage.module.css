@@ -1,0 +1,88 @@
+/* MenuPage.css */
+*{
+  box-sizing: border-box;
+  
+}
+.menu_page {
+  width: 100vw;
+  height: 100vh;
+  background-color: #F8F7F6;
+}
+.page_header{
+  display: flex;
+  background-color: #526CA5;
+  height: 10vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+.page_header h1{
+  color: white;
+  font-weight: normal;
+}
+
+.page_content{
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.menu_sidebar {
+  height: 90vh;
+  width: 20vw;
+  padding: 20px;
+  background-color: #DCE4FF;
+  overflow-y: hidden;
+
+}
+.menu_sidebar h2{
+  font-weight: normal;
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+.button_menu button {
+  background-color: #DCE4FF;
+  border: 1px solid #526CA5;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin: 8px 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.button_menu button:hover {
+  background-color: #B4C2E1;
+}
+
+.button_menu .activeButton {
+  background-color: #526CA5;
+  color: white;
+}
+
+.content_area {
+  display: flex;
+  width: 80vw;
+  height: 90vh;
+  /* padding: 20px; */
+  overflow-y: auto;
+}
+
+#back_button {
+  position: absolute; 
+  left: 32px; 
+  font-size: 2rem; 
+  color: white; 
+  cursor: pointer; 
+  transition: transform 0.2s ease, color 0.2s ease; 
+  border: 1px solid white;
+  padding: 2px 20px;
+}
+
+#back_button:hover {
+  color: #B4C2E1; 
+  transform: scale(1.1); 
+}

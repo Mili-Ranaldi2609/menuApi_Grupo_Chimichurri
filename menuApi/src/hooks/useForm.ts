@@ -1,22 +1,43 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useState } from "react";
 
-interface ValuesForm{
-    [key:string]:string |number
-}
+type FormState<T> = {
+  formState: T;
+  onInputChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  setFormState: React.Dispatch<React.SetStateAction<T>>;
+};
 
-export const useForm =<T extends ValuesForm> (initialValues:T) => {
-    const [values,setValues]=useState<T>(initialValues)
-    const handleChange=(event:ChangeEvent<HTMLInputElement>)=>{
-        const {value,name}=event.target
-        setValues({...values,[`${name}`]:value})
+export const useForm = <T extends Record<string, any>>(
+  initialForm: T
+): FormState<T> => {
+  const [formState, setFormState] = useState<T>(initialForm);
 
+  const onInputChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+
+    if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+      setFormState((prevState) => ({
+        ...prevState,
+        [parent]: {
+          ...(prevState[parent] || {}),
+          [child]: value,
+        },
+      }));
+    } else {
+      setFormState((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
     }
-    const resetForm=()=>{
-        setValues(initialValues)
-    }
+  };
+
   return {
-    values,
-    handleChange,
-    resetForm
-  }
-}
+    formState,
+    onInputChange,
+    setFormState,
+  };
+};

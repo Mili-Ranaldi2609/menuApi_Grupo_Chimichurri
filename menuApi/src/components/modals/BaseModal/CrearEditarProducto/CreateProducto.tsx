@@ -1,0 +1,183 @@
+import styles from "./CrearEditarProducto.module.css";
+import React, { FormEvent, useEffect, useState } from "react";
+import { ProductoService } from "../../../../services/ProductoService/ProductoService";
+import { ISucursal } from "../../../../types/dtos/sucursal/ISucursal";
+import { ICategorias } from "../../../../types/dtos/categorias/ICategorias";
+import { IAlergenos } from "../../../../types/dtos/alergenos/IAlergenos";
+import { useForm } from "../../../../hooks/useForm";
+import { IProductos } from "../../../../types/dtos/productos/IProductos";
+import BaseModal from "../BaseModal";
+import { ICreateProducto } from "../../../../types/dtos/productos/ICreateProducto";
+import Select from "react-select";
+
+interface ProductoModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    sucursal?: ISucursal;
+    initialForm: ICreateProducto;
+    onSave?: (newProducto: IProductos) => void;  // Propiedad para comunicar el producto creado
+    handleCrearProducto: () => void;
+}
+
+const ModalCreateProducto: React.FC<ProductoModalProps> = ({ isOpen, onClose, sucursal, initialForm, handleCrearProducto, onSave }) => {
+    const productoService = new ProductoService("http://190.221.207.224:8090/articulos/create");
+    const [categorias, setCategorias] = useState<ICategorias[]>([]);
+    const [alergenos, setAlergenos] = useState<IAlergenos[]>([]);
+    const { onInputChange, formState, setFormState } = useForm<ICreateProducto>(initialForm);
+
+    const options = alergenos.map((alergeno) => ({
+        value: alergeno.id,
+        label: alergeno.denominacion,
+    }));
+    
+
+    useEffect(() => {
+        if (sucursal?.id) {
+            fetch(`http://190.221.207.224:8090/categorias/allSubCategoriasPorSucursal/${sucursal.id}`)
+                .then((response) => response.json())
+                .then((data) => setCategorias(data))
+                .catch((error) => console.error("Error fetching categorias:", error));
+
+            fetch("http://190.221.207.224:8090/alergenos")
+                .then((response) => response.json())
+                .then((data) => setAlergenos(data))
+                .catch((error) => console.error("Error fetching alergenos:", error));
+        }
+    }, [sucursal?.id]);
+
+
+    const handleImagenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const url = event.target.value;
+        setFormState({
+            ...formState,
+            imagenes: [{ name: formState.denominacion, url }],
+        });
+    };
+
+    const onSubmit = async (event: FormEvent<Element>) => {
+        event.preventDefault();
+        try {
+            const newProducto = await productoService.post(formState); // Llamada al servicio
+
+            if (newProducto) {
+                onSave?.(newProducto);  // Llamamos a `onSave` si está definido
+                handleCrearProducto();  // Llamada a la función para cualquier otra acción requerida
+                console.log("producto creado",newProducto);
+                window.location.reload()
+                onClose();   
+                        // Cerramos el modal al finalizar
+            }
+        } catch (error) {
+            console.error("Error al crear producto:", error);
+        }
+    };
+    
+    
+    return (
+        isOpen && (
+            <BaseModal title="Crear Artículo" onClose={onClose} onSave={onSubmit}>
+                <form onSubmit={onSubmit} className={styles.modalProducto__contenedor_inputs}>
+                    <input
+                        className="modalProducto__input"
+                        type="text"
+                        name="denominacion"
+                        value={formState.denominacion}
+                        onChange={onInputChange}
+                        placeholder="Nombre"
+                        required
+                    />
+                    <div>
+                        <label>Precio </label>
+                        <input
+                            className="modalProducto__input"
+                            type="number"
+                            name="precioVenta"
+                            value={formState.precioVenta}
+                            onChange={(e) =>
+                                setFormState({
+                                    ...formState,
+                                    precioVenta: parseInt(e.target.value, 10) || 0,  // Convierte el valor a número o usa 0 si es NaN
+                                })
+                            }
+                            required
+                        />
+
+                    </div>
+                    <label>
+                        <input
+                            className="modalProducto__input"
+                            type="checkbox"
+                            name="habilitado"
+                            checked={formState.habilitado}
+                            onChange={onInputChange}
+                        />
+                        Habilitado
+                    </label>
+                    <input
+                        className="modalProducto__input"
+                        type="text"
+                        name="codigo"
+                        value={formState.codigo}
+                        onChange={onInputChange}
+                        placeholder="Código"
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="Ingrese una descripcion"
+                        name="descripcion"
+                        value={formState.descripcion}
+                        onChange={onInputChange}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Ingrese una imagen"
+                        onChange={handleImagenChange}
+                        value={formState.imagenes[0]?.url || ""}
+                    />
+
+                <Select
+                        isMulti
+                        options={options}
+                        className="multiSelect"
+                        classNamePrefix="select"
+                        placeholder="Selecciona los alergenos..." 
+                        onChange={(selectedOptions) => {
+                            const selectedIds = selectedOptions.map((option) => option.value);
+                            setFormState({ ...formState, idAlergenos: selectedIds });
+                        }}
+                        value={options.filter((option) =>
+                            formState.idAlergenos.includes(option.value)
+                        )}
+                    />
+
+<Select
+  options={categorias.map((categoria) => ({
+    value: categoria.id,
+    label: categoria.denominacion,
+  }))}
+  className="categoriaSelect"
+  classNamePrefix="select"
+  placeholder="Selecciona una categoría..."
+  onChange={(selectedOption) => {
+    const selectedId = selectedOption?.value || 0; // Maneja undefined como 0 o cualquier valor predeterminado que prefieras
+    setFormState({ ...formState, idCategoria: selectedId });
+  }}
+  value={
+    categorias
+      .filter((categoria) => categoria.id === formState.idCategoria)
+      .map((categoria) => ({
+        value: categoria.id,
+        label: categoria.denominacion,
+      }))[0] || null
+  }
+/>
+
+                  
+                </form>
+            </BaseModal>
+        )
+    );
+};
+
+export default ModalCreateProducto;

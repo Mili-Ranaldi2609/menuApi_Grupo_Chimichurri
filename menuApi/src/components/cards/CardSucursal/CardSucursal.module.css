@@ -1,0 +1,59 @@
+.card_sucursal {
+    border-radius: 6px; 
+    border: 3px solid rgb(34, 42, 116);
+    background-color: #DCE4FF;
+    /* min-height: 240px; */
+    padding: 20px; 
+    padding-bottom: 52px;
+    transition: transform 0.2s; 
+    align-items: center;
+    position: relative;
+}
+
+.card_sucursal:hover {
+    transform: scale(1.01); /* sobresale al pasar el mause */
+}
+.card_sucursal h3 {
+    text-align: center;
+    margin: 4px 0 20px; 
+    text-transform: uppercase;
+}
+.card_sucursal p{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.img_card_sucursal{
+    display: block;
+    max-height: 120px;
+    margin: 0 auto ;
+    margin-bottom: 12px;
+}
+/* icono de camara */
+#icono{
+    font-size: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+
+.card__contenedor_botones{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 16px; 
+    left: 0;
+    right: 0;
+}
+.cardSucursal__botones {
+    display: flex;
+    gap: 28px;
+}
+
+.card_sucursal #boton {
+    font-size: 32px;
+    color: rgb(34, 42, 116); 
+    cursor: pointer;
+}
+

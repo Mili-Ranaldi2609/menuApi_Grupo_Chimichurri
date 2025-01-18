@@ -1,0 +1,14 @@
+.modalEmpresa__contenedor_inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.modalEmpresa__input{
+    width: 100%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    font-size: 1rem; 
+    border: 1px solid #545454; 
+    border-radius: 8px; 
+    background-color: #e7ebf1; 
+}

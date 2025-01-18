@@ -1,0 +1,33 @@
+.pageAlergenos_conteiner{
+    flex-grow: 1;
+    background-color: #DCE4FF;
+    box-sizing: border-box; 
+    border-radius: 8px;
+    margin: 0 30px;
+    margin-top: 16px;
+
+}
+.alergenos_contenedor_boton{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.alergenos__boton{
+    display: block;
+    background-color: #526CA5;
+    border: 1px solid #526CA5;
+    color: white; 
+    border-radius: 4px;
+    padding: 12px 28px;
+    font-size: 1rem;
+    cursor: pointer; 
+    transition: transform 0.2s ease, color 0.2s ease; 
+    margin-top: 16px;
+    margin-right: 28px;
+    margin-bottom: 20px;
+}
+.alergenos__boton:hover {
+    background-color: #B4C2E1;
+    color: black;
+    transform: scale(1.02); 
+}
